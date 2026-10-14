@@ -1,0 +1,442 @@
+<title>Cola de Instagram TallerMax</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;700;800&family=Public+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: una columna de piezas por fecha; cada pieza es el post tal como sale en el feed a la izquierda y la mesa de revisión a la derecha. */
+:root {
+  --bg: #f3f4f7;
+  --surface: #ffffff;
+  --ink: #161a24;
+  --muted: #5b6273;
+  --line: #dde0e8;
+  --accent: #4f46e5;
+  --accent-ink: #ffffff;
+  --slide: #1f2433;
+  --slide-ink: #eef0f6;
+  --ok: #157f4a;
+  --ok-bg: #e3f4ea;
+  --warn: #9a5b00;
+  --warn-bg: #fdf0d9;
+  --bad: #b42318;
+  --bad-bg: #fde7e5;
+  --info: #3b4bb8;
+  --info-bg: #e8eafc;
+  --f-display: "Archivo", "Helvetica Neue", Arial, sans-serif;
+  --f-body: "Public Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --f-mono: "JetBrains Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0f1218; --surface: #171b24; --ink: #e8eaf0; --muted: #9aa1b2; --line: #2a3040;
+    --accent: #8b85ff; --accent-ink: #0f1218; --slide: #262c3d; --slide-ink: #eef0f6;
+    --ok: #5fd39a; --ok-bg: #12301f; --warn: #f2b65a; --warn-bg: #33260f;
+    --bad: #ff8a80; --bad-bg: #3a1714; --info: #a9b2ff; --info-bg: #1f2547;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0f1218; --surface: #171b24; --ink: #e8eaf0; --muted: #9aa1b2; --line: #2a3040;
+  --accent: #8b85ff; --accent-ink: #0f1218; --slide: #262c3d; --slide-ink: #eef0f6;
+  --ok: #5fd39a; --ok-bg: #12301f; --warn: #f2b65a; --warn-bg: #33260f;
+  --bad: #ff8a80; --bad-bg: #3a1714; --info: #a9b2ff; --info-bg: #1f2547;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body { background: var(--bg); color: var(--ink); font: 15px/1.55 var(--f-body); }
+.wrap { max-width: 1080px; margin: 0 auto; padding-inline: 16px; padding-block: 28px 64px; display: grid; gap: 24px; }
+
+header.top { display: grid; gap: 6px; }
+.eyebrow { font: 500 12px/1 var(--f-mono); letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+h1 { font: 800 clamp(26px, 4vw, 36px)/1.1 var(--f-display); letter-spacing: -.01em; margin: 0; text-wrap: balance; }
+.lede { color: var(--muted); margin: 0; max-width: 62ch; }
+
+.filtros { display: flex; flex-wrap: wrap; gap: 8px; }
+.filtro { font: 600 14px/1 var(--f-body); border: 1px solid var(--line); background: var(--surface); color: var(--ink);
+  border-radius: 999px; padding: 0 14px; min-height: 40px; display: inline-flex; align-items: center; gap: 8px; cursor: pointer; }
+.filtro .n { font: 500 13px/1 var(--f-mono); color: var(--muted); }
+.filtro[aria-pressed="true"] { background: var(--ink); color: var(--bg); border-color: var(--ink); }
+.filtro[aria-pressed="true"] .n { color: var(--bg); opacity: .75; }
+
+.proxima { font-size: 14px; color: var(--muted); }
+.proxima strong { color: var(--ink); font-weight: 600; }
+
+.lista { display: grid; gap: 20px; }
+.pieza { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 20px;
+  display: grid; grid-template-columns: minmax(0, 360px) minmax(0, 1fr); gap: 28px; }
+@media (max-width: 760px) { .pieza { grid-template-columns: minmax(0, 1fr); padding: 16px; gap: 20px; } }
+
+/* El post, como se ve en el feed */
+.post { border: 1px solid var(--line); border-radius: 10px; overflow: hidden; background: var(--surface); align-self: start; }
+.post-head { display: flex; align-items: center; gap: 10px; padding: 10px 12px; }
+.avatar { width: 32px; height: 32px; border-radius: 50%; background: var(--accent); color: var(--accent-ink);
+  display: grid; place-items: center; font: 800 13px/1 var(--f-display); }
+.cuenta { font-weight: 600; font-size: 14px; }
+.media { position: relative; aspect-ratio: 4 / 5; max-width: 100%; background: var(--slide); color: var(--slide-ink); overflow: hidden; }
+.media.reel { aspect-ratio: 9 / 16; }
+.media img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.ph { position: absolute; inset: 0; display: grid; align-content: center; gap: 12px; padding: 28px; }
+.ph .num { font: 500 12px/1 var(--f-mono); letter-spacing: .06em; opacity: .7; text-transform: uppercase; }
+.ph .txt { font: 700 clamp(18px, 2.6vw, 22px)/1.25 var(--f-display); text-wrap: balance; }
+.ph .pend { font: 400 12px/1.3 var(--f-mono); opacity: .6; }
+.flecha { position: absolute; top: 50%; transform: translateY(-50%); width: 40px; height: 40px; border-radius: 50%; border: 0;
+  background: rgba(255,255,255,.9); color: #161a24; font: 700 18px/1 var(--f-body); cursor: pointer; display: grid; place-items: center; }
+.flecha.izq { left: 8px; } .flecha.der { right: 8px; }
+.puntos { position: absolute; bottom: 10px; left: 0; right: 0; display: flex; justify-content: center; gap: 5px; }
+.puntos i { width: 6px; height: 6px; border-radius: 50%; background: rgba(255,255,255,.45); }
+.puntos i.on { background: #fff; }
+.contador { position: absolute; top: 10px; right: 10px; font: 500 12px/1 var(--f-mono); background: rgba(0,0,0,.55); color: #fff;
+  padding: 5px 8px; border-radius: 999px; }
+.caption { padding: 10px 12px 14px; font-size: 14px; white-space: pre-wrap; overflow-wrap: anywhere; }
+.caption b { font-weight: 600; margin-right: 6px; }
+.caption .mas { color: var(--muted); background: none; border: 0; padding: 0; font: inherit; cursor: pointer; }
+
+/* La mesa de revisión */
+.mesa { display: grid; gap: 16px; align-content: start; min-width: 0; }
+.cab { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 12px; }
+.cab h2 { font: 700 20px/1.2 var(--f-display); margin: 0; flex: 1 1 220px; text-wrap: balance; }
+.chip { font: 600 12px/1 var(--f-body); letter-spacing: .03em; text-transform: uppercase; padding: 6px 10px; border-radius: 999px; white-space: nowrap; }
+.chip.borrador { background: var(--info-bg); color: var(--info); }
+.chip.aprobada { background: var(--ok-bg); color: var(--ok); }
+.chip.cambios { background: var(--warn-bg); color: var(--warn); }
+.chip.publicada { background: var(--line); color: var(--ink); }
+.chip.error { background: var(--bad-bg); color: var(--bad); }
+.datos { display: flex; flex-wrap: wrap; gap: 6px 18px; font: 400 13px/1.4 var(--f-mono); color: var(--muted); font-variant-numeric: tabular-nums; }
+.datos strong { color: var(--ink); font-weight: 500; }
+
+.aviso { border-radius: 10px; padding: 10px 12px; font-size: 14px; }
+.aviso.warn { background: var(--warn-bg); color: var(--warn); }
+.aviso.bad { background: var(--bad-bg); color: var(--bad); }
+.aviso.ok { background: var(--ok-bg); color: var(--ok); }
+.aviso a { color: inherit; font-weight: 600; }
+
+details.guion { border: 1px solid var(--line); border-radius: 10px; }
+details.guion summary { cursor: pointer; padding: 10px 12px; font-weight: 600; font-size: 14px; min-height: 40px; display: flex; align-items: center; }
+details.guion ol { margin: 0; padding: 0 16px 12px 36px; display: grid; gap: 6px; font-size: 14px; }
+.notas { font-size: 14px; color: var(--muted); margin: 0; }
+.chequeos { display: flex; flex-wrap: wrap; gap: 6px 16px; font: 400 12px/1.4 var(--f-mono); color: var(--muted); }
+.chequeos .mal { color: var(--bad); }
+
+.acciones { display: flex; flex-wrap: wrap; gap: 10px; }
+.btn { font: 600 14px/1 var(--f-body); min-height: 42px; padding: 0 18px; border-radius: 10px; cursor: pointer; border: 1px solid var(--line);
+  background: var(--surface); color: var(--ink); }
+.btn.primario { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
+.btn[disabled] { opacity: .5; cursor: not-allowed; }
+.btn:focus-visible, .filtro:focus-visible, .flecha:focus-visible, textarea:focus-visible, summary:focus-visible, .mas:focus-visible {
+  outline: 3px solid var(--accent); outline-offset: 2px; }
+.cambio { display: grid; gap: 8px; }
+.cambio label { font-weight: 600; font-size: 14px; }
+textarea { font: 15px/1.5 var(--f-body); color: var(--ink); background: var(--bg); border: 1px solid var(--line); border-radius: 10px;
+  padding: 10px 12px; min-height: 88px; width: 100%; resize: vertical; }
+.revision { font-size: 13px; color: var(--muted); }
+
+.vacio, .sin-acceso { background: var(--surface); border: 1px dashed var(--line); border-radius: 14px; padding: 32px 20px; text-align: left; display: grid; gap: 6px; }
+.vacio h2, .sin-acceso h2 { font: 700 18px/1.3 var(--f-display); margin: 0; }
+.vacio p, .sin-acceso p { margin: 0; color: var(--muted); max-width: 60ch; }
+
+.toast { position: fixed; left: 50%; bottom: calc(20px + env(safe-area-inset-bottom, 0px)); transform: translateX(-50%);
+  background: var(--ink); color: var(--bg); padding: 12px 18px; border-radius: 10px; font-weight: 600; font-size: 14px; max-width: calc(100% - 32px); }
+@media (prefers-reduced-motion: no-preference) { .toast { transition: opacity .2s; } }
+</style>
+
+<div class="wrap">
+  <header class="top">
+    <span class="eyebrow">TallerMax · Instagram</span>
+    <h1>Cola de publicaciones</h1>
+    <p class="lede">Cada pieza se ve como saldrá en el feed. El agente sólo publica las aprobadas, a su hora. Si una pieza cambia después de aprobarla, vuelve a pedir revisión.</p>
+  </header>
+
+  <div class="filtros" role="group" aria-label="Filtrar por estado" id="filtros"></div>
+  <p class="proxima" id="proxima" hidden></p>
+
+  <main class="lista" id="lista">
+    <div class="vacio">
+      <h2>Cargando la cola…</h2>
+      <p>Si tarda, revisa que estés con tu sesión de claude.ai iniciada.</p>
+    </div>
+  </main>
+</div>
+<div class="toast" id="toast" role="status" hidden></div>
+
+<script>
+(() => {
+  const ZONA = "America/Santiago";
+  const LIMITE_TEXTO = 2200, LIMITE_HASHTAGS = 30, LIMITE_IMAGENES = 10, CORTE_FEED = 125;
+  const ESTADOS = {
+    borrador:  { nombre: "Por revisar",   filtro: "Por revisar" },
+    cambios:   { nombre: "Pidió cambios", filtro: "Con cambios" },
+    aprobada:  { nombre: "Aprobada",      filtro: "Aprobadas" },
+    publicada: { nombre: "Publicada",     filtro: "Publicadas" },
+    error:     { nombre: "Falló",         filtro: "Con error" },
+  };
+  const TIPOS = { carrusel: "Carrusel", foto: "Foto", reel: "Reel" };
+
+  const $ = (sel, el = document) => el.querySelector(sel);
+  const h = (tag, attrs = {}, ...hijos) => {
+    const el = document.createElement(tag);
+    for (const [k, v] of Object.entries(attrs)) {
+      if (v == null || v === false) continue;
+      if (k.startsWith("on")) el.addEventListener(k.slice(2), v);
+      else if (k === "class") el.className = v;
+      else el.setAttribute(k, v === true ? "" : v);
+    }
+    for (const c of hijos.flat()) if (c != null && c !== false) el.append(c.nodeType ? c : String(c));
+    return el;
+  };
+
+  // Estado de la vista: lo que no se guarda en la base.
+  let piezas = [];
+  let filtro = "pendientes";
+  let db = null, uid = null, puedeEscribir = true;
+  const slideActual = new Map();
+  const borradores = new Map();
+  const abiertos = new Set();
+  const textoEntero = new Set();
+  const huellasOk = new Map();
+
+  try { const f = localStorage.getItem("cola-filtro"); if (f) filtro = f; } catch {}
+
+  // Hora de Chile como "AAAA-MM-DDTHH:MM", comparable con el campo fecha.
+  const ahoraChile = () => {
+    const p = Object.fromEntries(new Intl.DateTimeFormat("en-CA", { timeZone: ZONA, year: "numeric", month: "2-digit", day: "2-digit",
+      hour: "2-digit", minute: "2-digit", hourCycle: "h23" }).formatToParts(new Date()).map(x => [x.type, x.value]));
+    return `${p.year}-${p.month}-${p.day}T${p.hour}:${p.minute}`;
+  };
+  const fechaLarga = (f) => {
+    if (!f) return "sin fecha";
+    const [d, t] = f.split("T");
+    const [y, m, dd] = d.split("-").map(Number);
+    const dia = new Date(Date.UTC(y, m - 1, dd, 12)).toLocaleDateString("es-CL", { weekday: "short", day: "numeric", month: "short", timeZone: "UTC" });
+    return `${dia} · ${t}`;
+  };
+  const faltan = (f) => {
+    if (!f) return "";
+    const [d] = f.split("T"); const [hoy] = ahoraChile().split("T");
+    const dias = Math.round((Date.parse(d) - Date.parse(hoy)) / 86400000);
+    if (dias === 0) return "hoy"; if (dias === 1) return "mañana"; if (dias === -1) return "ayer";
+    return dias > 0 ? `en ${dias} días` : `hace ${-dias} días`;
+  };
+
+  // La huella es lo que se aprueba. El publicador la recalcula igual y no publica si no coincide:
+  // sha256 de JSON.stringify([fecha, tipo, texto, imagenes]).
+  const huella = async (p) => {
+    const datos = JSON.stringify([p.fecha || "", p.tipo || "", p.texto || "", Array.isArray(p.imagenes) ? p.imagenes : []]);
+    const buf = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(datos));
+    return [...new Uint8Array(buf)].map(b => b.toString(16).padStart(2, "0")).join("");
+  };
+
+  const toast = (msg) => {
+    const t = $("#toast"); t.textContent = msg; t.hidden = false;
+    clearTimeout(toast.t); toast.t = setTimeout(() => { t.hidden = true; }, 3200);
+  };
+
+  const enFiltro = (p) => filtro === "todas" ? true
+    : filtro === "pendientes" ? (p.estado === "borrador" || p.estado === "cambios" || !p.estado)
+    : p.estado === filtro;
+
+  function pintarFiltros() {
+    const cuenta = (pred) => piezas.filter(pred).length;
+    const opciones = [
+      ["pendientes", "Por revisar", cuenta(p => !p.estado || p.estado === "borrador" || p.estado === "cambios")],
+      ["aprobada", "Aprobadas", cuenta(p => p.estado === "aprobada")],
+      ["publicada", "Publicadas", cuenta(p => p.estado === "publicada")],
+      ["error", "Con error", cuenta(p => p.estado === "error")],
+      ["todas", "Todas", piezas.length],
+    ];
+    $("#filtros").replaceChildren(...opciones
+      .filter(([k, , n]) => k !== "error" || n > 0)
+      .map(([k, txt, n]) => h("button", { class: "filtro", type: "button", "aria-pressed": String(filtro === k),
+        onclick: () => { filtro = k; try { localStorage.setItem("cola-filtro", k); } catch {} pintar(); } },
+        txt, h("span", { class: "n" }, n))));
+
+    const ahora = ahoraChile();
+    const prox = piezas.filter(p => p.estado === "aprobada" && p.fecha >= ahora).sort((a, b) => a.fecha.localeCompare(b.fecha))[0];
+    const el = $("#proxima");
+    if (prox) {
+      el.hidden = false;
+      el.replaceChildren("Próxima publicación: ", h("strong", {}, prox.titulo || prox.id), ` — ${fechaLarga(prox.fecha)} (${faltan(prox.fecha)})`);
+    } else el.hidden = true;
+  }
+
+  function medios(p) {
+    const imgs = Array.isArray(p.imagenes) ? p.imagenes : [];
+    const textos = Array.isArray(p.diapositivas) ? p.diapositivas : [];
+    const total = Math.max(imgs.length, textos.length, 1);
+    let i = Math.min(slideActual.get(p.id) || 0, total - 1);
+    const reel = p.tipo === "reel";
+    const caja = h("div", { class: "media" + (reel ? " reel" : ""), "aria-roledescription": "carrusel",
+      "aria-label": `Vista previa, imagen ${i + 1} de ${total}` });
+    const ph = (n) => h("div", { class: "ph" },
+      h("span", { class: "num" }, reel ? "Reel · guion" : `Imagen ${n + 1}`),
+      h("span", { class: "txt" }, reel ? (p.gancho || p.titulo || "") : (textos[n] || p.titulo || "")),
+      h("span", { class: "pend" }, reel ? "Video pendiente · 1080×1920" : "Imagen pendiente · 1080×1350 JPEG"));
+    if (imgs[i]) {
+      const img = h("img", { src: imgs[i], alt: textos[i] || `Imagen ${i + 1} de ${p.titulo || "la pieza"}` });
+      img.addEventListener("error", () => img.replaceWith(ph(i)));
+      caja.append(img);
+    } else caja.append(ph(i));
+    if (total > 1 && !reel) {
+      const ir = (d) => { slideActual.set(p.id, (i + d + total) % total); pintar(); };
+      if (i > 0) caja.append(h("button", { class: "flecha izq", type: "button", "aria-label": "Imagen anterior", onclick: () => ir(-1) }, "‹"));
+      if (i < total - 1) caja.append(h("button", { class: "flecha der", type: "button", "aria-label": "Imagen siguiente", onclick: () => ir(1) }, "›"));
+      caja.append(h("span", { class: "contador" }, `${i + 1}/${total}`));
+      caja.append(h("div", { class: "puntos", "aria-hidden": "true" }, Array.from({ length: total }, (_, k) => h("i", { class: k === i ? "on" : "" }))));
+    }
+    return caja;
+  }
+
+  function post(p) {
+    const texto = p.texto || "";
+    const largo = texto.length > CORTE_FEED && !textoEntero.has(p.id);
+    return h("article", { class: "post", "aria-label": "Así se verá en el feed" },
+      h("div", { class: "post-head" }, h("span", { class: "avatar", "aria-hidden": "true" }, "TM"), h("span", { class: "cuenta" }, "tallermax")),
+      medios(p),
+      h("p", { class: "caption" }, h("b", {}, "tallermax"),
+        largo ? texto.slice(0, CORTE_FEED).trimEnd() + "… " : texto,
+        largo ? h("button", { class: "mas", type: "button", onclick: () => { textoEntero.add(p.id); pintar(); } }, "más") : null));
+  }
+
+  function chequeos(p) {
+    const texto = p.texto || "";
+    const tags = (texto.match(/#[\p{L}\p{N}_]+/gu) || []).length;
+    const imgs = (p.imagenes || []).length;
+    const fila = [
+      [`${texto.length}/${LIMITE_TEXTO} caracteres`, texto.length > LIMITE_TEXTO],
+      [`${tags}/${LIMITE_HASHTAGS} hashtags`, tags > LIMITE_HASHTAGS],
+    ];
+    if (p.tipo !== "reel") fila.push([`${imgs} imagen${imgs === 1 ? "" : "es"}`, imgs === 0 || imgs > LIMITE_IMAGENES]);
+    const malos = (p.imagenes || []).filter(x => !/\.jpe?g$/i.test(x));
+    if (malos.length) fila.push([`${malos.length} no son JPEG`, true]);
+    return h("div", { class: "chequeos" }, fila.map(([t, mal]) => h("span", { class: mal ? "mal" : "" }, t)));
+  }
+
+  async function escribir(p, cambios, ok) {
+    try {
+      await db.collection("piezas").doc(p.id).update({ ...cambios, revisadoPor: uid, revisadoEn: new Date().toISOString() });
+      toast(ok);
+    } catch (e) {
+      if (e && e.code === "invalid_argument") { puedeEscribir = false; pintar(); toast("No tienes permiso para cambiar la cola."); }
+      else toast("No se guardó. Revisa la conexión e inténtalo de nuevo.");
+    }
+  }
+
+  function mesa(p) {
+    const estado = ESTADOS[p.estado] ? p.estado : "borrador";
+    const ahora = ahoraChile();
+    const atrasada = estado === "aprobada" && p.fecha && p.fecha < ahora;
+    const huellaRota = estado === "aprobada" && huellasOk.get(p.id) === false;
+    const cont = h("section", { class: "mesa" },
+      h("div", { class: "cab" }, h("h2", {}, p.titulo || p.id), h("span", { class: `chip ${estado}` }, ESTADOS[estado].nombre)),
+      h("div", { class: "datos" },
+        h("span", {}, h("strong", {}, fechaLarga(p.fecha)), ` · ${faltan(p.fecha)}`),
+        h("span", {}, TIPOS[p.tipo] || p.tipo || "—")),
+      chequeos(p));
+
+    if (huellaRota) cont.append(h("div", { class: "aviso warn" }, "La pieza cambió después de aprobarse. El agente no la publicará hasta que la vuelvas a aprobar."));
+    if (atrasada && !huellaRota) cont.append(h("div", { class: "aviso warn" }, "Ya pasó su hora y sigue sin publicarse. Sale en la próxima pasada del agente."));
+    if (estado === "cambios" && p.comentario) cont.append(h("div", { class: "aviso warn" }, `Cambios pedidos: ${p.comentario}`));
+    if (estado === "error") cont.append(h("div", { class: "aviso bad" }, `No se pudo publicar: ${p.error || "sin detalle"}`));
+    if (estado === "publicada") cont.append(h("div", { class: "aviso ok" }, "Publicada",
+      p.publicadaEn ? ` el ${new Date(p.publicadaEn).toLocaleString("es-CL", { timeZone: ZONA, dateStyle: "medium", timeStyle: "short" })}` : "",
+      p.enlace ? ". " : "", p.enlace ? h("a", { href: p.enlace, target: "_blank", rel: "noopener" }, "Verla en Instagram") : ""));
+
+    const guion = Array.isArray(p.guion) ? p.guion : (Array.isArray(p.diapositivas) ? p.diapositivas : []);
+    if (guion.length) cont.append(h("details", { class: "guion" },
+      h("summary", {}, p.tipo === "reel" ? `Guion del reel (${guion.length} planos)` : `Texto de cada imagen (${guion.length})`),
+      h("ol", {}, guion.map(g => h("li", {}, g)))));
+    if (p.notas) cont.append(h("p", { class: "notas" }, p.notas));
+
+    if (!puedeEscribir || estado === "publicada") return cont;
+
+    const acciones = h("div", { class: "acciones" });
+    if (estado === "borrador" || estado === "cambios" || huellaRota) {
+      acciones.append(h("button", { class: "btn primario", type: "button", onclick: async (ev) => {
+        ev.currentTarget.disabled = true;
+        await escribir(p, { estado: "aprobada", huellaAprobada: await huella(p), error: null }, "Aprobada. Sale a su hora.");
+      } }, huellaRota ? "Aprobar de nuevo" : "Aprobar"));
+    }
+    if (estado !== "cambios") {
+      acciones.append(h("button", { class: "btn", type: "button", "aria-expanded": String(abiertos.has(p.id)),
+        onclick: () => { abiertos.has(p.id) ? abiertos.delete(p.id) : abiertos.add(p.id); pintar(); } }, "Pedir cambio"));
+    }
+    if (estado === "aprobada") {
+      acciones.append(h("button", { class: "btn", type: "button", onclick: async (ev) => {
+        ev.currentTarget.disabled = true;
+        await escribir(p, { estado: "borrador", huellaAprobada: null }, "Aprobación retirada.");
+      } }, "Quitar aprobación"));
+    }
+    if (estado === "error") {
+      acciones.append(h("button", { class: "btn primario", type: "button", onclick: async (ev) => {
+        ev.currentTarget.disabled = true;
+        await escribir(p, { estado: "aprobada", huellaAprobada: await huella(p), error: null }, "Se reintentará en la próxima pasada.");
+      } }, "Reintentar"));
+    }
+    cont.append(acciones);
+
+    if (abiertos.has(p.id) || estado === "cambios") {
+      const idCampo = `cambio-${p.id}`;
+      const area = h("textarea", { id: idCampo, placeholder: "Ej.: la segunda imagen dice «boleta» y debería decir «comprobante»." });
+      area.value = borradores.get(p.id) ?? (estado === "cambios" ? (p.comentario || "") : "");
+      area.addEventListener("input", () => borradores.set(p.id, area.value));
+      cont.append(h("div", { class: "cambio" },
+        h("label", { for: idCampo }, estado === "cambios" ? "Lo que pediste cambiar" : "¿Qué hay que cambiar?"),
+        area,
+        h("div", { class: "acciones" }, h("button", { class: "btn", type: "button", onclick: async (ev) => {
+          const txt = area.value.trim();
+          if (!txt) { toast("Escribe qué hay que cambiar."); area.focus(); return; }
+          ev.currentTarget.disabled = true;
+          await escribir(p, { estado: "cambios", comentario: txt, huellaAprobada: null }, "Pedido de cambio guardado.");
+          borradores.delete(p.id); abiertos.delete(p.id);
+        } }, estado === "cambios" ? "Actualizar pedido" : "Enviar pedido"))));
+    }
+    if (p.revisadoEn) cont.append(h("p", { class: "revision" },
+      `Última revisión: ${new Date(p.revisadoEn).toLocaleString("es-CL", { timeZone: ZONA, dateStyle: "medium", timeStyle: "short" })}`));
+    return cont;
+  }
+
+  function pintar() {
+    pintarFiltros();
+    const visibles = piezas.filter(enFiltro).sort((a, b) => (a.fecha || "").localeCompare(b.fecha || ""));
+    const lista = $("#lista");
+    if (!piezas.length) {
+      lista.replaceChildren(h("div", { class: "vacio" }, h("h2", {}, "La cola está vacía"),
+        h("p", {}, "Cuando Claude prepare un lote, las piezas aparecen aquí para revisarlas una por una.")));
+      return;
+    }
+    if (!visibles.length) {
+      lista.replaceChildren(h("div", { class: "vacio" }, h("h2", {}, "Nada en este filtro"),
+        h("p", {}, filtro === "pendientes" ? "Revisaste todo lo pendiente." : "Prueba con «Todas».")));
+      return;
+    }
+    lista.replaceChildren(...visibles.map(p => h("div", { class: "pieza", id: `p-${p.id}` }, post(p), mesa(p))));
+  }
+
+  async function comprobarHuellas() {
+    await Promise.all(piezas.filter(p => p.estado === "aprobada").map(async p => {
+      try { huellasOk.set(p.id, p.huellaAprobada === await huella(p)); } catch { huellasOk.delete(p.id); }
+    }));
+  }
+
+  function sinAcceso() {
+    $("#lista").replaceChildren(h("div", { class: "sin-acceso" }, h("h2", {}, "No se pudo abrir la cola"),
+      h("p", {}, "Abre esta página desde claude.ai con tu sesión iniciada. La cola vive en la cuenta de TallerMax y no se ve sin ella.")));
+  }
+
+  (async () => {
+    if (!window.claude || !window.claude.use) { sinAcceso(); return; }
+    db = await window.claude.use("db");
+    if (!db) { sinAcceso(); return; }
+    const user = await window.claude.use("user");
+    if (user) {
+      uid = await user.id();
+      const puede = await user.can("data.write");
+      if (puede === false) puedeEscribir = false;
+    }
+    db.collection("piezas").onSnapshot(async (snap) => {
+      piezas = snap.docs.filter(d => d.exists).map(d => ({ id: d.id, ...d.data() }));
+      await comprobarHuellas();
+      pintar();
+    }, () => sinAcceso());
+  })();
+})();
+</script>

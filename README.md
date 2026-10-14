@@ -44,3 +44,30 @@ Las pone la API de Instagram, no nosotros:
 
 El token de Instagram. Vive como variable de entorno `IG_TOKEN` en el entorno
 de nube del agente, y en ningún otro sitio.
+
+## La página de vista previa
+
+Publicada en https://claude.ai/artifact/9HCNYBHQWVF2v8XwVDc9vE (privada: sólo
+la cuenta dueña y quien ella invite). El código está en `vista-previa/`.
+
+La cola vive en la **base de datos de esa página**, en la colección `piezas`,
+y no en este repositorio: el navegador de la página no puede leer GitHub. Cada
+pieza es un documento cuyo id es su carpeta (`2026-10-20-1315-slug`) con:
+
+| Campo | Qué es |
+|---|---|
+| `titulo`, `tipo` | nombre interno; `carrusel`, `foto` o `reel` |
+| `fecha` | `AAAA-MM-DDTHH:MM` en hora de Chile, nunca UTC |
+| `texto` | el texto de la publicación |
+| `imagenes` | rutas `piezas/<id>/01.jpg`… en este repo, en orden |
+| `diapositivas` / `guion` | lo que dice cada imagen, o los planos del reel |
+| `estado` | `borrador` → `aprobada` / `cambios` → `publicada` / `error` |
+| `huellaAprobada` | lo que se aprobó (ver abajo) |
+| `comentario`, `revisadoPor`, `revisadoEn` | la última revisión |
+| `enlace`, `publicadaEn`, `error` | los escribe el publicador |
+
+**La huella.** Al aprobar, la página guarda el SHA-256 de
+`JSON.stringify([fecha, tipo, texto, imagenes])`. El publicador la recalcula y
+**no publica si no coincide**: si alguien toca el texto, la hora o una imagen
+después de aprobar, la aprobación deja de valer sola. En Python es
+`json.dumps([...], ensure_ascii=False, separators=(",", ":"))`.

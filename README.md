@@ -61,6 +61,7 @@ pieza es un documento cuyo id es su carpeta (`2026-10-20-1315-slug`) con:
 | `fecha` | `AAAA-MM-DDTHH:MM` en hora de Chile, nunca UTC |
 | `texto` | el texto de la publicación |
 | `imagenes` | rutas `piezas/<id>/01.jpg`… en este repo, en orden |
+| `imagenesSha` | el SHA-256 de cada una, en el mismo orden |
 | `diapositivas` / `guion` | lo que dice cada imagen, o los planos del reel |
 | `estado` | `borrador` → `aprobada` / `cambios` → `publicada` / `error` |
 | `huellaAprobada` | lo que se aprobó (ver abajo) |
@@ -68,9 +69,12 @@ pieza es un documento cuyo id es su carpeta (`2026-10-20-1315-slug`) con:
 | `enlace`, `publicadaEn`, `error` | los escribe el publicador |
 
 **La huella.** Al aprobar, la página guarda el SHA-256 de
-`JSON.stringify([fecha, tipo, texto, imagenes])`. El publicador la recalcula y
-**no publica si no coincide**: si alguien toca el texto, la hora o una imagen
-después de aprobar, la aprobación deja de valer sola. En Python es
+`JSON.stringify([fecha, tipo, texto, imagenes, imagenesSha])`. El publicador
+la recalcula, comprueba que cada JPEG que baja de GitHub tiene el SHA-256 que
+dice `imagenesSha`, y **no publica si algo no coincide**: si alguien toca el
+texto, la hora o una imagen después de aprobar —aunque la imagen conserve su
+nombre—, la aprobación deja de valer sola. Por eso, **al regenerar imágenes hay
+que actualizar `imagenesSha` en la cola**. En Python es
 `json.dumps([...], ensure_ascii=False, separators=(",", ":"))`.
 
 ## Cómo se hacen las imágenes

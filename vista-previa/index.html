@@ -218,9 +218,11 @@ textarea { font: 15px/1.5 var(--f-body); color: var(--ink); background: var(--bg
   };
 
   // La huella es lo que se aprueba. El publicador la recalcula igual y no publica si no coincide:
-  // sha256 de JSON.stringify([fecha, tipo, texto, imagenes]).
+  // sha256 de JSON.stringify([fecha, tipo, texto, imagenes, imagenesSha]). imagenesSha es el
+  // sha256 de cada JPEG, así que regenerar una imagen con el mismo nombre también invalida la aprobación.
   const huella = async (p) => {
-    const datos = JSON.stringify([p.fecha || "", p.tipo || "", p.texto || "", Array.isArray(p.imagenes) ? p.imagenes : []]);
+    const lista = (x) => Array.isArray(x) ? x : [];
+    const datos = JSON.stringify([p.fecha || "", p.tipo || "", p.texto || "", lista(p.imagenes), lista(p.imagenesSha)]);
     const buf = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(datos));
     return [...new Uint8Array(buf)].map(b => b.toString(16).padStart(2, "0")).join("");
   };

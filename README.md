@@ -8,8 +8,9 @@ nada que se despliegue al servidor.
 
 ## Cómo fluye una publicación
 
-1. Se prepara la pieza en `piezas/` con estado `borrador`.
-2. Se revisa en la página de vista previa y se aprueba o se pide cambio.
+1. Las imágenes de la pieza van a `piezas/<id>/`, y la pieza entra a la cola
+   de la página de vista previa con estado `borrador`.
+2. Se revisa en esa página y se aprueba o se pide cambio.
 3. El agente de la nube publica lo aprobado cuya hora ya llegó, y anota el
    enlace de la publicación en la misma pieza.
 
@@ -20,9 +21,9 @@ aprobada, por buena que parezca.
 
 ```
 piezas/
-  2026-10-21-1300-ingreso-con-fotos/
-    pieza.json        tipo, texto, fecha y hora (America/Santiago), estado
-    01.jpg 02.jpg …   en orden; la primera es la portada
+  2026-10-20-1315-el-rayon-que-ya-estaba/
+    01.jpg 02.jpg …   en orden; la primera es la portada. El texto, la fecha
+                      y el estado están en la cola, no aquí
 investigacion/        en qué se basan los horarios y los anuncios
 scripts/              publicar.py (pendiente)
 vista-previa/         la página de aprobación (pendiente)

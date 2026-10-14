@@ -291,9 +291,9 @@ textarea { font: 15px/1.5 var(--f-body); color: var(--ink); background: var(--bg
     const texto = p.texto || "";
     const largo = texto.length > CORTE_FEED && !textoEntero.has(p.id);
     return h("article", { class: "post", "aria-label": "Así se verá en el feed" },
-      h("div", { class: "post-head" }, h("span", { class: "avatar", "aria-hidden": "true" }, "TM"), h("span", { class: "cuenta" }, "tallermax")),
+      h("div", { class: "post-head" }, h("span", { class: "avatar", "aria-hidden": "true" }, "TM"), h("span", { class: "cuenta" }, "tallermax.cl")),
       medios(p),
-      h("p", { class: "caption" }, h("b", {}, "tallermax"),
+      h("p", { class: "caption" }, h("b", {}, "tallermax.cl"),
         largo ? texto.slice(0, CORTE_FEED).trimEnd() + "… " : texto,
         largo ? h("button", { class: "mas", type: "button", onclick: () => { textoEntero.add(p.id); pintar(); } }, "más") : null));
   }

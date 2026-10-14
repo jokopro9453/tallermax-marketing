@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>Un cobro claro no se discute</title>
+<link rel="stylesheet" href="marca.css">
+<style>
+  .papel { position: absolute; right: -40px; top: 560px; width: 600px; height: 760px; background: #fff; border-radius: 6px; padding: 34px 30px 0;
+    transform: rotate(-6deg); overflow: hidden; box-shadow: 0 50px 90px -30px rgba(18,19,24,.5); }
+  .papel img { width: 100%; display: block; }
+  .cobro { padding: 34px 34px 30px; display: flex; flex-direction: column; gap: 16px; }
+  .portada .cobro { position: absolute; left: 80px; top: 800px; width: 540px; }
+  .cobro .fila { display: flex; justify-content: space-between; font: 400 28px/1 "Inter"; color: #9CA3AF; font-variant-numeric: tabular-nums; }
+  .cobro .fila b { color: #F3F4F6; font-weight: 600; }
+  .cobro .total { border-top: 2px solid #343744; padding-top: 18px; margin-top: 4px; font: 800 38px/1 "Inter"; color: #F3F4F6; }
+  .cobro .total b { color: var(--amarillo); font-weight: 800; }
+  .grande .fila { font-size: 36px; }
+  .grande .total { font-size: 50px; }
+  .grande { margin-top: 60px; padding: 44px 44px 40px; gap: 22px; }
+</style>
+</head>
+<body class="xl">
+
+<section class="slide claro portada">
+  <img class="logo" src="logo/svg/tallermax-horizontal.svg" alt="tallermax">
+  <div class="etiqueta">Cobro claro</div>
+  <h1 class="titular">Un cobro claro <em>no se discute.</em></h1>
+  <div class="papel"><img src="capturas/comprobante.png" alt=""></div>
+  <div class="ui cobro">
+    <div class="fila">Neto <b>$120.950</b></div>
+    <div class="fila">IVA 19 % <b>$22.981</b></div>
+    <div class="fila total">Total a pagar <b>$143.931</b></div>
+  </div>
+  <div class="demo" style="left:80px;right:auto">Datos de ejemplo</div>
+</section>
+
+<section class="slide claro">
+  <div class="etiqueta" style="margin-top:0">El problema</div>
+  <h2 class="titular sm">«¿Y por qué <em>me sale tanto?»</em></h2>
+  <div class="burbujas">
+    <p class="burbuja ellos"><small>Cliente</small>¿Y por qué me sale tanto?</p>
+    <p class="burbuja tu"><small>Tú</small>Es que… fueron varias cosas.</p>
+  </div>
+  <p class="bajada">Si el detalle no está por escrito, <b style="color:var(--grafito)">el precio siempre parece caro.</b></p>
+  <div class="desliza">Desliza →</div>
+</section>
+
+<section class="slide claro">
+  <div class="etiqueta" style="margin-top:0">En Tallermax</div>
+  <h2 class="titular sm">Mano de obra y repuestos, <em>cada uno en su bloque.</em></h2>
+  <div class="ui bloque">
+    <div class="t"><span>MANO DE OBRA</span><span>$60.000</span></div>
+    <div class="r"><span class="chip mo">MO</span>Cambio de pastillas delanteras<span class="der">$35.000</span></div>
+    <div class="r"><span class="chip mo">MO</span>Alineación y balanceo<span class="der">$25.000</span></div>
+    <div class="t" style="margin-top:18px"><span>REPUESTOS</span><span>$60.950</span></div>
+    <div class="r"><span class="chip rep">REP</span>Pastillas de freno delanteras<span class="der">$28.990</span></div>
+    <div class="r"><span class="chip rep">REP</span>Aceite 10W-40 · 4 litros<span class="der">$31.960</span></div>
+  </div>
+  <p class="bajada">El cliente ve qué se hizo y qué se cambió. Nada que explicar.</p>
+</section>
+
+<section class="slide claro">
+  <div class="etiqueta" style="margin-top:0">En Tallermax</div>
+  <h2 class="titular sm">El IVA, <em>calculado solo.</em></h2>
+  <div class="ui cobro grande">
+    <div class="fila">Neto <b>$120.950</b></div>
+    <div class="fila">IVA 19 % <b>$22.981</b></div>
+    <div class="fila total">Total a pagar <b>$143.931</b></div>
+  </div>
+  <p class="bajada">Sin calculadora ni errores de suma. Y el comprobante sale en PDF, con tu logo.</p>
+</section>
+
+<section class="slide indigo">
+  <img class="logo" src="logo/svg/tallermax-horizontal-blanco.svg" alt="tallermax">
+  <h2 class="titular" style="margin-top:110px">El cliente paga <em>tranquilo.</em></h2>
+  <p class="bajada">Y vuelve, porque sabe exactamente qué le cobraste y por qué.</p>
+  <div class="pie-cierre"><div class="llamado">Escríbenos → demo de 10 minutos</div><div class="web" style="position:static">tallermax.website</div></div>
+</section>
+
+</body>
+</html>

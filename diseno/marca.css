@@ -137,3 +137,48 @@ body { background: #000; }
 .metrica { background: #1E2029; border: 1px solid #343744; border-radius: 22px; padding: 28px 30px; }
 .metrica small { font: 600 18px/1 "Inter"; letter-spacing: .12em; color: #9CA3AF; text-transform: uppercase; }
 .metrica b { display: block; margin-top: 16px; font: 800 54px/1 "Inter"; letter-spacing: -.035em; color: #fff; font-variant-numeric: tabular-nums; }
+
+/* ---------- Lote de lanzamiento (14 oct): estados, tablas y listas grandes ---------- */
+.estado.amb { color: #FFC53D; background: rgba(255,197,61,.12); border-color: rgba(255,197,61,.4); }
+.estado.ind { color: #C7C4FF; background: rgba(79,70,229,.22); border-color: rgba(79,70,229,.55); }
+.estado.gris { color: #C9CCD6; background: rgba(255,255,255,.06); border-color: rgba(255,255,255,.18); }
+.lista-grande { margin-top: 56px; padding: 22px 36px 10px; }
+.lista-grande .r { font-size: 28px; padding: 24px 0; }
+.lista-grande .r:first-child { border-top: 0; }
+.hora { font: 700 26px/1 "JBM"; color: #C7C4FF; width: 100px; flex: none; }
+.ui .patente { font-size: 22px; padding: 7px 10px; }
+.comp { margin-top: 56px; display: grid; grid-template-columns: 1.05fr 1fr 1fr; border-radius: 26px; overflow: hidden; background: #1E2029; border: 1px solid #343744; }
+.comp > div { padding: 24px 24px; border-top: 1px solid #343744; font: 500 26px/1.25 "Inter"; color: #E5E7EB; }
+.comp .h { font: 700 18px/1 "JBM"; letter-spacing: .12em; color: #9CA3AF; border-top: 0; padding-top: 28px; padding-bottom: 20px; }
+.comp .tema { color: #fff; font-weight: 700; }
+.comp .antes { color: #8B90A0; text-decoration: line-through; text-decoration-color: rgba(248,113,113,.75); text-decoration-thickness: 3px; }
+.comp .ahora { color: var(--amarillo); font-weight: 650; }
+.bloque { margin-top: 56px; padding: 34px 36px; display: flex; flex-direction: column; gap: 4px; }
+.bloque .t { display: flex; justify-content: space-between; font: 700 20px/1 "JBM"; letter-spacing: .12em; color: #9CA3AF; padding: 14px 0 6px; }
+.bloque .r { font-size: 26px; }
+.grande-num { font: 800 64px/1 "Inter"; letter-spacing: -.03em; color: #fff; font-variant-numeric: tabular-nums; }
+
+/* Piezas con <body class="xl">: la interfaz recreada, más grande, para leerse en el teléfono. */
+.xl .ui .cab { font-size: 38px; }
+.xl .ui .sub { font-size: 28px; }
+.xl .r, .xl .bloque .r { font-size: 32px; padding: 24px 0; }
+.xl .lista-grande .r { font-size: 34px; padding: 30px 0; }
+.xl .ui .patente { font-size: 26px; padding: 8px 12px; }
+.xl .estado { font-size: 24px; padding: 10px 16px; }
+.xl .check { width: 48px; height: 48px; border-radius: 11px; }
+.xl .check.on::after { left: 14px; top: 9px; width: 12px; height: 21px; border-width: 0 5px 5px 0; }
+.xl .chip { font-size: 20px; padding: 9px 11px; }
+.xl .hora { font-size: 32px; width: 120px; }
+.xl .dias, .xl .dia { font-size: 26px !important; }
+.xl .comp > div { font-size: 31px; padding: 30px 26px; }
+.xl .comp .h { font-size: 21px; padding: 30px 26px 22px; }
+.xl .gana b { font-size: 60px; }
+.xl .gana span { font-size: 36px; }
+.xl .lista-gana { gap: 46px; margin-top: 80px; }
+.xl .gana i { width: 70px; height: 70px; }
+.xl .gana i::after { left: 25px; top: 13px; width: 15px; height: 30px; border-width: 0 7px 7px 0; }
+.xl .grande-num { font-size: 92px; }
+.xl .bajada { font-size: 40px; margin-top: 40px; }
+.xl .pildora { font-size: 38px; padding: 22px 36px 22px 30px; }
+.xl .pildora::before { width: 16px; height: 16px; }
+.xl .burbuja { font-size: 44px; }

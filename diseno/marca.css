@@ -95,3 +95,45 @@ body { background: #000; }
 
 /* El logo oficial (diseno/logo/svg), en lugar del provisorio de la versión 1. */
 .logo { height: 64px; width: auto; align-self: flex-start; }
+
+/* ---------- Componentes de las piezas (lote del 20 oct en adelante) ---------- */
+
+.desliza { position: absolute; right: 80px; bottom: 64px; font: 600 26px/1 "JBM"; letter-spacing: .04em; color: var(--suave); }
+.demo { position: absolute; right: 80px; bottom: 64px; font: 500 18px/1 "JBM"; letter-spacing: .08em; text-transform: uppercase; color: var(--suave); opacity: .8; }
+
+.llamado { display: inline-flex; align-items: center; gap: 18px; align-self: flex-start; border-radius: 22px; padding: 30px 42px;
+  font: 800 42px/1 "Inter"; letter-spacing: -.02em; background: var(--amarillo); color: var(--grafito); }
+.claro .llamado { background: var(--indigo); color: #fff; }
+.pie-cierre { margin-top: auto; margin-bottom: 140px; display: flex; flex-direction: column; gap: 26px; }
+
+.burbujas { display: flex; flex-direction: column; gap: 18px; margin-top: 54px; }
+.burbuja { max-width: 800px; padding: 26px 36px 30px; border-radius: 34px; font: 500 38px/1.25 "Inter"; letter-spacing: -.01em; }
+.burbuja small { display: block; font: 700 18px/1 "JBM"; letter-spacing: .14em; text-transform: uppercase; margin-bottom: 12px; opacity: .6; }
+.burbuja.ellos { align-self: flex-start; background: #fff; color: var(--grafito); border-bottom-left-radius: 8px; box-shadow: 0 14px 30px -14px rgba(18,19,24,.25); }
+.burbuja.tu { align-self: flex-end; background: var(--indigo); color: #fff; border-bottom-right-radius: 8px; }
+
+.numero { font: 900 280px/.8 "Inter"; letter-spacing: -.06em; color: var(--amarillo); margin-top: 40px; }
+.casilla { position: absolute; left: 80px; bottom: 120px; display: flex; align-items: center; gap: 22px; font: 600 34px/1 "Inter"; color: var(--suave); }
+.casilla i { width: 58px; height: 58px; border: 4px solid currentColor; border-radius: 13px; opacity: .7; }
+
+/* Interfaz recreada: filas, chips, casillas, avisos, métricas. */
+.ui .cab { font: 700 30px/1.15 "Inter"; letter-spacing: -.01em; }
+.ui .sub { font: 400 22px/1.35 "Inter"; color: #9CA3AF; }
+.filas { display: flex; flex-direction: column; }
+.r { display: flex; align-items: center; gap: 18px; padding: 18px 0; border-top: 1px solid #343744; font: 500 25px/1.2 "Inter"; color: #E5E7EB; }
+.r .m { color: #9CA3AF; font-weight: 400; }
+.r .der { margin-left: auto; font-weight: 700; font-variant-numeric: tabular-nums; }
+.chip { font: 700 16px/1 "JBM"; letter-spacing: .08em; border-radius: 7px; padding: 7px 9px; flex: none; }
+.chip.mo { background: rgba(79,70,229,.3); color: #C7C4FF; }
+.chip.rep { background: rgba(255,197,61,.18); color: #FFC53D; }
+.check { width: 36px; height: 36px; border-radius: 9px; border: 2px solid #4b5563; flex: none; position: relative; }
+.check.on { background: var(--indigo); border-color: var(--indigo); }
+.check.on::after { content: ""; position: absolute; left: 10px; top: 7px; width: 9px; height: 15px; border-right: 4px solid #fff; border-bottom: 4px solid #fff; transform: rotate(40deg); }
+.aviso-ui { display: inline-flex; align-items: center; gap: 18px; background: #2A2C36; border: 1px solid #3a3d4b; border-radius: 20px; padding: 24px 30px;
+  font: 600 30px/1.2 "Inter"; color: #fff; position: relative; }
+.aviso-ui .punto { position: absolute; right: -14px; bottom: -14px; width: 42px; height: 42px; border-radius: 50%; background: #F59E0B; color: #111318;
+  font: 800 24px/42px "Inter"; text-align: center; }
+.metricas { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+.metrica { background: #1E2029; border: 1px solid #343744; border-radius: 22px; padding: 28px 30px; }
+.metrica small { font: 600 18px/1 "Inter"; letter-spacing: .12em; color: #9CA3AF; text-transform: uppercase; }
+.metrica b { display: block; margin-top: 16px; font: 800 54px/1 "Inter"; letter-spacing: -.035em; color: #fff; font-variant-numeric: tabular-nums; }

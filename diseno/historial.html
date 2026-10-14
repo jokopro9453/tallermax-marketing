@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>Historial por patente</title>
+<link rel="stylesheet" href="marca.css">
+<style>
+  .ficha { position: absolute; left: 80px; right: 80px; top: 640px; padding: 34px 36px 20px; }
+  .ficha header { display: flex; align-items: center; gap: 22px; margin-bottom: 20px; }
+  .ficha .r { font-size: 26px; }
+  .ficha .fecha { font: 600 22px/1 "JBM"; color: #9CA3AF; width: 150px; flex: none; }
+  .ficha .km { font: 500 22px/1 "JBM"; color: #9CA3AF; width: 150px; flex: none; text-align: right; }
+  .en-curso { background: rgba(79,70,229,.16); margin: 0 -36px; padding-left: 36px !important; padding-right: 36px !important; }
+  .en-curso .fecha { color: #C7C4FF; }
+
+  .tachadas { margin-top: auto; margin-bottom: 170px; display: flex; flex-direction: column; gap: 34px; align-items: flex-start; }
+  .tachada { font: 800 92px/1 "Inter"; letter-spacing: -.03em; color: #6B7080; position: relative; padding: 4px 6px; }
+  .tachada::after { content: ""; position: absolute; left: -6px; right: -6px; top: 52%; height: 10px; background: var(--amarillo); border-radius: 5px; transform: rotate(-2deg); }
+
+  .buscador { margin-top: 64px; padding: 40px 40px 36px; display: flex; flex-direction: column; gap: 22px; }
+  .buscador .campo { background: #15171D; border: 1px solid #343744; border-radius: 18px; padding: 26px 28px; font: 600 40px/1 "JBM"; letter-spacing: .1em; color: #fff; }
+  .buscador .boton { font-size: 30px; padding: 28px; }
+  .resultado { margin-top: 22px; padding: 28px 36px; display: flex; align-items: center; gap: 24px; }
+  .resultado .der { margin-left: auto; text-align: right; }
+  .resultado b { display: block; font: 800 44px/1 "Inter"; color: var(--amarillo); }
+
+  .linea { margin-top: 110px; position: relative; height: 260px; }
+  .linea::before { content: ""; position: absolute; left: 20px; right: 20px; top: 40px; height: 4px; background: #343744; border-radius: 2px; }
+  .hito { position: absolute; top: 24px; width: 200px; transform: translateX(-50%); display: flex; flex-direction: column; align-items: center; gap: 16px; text-align: center; }
+  .hito i { width: 36px; height: 36px; border-radius: 50%; background: #2A2C36; border: 4px solid #6B7080; }
+  .hito.ahora i { background: var(--amarillo); border-color: var(--amarillo); box-shadow: 0 0 0 10px rgba(255,197,61,.18); }
+  .hito b { font: 800 34px/1 "Inter"; letter-spacing: -.02em; font-variant-numeric: tabular-nums; }
+  .hito span { font: 400 23px/1.25 "Inter"; color: #A3A7B4; }
+  .hito small { font: 600 18px/1 "JBM"; color: #6B7080; letter-spacing: .06em; }
+
+  .oscuro .burbuja.ellos { background: #2A2C36; color: #fff; }
+</style>
+</head>
+<body>
+
+<!-- 1 · Portada -->
+<section class="slide oscuro">
+  <img class="logo" src="logo/svg/tallermax-horizontal-sobre-oscuro.svg" alt="tallermax">
+  <div class="etiqueta">Historial por patente</div>
+  <h1 class="titular sm">Vuelve un auto. <em>Ya sabes todo lo que le hiciste.</em></h1>
+  <div class="ui ficha">
+    <header><span class="patente">KL·TR·42</span><div><div class="cab">Toyota Hilux 2019</div><div class="sub">Juan Pérez · 4 visitas</div></div></header>
+    <div class="filas">
+      <div class="r en-curso"><span class="fecha">HOY</span>Frenos y alineación<span class="km">84.310 km</span><span class="estado" style="margin-left:auto">En el taller</span></div>
+      <div class="r"><span class="fecha">12-08-26</span>Aceite y filtro<span class="km">81.950 km</span><span class="der">$48.900</span></div>
+      <div class="r"><span class="fecha">03-04-26</span>Pastillas de freno<span class="km">76.200 km</span><span class="der">$64.000</span></div>
+      <div class="r"><span class="fecha">18-11-25</span>Alineación y balanceo<span class="km">70.120 km</span><span class="der">$25.000</span></div>
+    </div>
+  </div>
+  <div class="desliza" style="bottom:40px">Desliza →</div>
+</section>
+
+<!-- 2 · El dolor -->
+<section class="slide oscuro">
+  <div class="etiqueta" style="margin-top:0">El problema</div>
+  <h2 class="titular sm">«¿Qué le cambiamos <em>la otra vez?»</em></h2>
+  <p class="bajada">Si la respuesta está en un cuaderno, en el WhatsApp o en la memoria de alguien, no está.</p>
+  <div class="tachadas">
+    <span class="tachada">El cuaderno</span>
+    <span class="tachada">El WhatsApp</span>
+    <span class="tachada">La memoria</span>
+  </div>
+  <div class="desliza">Desliza →</div>
+</section>
+
+<!-- 3 · La solución -->
+<section class="slide oscuro">
+  <div class="etiqueta" style="margin-top:0">En Tallermax</div>
+  <h2 class="titular sm">Escribes la patente <em>y aparece todo.</em></h2>
+  <div class="ui buscador">
+    <div class="cab">Buscar vehículo por patente</div>
+    <div class="campo">KLTR42</div>
+    <span class="boton primario">Buscar este auto</span>
+  </div>
+  <div class="ui resultado">
+    <span class="patente">KL·TR·42</span>
+    <div><div class="cab">Toyota Hilux 2019</div><div class="sub">Juan Pérez</div></div>
+    <div class="der"><b>4</b><span class="sub">visitas</span></div>
+  </div>
+  <div class="pildoras" style="margin-top:56px">
+    <span class="pildora">Quién es el dueño</span>
+    <span class="pildora">Cada orden y lo que se cobró</span>
+    <span class="pildora">Si está en el taller ahora</span>
+  </div>
+</section>
+
+<!-- 4 · Kilometraje -->
+<section class="slide oscuro">
+  <div class="etiqueta" style="margin-top:0">Cada visita, con su kilometraje</div>
+  <h2 class="titular sm">Sabes qué le toca <em>antes de que pregunte.</em></h2>
+  <div class="linea">
+    <div class="hito" style="left:12%"><i></i><b>70.120</b><span>Alineación</span><small>NOV 25</small></div>
+    <div class="hito" style="left:37%"><i></i><b>76.200</b><span>Pastillas</span><small>ABR 26</small></div>
+    <div class="hito" style="left:62%"><i></i><b>81.950</b><span>Aceite</span><small>AGO 26</small></div>
+    <div class="hito ahora" style="left:87%"><i></i><b>84.310</b><span>Hoy</span><small>OCT 26</small></div>
+  </div>
+  <p class="bajada">Ves cuándo fue la última mantención y le avisas al cliente lo que viene. Eso es vender sin presionar.</p>
+</section>
+
+<!-- 5 · Lo que siente el cliente -->
+<section class="slide oscuro">
+  <div class="etiqueta" style="margin-top:0">Lo que siente el cliente</div>
+  <h2 class="titular sm">Que lo <em>conoces.</em></h2>
+  <div class="burbujas">
+    <p class="burbuja tu"><small>Tú</small>Don Juan, las pastillas se las cambiamos a los 76.200. Le reviso los discos.</p>
+    <p class="burbuja ellos"><small>Cliente</small>¡Qué buena memoria!</p>
+    <p class="burbuja tu"><small>Tú</small>No es memoria: está todo anotado.</p>
+  </div>
+</section>
+
+<!-- 6 · Cierre -->
+<section class="slide indigo">
+  <img class="logo" src="logo/svg/tallermax-horizontal-blanco.svg" alt="tallermax">
+  <h2 class="titular" style="margin-top:110px">Tu taller recuerda <em>cada auto.</em></h2>
+  <p class="bajada">Historial por patente, con fechas, kilometraje y lo que se cobró. En el teléfono y en el computador.</p>
+  <div class="pie-cierre">
+    <div class="llamado">Escríbenos → demo de 10 minutos</div>
+    <div class="web" style="position:static">tallermax.website</div>
+  </div>
+</section>
+
+</body>
+</html>

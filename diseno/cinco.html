@@ -3,90 +3,70 @@
 <head>
 <meta charset="utf-8">
 <title>5 señales de que tu taller necesita ordenarse</title>
-<link rel="stylesheet" href="base.css">
+<link rel="stylesheet" href="marca.css">
 <style>
-  .gran-cinco { font: 900 760px/.78 "Archivo"; font-stretch: 75%; color: var(--ambar); letter-spacing: -.04em; margin: -20px 0 -10px -16px; }
-  .portada-titulo { font: 800 100px/1 "Archivo"; font-stretch: 85%; letter-spacing: -.015em; text-wrap: balance; }
-  .guarda { font: 600 30px/1 "JBM"; color: var(--suave); letter-spacing: .06em; text-transform: uppercase; display: flex; align-items: center; gap: 16px; }
-  .numero { font: 900 300px/.8 "Archivo"; font-stretch: 75%; color: var(--ambar); letter-spacing: -.03em; }
-  .senal { font: 800 98px/1.02 "Archivo"; font-stretch: 85%; letter-spacing: -.015em; text-wrap: balance; }
-  .te-pasa { display: flex; align-items: center; gap: 24px; font: 500 38px/1 "Inter"; color: var(--suave); }
-  .te-pasa i { width: 60px; height: 60px; border: 5px solid var(--borde); border-radius: 12px; display: block; }
-  .regla { height: 4px; background: var(--borde); border-radius: 2px; }
+  .gran-cinco { font: 900 560px/.74 "Inter"; letter-spacing: -.08em; color: var(--amarillo); margin: 40px 0 0 -20px; }
+  .numero { font-size: 420px; margin-top: 20px; }
+  .senal { margin-top: 30px; font-size: 112px; }
+  .costo { margin-top: 44px; font-size: 38px !important; padding: 24px 32px !important; display: inline-flex; align-self: flex-start; align-items: center; gap: 16px; background: rgba(255,197,61,.12);
+    border: 2px solid rgba(255,197,61,.35); color: var(--amarillo); border-radius: 18px; padding: 18px 26px; font: 600 30px/1.3 "Inter"; max-width: 900px; }
 </style>
 </head>
 <body>
 
 <!-- 1 · Portada -->
-<section class="slide">
-  <div class="marca"><i></i>Tallermax</div>
+<section class="slide oscuro">
+  <img class="logo" src="logo/svg/tallermax-horizontal-sobre-oscuro.svg" alt="tallermax">
   <div class="gran-cinco">5</div>
-  <h1 class="portada-titulo">señales de que tu taller necesita ordenarse</h1>
-  <div class="empuje"></div>
-  <p class="guarda"><svg width="32" height="42" viewBox="0 0 32 42" aria-hidden="true"><path d="M3 3 H29 V39 L16 29 L3 39 Z" fill="none" stroke="#9ca3af" stroke-width="4" stroke-linejoin="round"/></svg>Guárdalo y cuenta cuántas te pasan</p>
-  <div class="pie"><span class="sigue">Desliza →</span><span>1/7</span></div>
+  <h1 class="titular sm">señales de que tu taller <em>necesita ordenarse.</em></h1>
+  <div class="desliza">Guárdalo y cuenta cuántas te pasan →</div>
 </section>
 
 <!-- 2 a 6 · Las señales -->
-<section class="slide">
+<section class="slide oscuro">
   <div class="numero">1</div>
-  <h2 class="senal">Buscas una orden antigua y no aparece.</h2>
-  <p class="cuerpo">El cuaderno se mojó, se llenó o alguien se lo llevó.</p>
-  <div class="empuje"></div>
-  <div class="regla"></div>
-  <p class="te-pasa"><i></i>¿Te pasa?</p>
-  <div class="pie"><span class="sigue">Desliza →</span><span>2/7</span></div>
+  <h2 class="titular sm senal">Buscas una orden antigua <em>y no aparece.</em></h2>
+  <div class="costo">Y no sabes qué le hiciste a ese auto ni cuánto le cobraste.</div>
+  <div class="casilla"><i></i>¿Te pasa?</div>
 </section>
 
-<section class="slide">
+<section class="slide oscuro">
   <div class="numero">2</div>
-  <h2 class="senal">No sabes cuánto facturaste este mes sin sacar la calculadora.</h2>
-  <p class="cuerpo">Y la cuenta nunca da igual dos veces.</p>
-  <div class="empuje"></div>
-  <div class="regla"></div>
-  <p class="te-pasa"><i></i>¿Te pasa?</p>
-  <div class="pie"><span class="sigue">Desliza →</span><span>3/7</span></div>
+  <h2 class="titular sm senal">No sabes cuánto facturaste <em>este mes.</em></h2>
+  <div class="costo">Trabajas lleno y no sabes si el taller da plata.</div>
+  <div class="casilla"><i></i>¿Te pasa?</div>
 </section>
 
-<section class="slide">
+<section class="slide oscuro">
   <div class="numero">3</div>
-  <h2 class="senal">Un repuesto «se perdió» y nadie sabe en qué auto quedó.</h2>
-  <p class="cuerpo">Lo pagaste tú, pero no se lo cobraste a nadie.</p>
-  <div class="empuje"></div>
-  <div class="regla"></div>
-  <p class="te-pasa"><i></i>¿Te pasa?</p>
-  <div class="pie"><span class="sigue">Desliza →</span><span>4/7</span></div>
+  <h2 class="titular sm senal">Un repuesto «se perdió» <em>y nadie sabe dónde.</em></h2>
+  <div class="costo">Lo pagaste tú y no se lo cobraste a nadie.</div>
+  <div class="casilla"><i></i>¿Te pasa?</div>
 </section>
 
-<section class="slide">
+<section class="slide oscuro">
   <div class="numero">4</div>
-  <h2 class="senal">Sólo tú sabes cómo va cada trabajo.</h2>
-  <p class="cuerpo">Si faltas un día, el taller se detiene a llamarte.</p>
-  <div class="empuje"></div>
-  <div class="regla"></div>
-  <p class="te-pasa"><i></i>¿Te pasa?</p>
-  <div class="pie"><span class="sigue">Desliza →</span><span>5/7</span></div>
+  <h2 class="titular sm senal">Sólo tú sabes <em>cómo va cada trabajo.</em></h2>
+  <div class="costo">Si faltas un día, el taller se detiene a llamarte.</div>
+  <div class="casilla"><i></i>¿Te pasa?</div>
 </section>
 
-<section class="slide">
+<section class="slide oscuro">
   <div class="numero">5</div>
-  <h2 class="senal">Haces las boletas a mano y a veces el total no cuadra.</h2>
-  <p class="cuerpo">Cada error de suma es plata que pierdes o una discusión con el cliente.</p>
-  <div class="empuje"></div>
-  <div class="regla"></div>
-  <p class="te-pasa"><i></i>¿Te pasa?</p>
-  <div class="pie"><span class="sigue">Desliza →</span><span>6/7</span></div>
+  <h2 class="titular sm senal">El cliente duda <em>de lo que le cobras.</em></h2>
+  <div class="costo">Sin detalle de mano de obra, repuestos e IVA, cada cobro es una discusión.</div>
+  <div class="casilla"><i></i>¿Te pasa?</div>
 </section>
 
 <!-- 7 · Cierre -->
-<section class="slide">
-  <div class="marca"><i></i>Tallermax</div>
-  <h2 class="titular" style="margin-top:30px">¿Te identificas con <span class="ambar">3 o más?</span></h2>
-  <p class="cuerpo">No es falta de ganas: es que el cuaderno ya no da abasto. Tallermax junta <b>órdenes, clientes, autos por patente, repuestos y lo que facturas</b> en un solo lugar.</p>
-  <div class="empuje"></div>
-  <p class="llamado">Escríbenos → demo de 10 minutos</p>
-  <p class="web">tallermax.website</p>
-  <div class="pie"><span></span><span>7/7</span></div>
+<section class="slide indigo">
+  <img class="logo" src="logo/svg/tallermax-horizontal-blanco.svg" alt="tallermax">
+  <h2 class="titular" style="margin-top:110px">¿Te pasan <em>3 o más?</em></h2>
+  <p class="bajada">No es falta de ganas: el cuaderno ya no da abasto. Tallermax junta órdenes, historial por patente, repuestos y lo que facturas en un solo lugar.</p>
+  <div class="pie-cierre">
+    <div class="llamado">Escríbenos → demo de 10 minutos</div>
+    <div class="web" style="position:static">tallermax.website</div>
+  </div>
 </section>
 
 </body>

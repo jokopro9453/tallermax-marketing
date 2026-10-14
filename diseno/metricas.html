@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>Métricas: ¿el taller da plata?</title>
+<link rel="stylesheet" href="marca.css">
+<style>
+  .portada .metricas { position: absolute; left: 80px; right: 80px; top: 640px; }
+  .portada .metrica { background: var(--grafito); border-color: transparent; padding: 34px 34px 38px; }
+  .portada .metrica b { font-size: 68px; margin-top: 20px; }
+  .portada .metrica small { font-size: 20px; }
+
+  .reparto { margin-top: 70px; padding: 40px 40px 44px; display: flex; flex-direction: column; gap: 34px; }
+  .barra { display: flex; height: 40px; border-radius: 20px; overflow: hidden; }
+  .barra i:first-child { background: #3B82F6; }
+  .barra i:last-child { background: #F59E0B; }
+  .leyenda { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; }
+  .leyenda div { display: flex; flex-direction: column; gap: 10px; }
+  .leyenda b { font: 800 46px/1 "Inter"; letter-spacing: -.03em; color: #fff; display: flex; align-items: center; gap: 14px; }
+  .leyenda b::before { content: ""; width: 20px; height: 20px; border-radius: 50%; background: var(--c); }
+  .leyenda span { font: 400 24px/1.35 "Inter"; color: #A3A7B4; }
+  .leyenda strong { font: 600 28px/1 "Inter"; color: #E5E7EB; font-variant-numeric: tabular-nums; }
+
+  .grafico { margin-top: 64px; padding: 40px 40px 30px; }
+  .barras { display: flex; align-items: flex-end; gap: 14px; height: 400px; margin-top: 28px; }
+  .barras div { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: flex-end; gap: 12px; height: 100%; }
+  .barras i { width: 100%; background: #4F46E5; border-radius: 10px 10px 4px 4px; }
+  .barras .ahora i { background: var(--amarillo); }
+  .barras small { font: 600 17px/1 "JBM"; color: #9CA3AF; }
+  .barras .ahora small { color: var(--amarillo); }
+  .tope { display: flex; justify-content: space-between; align-items: baseline; }
+  .tope b { font: 800 40px/1 "Inter"; color: var(--amarillo); letter-spacing: -.02em; }
+
+  .permiso { margin-top: 64px; padding: 34px 36px; display: flex; flex-direction: column; gap: 6px; }
+  .permiso .r { align-items: flex-start; gap: 22px; padding: 24px 0; }
+  .permiso .r:first-of-type { border-top: 0; }
+  .permiso .quien { font: 700 28px/1.2 "Inter"; color: #fff; }
+  .permiso .rol { font: 600 18px/1 "JBM"; letter-spacing: .12em; color: #9CA3AF; margin-top: 8px; }
+  .permiso .check { margin-left: auto; margin-top: 4px; }
+  .permiso .detalle { background: #15171D; border-radius: 16px; padding: 22px 24px; font: 400 23px/1.4 "Inter"; color: #A3A7B4; margin-bottom: 10px; }
+  .permiso .detalle b { color: #fff; font-weight: 700; }
+</style>
+</head>
+<body>
+
+<!-- 1 · Portada -->
+<section class="slide indigo portada">
+  <img class="logo" src="logo/svg/tallermax-horizontal-blanco.svg" alt="tallermax">
+  <div class="etiqueta">Métricas</div>
+  <h1 class="titular sm">¿Cuánto facturó tu taller <em>este mes?</em></h1>
+  <div class="metricas">
+    <div class="metrica"><small>Facturado este mes</small><b>$4.860.000</b></div>
+    <div class="metrica"><small>Autos entregados</small><b>38</b></div>
+    <div class="metrica"><small>Media por orden</small><b>$127.894</b></div>
+    <div class="metrica"><small>Lo normal en el taller</small><b>6 horas</b></div>
+  </div>
+  <div class="demo" style="left:80px;right:auto">Datos de ejemplo</div>
+  <div class="desliza">Desliza →</div>
+</section>
+
+<!-- 2 · El dolor -->
+<section class="slide oscuro">
+  <div class="etiqueta" style="margin-top:0">El problema</div>
+  <h2 class="titular sm">Mucho trabajo <em>no siempre es buen mes.</em></h2>
+  <p class="bajada" style="margin-top:44px">Terminas el mes cansado y con el taller lleno, pero sin saber si de verdad entró plata.</p>
+  <p class="bajada">Si no lo mides, <b style="color:#fff">no sabes si el taller da plata.</b></p>
+  <div class="pildoras" style="margin-top:auto;margin-bottom:150px">
+    <span class="pildora">¿Cuánto entró este mes?</span>
+    <span class="pildora">¿Cuánto fue repuestos?</span>
+    <span class="pildora">¿Cuánto deja cada auto?</span>
+  </div>
+  <div class="desliza">Desliza →</div>
+</section>
+
+<!-- 3 · De dónde sale la plata -->
+<section class="slide oscuro">
+  <div class="etiqueta" style="margin-top:0">De dónde sale la plata</div>
+  <h2 class="titular sm">Mano de obra contra repuestos, <em>de un vistazo.</em></h2>
+  <div class="ui reparto">
+    <div class="barra"><i style="width:64%"></i><i style="width:36%"></i></div>
+    <div class="leyenda">
+      <div style="--c:#3B82F6"><b>64 %</b><strong>Mano de obra · $3.110.400</strong><span>Las horas de su gente.</span></div>
+      <div style="--c:#F59E0B"><b>36 %</b><strong>Repuestos · $1.749.600</strong><span>Las piezas que se le vendieron al cliente.</span></div>
+    </div>
+  </div>
+  <p class="bajada">Sabes qué deja más y dónde conviene ajustar precios.</p>
+  <div class="demo">Datos de ejemplo</div>
+</section>
+
+<!-- 4 · Mes a mes -->
+<section class="slide oscuro">
+  <div class="etiqueta" style="margin-top:0">Mes a mes</div>
+  <h2 class="titular sm">Sin calculadora <em>y sin cuaderno.</em></h2>
+  <div class="ui grafico">
+    <div class="tope"><span class="cab">Facturado por mes</span><b>$4,86 M</b></div>
+    <div class="barras">
+      <div><i style="height:66%"></i><small>N</small></div>
+      <div><i style="height:74%"></i><small>D</small></div>
+      <div><i style="height:60%"></i><small>E</small></div>
+      <div><i style="height:64%"></i><small>F</small></div>
+      <div><i style="height:78%"></i><small>M</small></div>
+      <div><i style="height:72%"></i><small>A</small></div>
+      <div><i style="height:80%"></i><small>M</small></div>
+      <div><i style="height:70%"></i><small>J</small></div>
+      <div><i style="height:84%"></i><small>J</small></div>
+      <div><i style="height:90%"></i><small>A</small></div>
+      <div><i style="height:86%"></i><small>S</small></div>
+      <div class="ahora"><i style="height:100%"></i><small>O</small></div>
+    </div>
+  </div>
+  <p class="bajada">Los últimos 12 meses, siempre al día. Y si lo quieres en Excel, se descarga.</p>
+  <div class="demo">Datos de ejemplo</div>
+</section>
+
+<!-- 5 · Quién las ve -->
+<section class="slide oscuro">
+  <div class="etiqueta" style="margin-top:0">Tus números son tuyos</div>
+  <h2 class="titular sm">Las cifras las ve <em>quien tú decides.</em></h2>
+  <div class="ui permiso">
+    <div class="detalle"><b>Ver las cifras del negocio</b><br>Lo facturado, las métricas y el historial de órdenes cerradas.</div>
+    <div class="r"><div><div class="quien">Tú</div><div class="rol">JEFE</div></div><i class="check on"></i></div>
+    <div class="r"><div><div class="quien">Carolina Rojas</div><div class="rol">ADMINISTRACIÓN</div></div><i class="check on"></i></div>
+    <div class="r"><div><div class="quien">Pedro Soto</div><div class="rol">MECÁNICO</div></div><i class="check"></i></div>
+  </div>
+  <p class="bajada">Un permiso por persona, con una casilla.</p>
+</section>
+
+<!-- 6 · Cierre -->
+<section class="slide indigo">
+  <img class="logo" src="logo/svg/tallermax-horizontal-blanco.svg" alt="tallermax">
+  <h2 class="titular" style="margin-top:110px">Decide con números, <em>no a ojo.</em></h2>
+  <p class="bajada">Facturado, autos entregados y lo que deja cada orden, sin hacer una sola suma.</p>
+  <div class="pie-cierre">
+    <div class="llamado">Escríbenos → demo de 10 minutos</div>
+    <div class="web" style="position:static">tallermax.website</div>
+  </div>
+</section>
+
+</body>
+</html>

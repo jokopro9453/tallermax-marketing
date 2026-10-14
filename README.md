@@ -72,3 +72,15 @@ pieza es un documento cuyo id es su carpeta (`2026-10-20-1315-slug`) con:
 **no publica si no coincide**: si alguien toca el texto, la hora o una imagen
 después de aprobar, la aprobación deja de valer sola. En Python es
 `json.dumps([...], ensure_ascii=False, separators=(",", ":"))`.
+
+## Cómo se hacen las imágenes
+
+`diseno/` tiene un HTML por pieza; cada `<section class="slide">` es una
+imagen de 1080 × 1350. `diseno/renderizar.sh archivo:id-de-pieza` las convierte
+en JPEG con el Chromium del contenedor `backend` de Tallermax (que tiene que
+estar levantado) y las deja en `piezas/<id>/`. Falla si una tipografía no carga
+o si un texto invade el pie, en vez de entregar una imagen mal hecha.
+
+Las tipografías (Archivo, Inter, JetBrains Mono, todas OFL) están en
+`diseno/fuentes/` para que las imágenes salgan iguales en cualquier máquina.
+La paleta es la de la aplicación.

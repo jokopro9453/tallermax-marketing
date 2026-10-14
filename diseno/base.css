@@ -1,0 +1,57 @@
+/* Piezas de Instagram de Tallermax. Cada <section class="slide"> es una imagen
+   de 1080 × 1350 (4:5). La paleta es la de la aplicación (frontend/src/app/
+   globals.css en el repo Tallermax): grafito, índigo y ámbar. El fondo es un
+   tablero perforado, el de las herramientas colgadas en cualquier taller. */
+
+@font-face { font-family: "Archivo"; src: url(fuentes/Archivo.ttf) format("truetype"); font-weight: 100 900; font-stretch: 62% 125%; }
+@font-face { font-family: "Inter"; src: url(fuentes/Inter.ttf) format("truetype"); font-weight: 100 900; }
+@font-face { font-family: "JBM"; src: url(fuentes/JetBrainsMono.ttf) format("truetype"); font-weight: 100 800; }
+
+:root {
+  --fondo: #1a1c23;
+  --panel: #242630;
+  --panel-alto: #2b2e3a;
+  --hueco: #15171d;
+  --borde: #374151;
+  --texto: #f3f4f6;
+  --suave: #9ca3af;
+  --tenue: #6b7280;
+  --acento: #4f46e5;
+  --acento-vivo: #a5a0f0;
+  --ambar: #f59e0b;
+  --rojo: #f87171;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { background: #000; }
+
+.slide {
+  width: 1080px; height: 1350px; position: relative; overflow: hidden;
+  background-color: var(--fondo);
+  background-image: radial-gradient(circle at center, rgba(255,255,255,.045) 0 3px, transparent 3.5px);
+  background-size: 54px 54px; background-position: 27px 27px;
+  color: var(--texto); font-family: "Inter", sans-serif;
+  padding: 92px 88px 150px; display: flex; flex-direction: column; gap: 40px;
+}
+
+.marca { display: flex; align-items: center; gap: 14px; font: 800 34px/1 "Archivo"; letter-spacing: -.01em; }
+.marca i { width: 24px; height: 24px; background: var(--acento); border-radius: 6px; display: block; }
+
+.pie { position: absolute; left: 88px; right: 88px; bottom: 70px; display: flex; justify-content: space-between; align-items: center;
+  font: 500 26px/1 "JBM"; color: var(--tenue); }
+.pie .sigue { color: var(--suave); }
+
+.paso { font: 600 28px/1 "JBM"; color: var(--acento-vivo); text-transform: uppercase; letter-spacing: .1em; }
+.titular { font-family: "Archivo"; font-weight: 800; font-stretch: 85%; font-size: 112px; line-height: .98; letter-spacing: -.015em; text-wrap: balance; }
+.titular.md { font-size: 96px; }
+.cuerpo { font: 400 44px/1.32 "Inter"; color: var(--suave); max-width: 880px; text-wrap: pretty; }
+.cuerpo b { color: var(--texto); font-weight: 600; }
+.ambar { color: var(--ambar); }
+.indigo { color: var(--acento-vivo); }
+
+.llamado { display: inline-flex; align-items: center; gap: 22px; background: var(--acento); color: #fff; border-radius: 22px;
+  padding: 34px 44px; font: 700 46px/1 "Archivo"; font-stretch: 95%; align-self: flex-start; }
+.web { font: 500 34px/1 "JBM"; color: var(--suave); }
+
+.empuje { flex: 1; }
+svg { display: block; }

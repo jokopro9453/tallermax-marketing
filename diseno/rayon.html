@@ -1,0 +1,184 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>El rayón que «ya estaba»</title>
+<link rel="stylesheet" href="base.css">
+<style>
+  .rayon-subrayado { color: var(--ambar); }
+  .auto-grande { margin: 0 0 0 -30px; }
+  .burbujas { display: flex; flex-direction: column; gap: 22px; }
+  .burbuja { max-width: 860px; padding: 30px 38px; border-radius: 34px; font: 500 42px/1.25 "Inter"; }
+  .burbuja small { display: block; font: 600 22px/1 "JBM"; letter-spacing: .1em; text-transform: uppercase; margin-bottom: 12px; opacity: .7; }
+  .cliente { background: var(--panel-alto); align-self: flex-start; border-bottom-left-radius: 8px; }
+  .taller { background: var(--acento); align-self: flex-end; border-bottom-right-radius: 8px; color: #fff; }
+  .puntos { letter-spacing: .3em; }
+  .caras { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+  .cara { background: var(--panel); border: 2px solid var(--borde); border-radius: 26px; padding: 26px 28px 24px; display: flex; flex-direction: column; gap: 18px; position: relative; }
+  .cara svg { height: 190px; width: 100%; }
+  .cara span { font: 600 26px/1 "JBM"; letter-spacing: .08em; text-transform: uppercase; color: var(--suave); }
+  .cara .ok { position: absolute; top: 22px; right: 22px; width: 50px; height: 50px; border-radius: 50%; background: var(--acento); color: #fff;
+    display: grid; place-items: center; font: 800 30px/1 "Inter"; }
+  .pantalla { background: var(--hueco); border: 2px solid var(--borde); border-radius: 32px; padding: 30px 20px 26px; }
+  .marcas { display: flex; flex-direction: column; gap: 16px; }
+  .marcas li { list-style: none; display: flex; align-items: center; gap: 20px; font: 500 36px/1.2 "Inter"; }
+  .marcas b { width: 52px; height: 52px; border-radius: 50%; border: 4px dashed var(--ambar); color: var(--ambar); display: grid; place-items: center;
+    font: 700 26px/1 "JBM"; flex: none; }
+  .correo { background: #f3f4f6; color: #111318; border-radius: 30px; padding: 44px 46px; display: flex; flex-direction: column; gap: 26px; }
+  .correo .de { font: 500 26px/1 "JBM"; color: #6b7280; }
+  .correo h3 { font: 800 50px/1.08 "Archivo"; font-stretch: 90%; }
+  .correo dl { display: grid; grid-template-columns: auto 1fr; gap: 14px 32px; font: 400 32px/1.2 "Inter"; }
+  .correo dt { color: #6b7280; }
+  .correo dd { font-weight: 600; font-variant-numeric: tabular-nums; }
+  .miniaturas { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
+  .miniaturas div { background: #242630; border-radius: 14px; aspect-ratio: 1; display: grid; place-items: center; padding: 12px; position: relative; }
+  .miniaturas svg { width: 100%; }
+  .patente { font-family: "JBM"; font-weight: 700; background: #fff; border: 3px solid #111318; border-radius: 8px; padding: 2px 12px; }
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="auto-lado" viewBox="0 0 400 160">
+      <path d="M14 112 C14 96 20 86 38 82 L104 72 C118 56 140 40 160 36 C180 32 250 32 270 36 C290 40 312 58 330 72 L368 80 C382 83 388 92 388 104 L388 112 C388 118 384 122 378 122 L346 122 A34 34 0 0 0 278 122 L130 122 A34 34 0 0 0 62 122 L22 122 C17 122 14 118 14 112 Z" fill="#2f3240" stroke="#5b6475" stroke-width="2.5"/>
+      <path d="M118 72 C130 58 146 46 162 43 L206 41 L206 72 Z" fill="#15171d"/>
+      <path d="M214 41 L266 42 C282 45 298 57 312 72 L214 72 Z" fill="#15171d"/>
+      <path d="M210 76 V118 M122 76 V118 M300 76 C303 92 303 106 300 118" stroke="#4b5563" stroke-width="2" fill="none"/>
+      <rect x="170" y="84" width="22" height="5" rx="2.5" fill="#6b7280"/>
+      <rect x="256" y="84" width="22" height="5" rx="2.5" fill="#6b7280"/>
+      <ellipse cx="25" cy="93" rx="9" ry="5" fill="#e5e7eb"/>
+      <rect x="379" y="86" width="9" height="11" rx="2" fill="#f87171"/>
+      <circle cx="96" cy="122" r="28" fill="#0e0f13" stroke="#4b5563" stroke-width="3"/>
+      <circle cx="96" cy="122" r="11" fill="#3a3f4d"/>
+      <circle cx="312" cy="122" r="28" fill="#0e0f13" stroke="#4b5563" stroke-width="3"/>
+      <circle cx="312" cy="122" r="11" fill="#3a3f4d"/>
+    </symbol>
+    <symbol id="auto-frente" viewBox="0 0 200 140">
+      <path d="M18 104 L22 74 C24 64 32 59 44 57 L60 32 C64 26 70 24 78 24 L122 24 C130 24 136 26 140 32 L156 57 C168 59 176 64 178 74 L182 104 C182 110 178 114 172 114 L28 114 C22 114 18 110 18 104 Z" fill="#2f3240" stroke="#5b6475" stroke-width="2.5"/>
+      <path d="M68 36 L132 36 L146 56 L54 56 Z" fill="#15171d"/>
+      <ellipse cx="44" cy="78" rx="14" ry="8" fill="#e5e7eb"/>
+      <ellipse cx="156" cy="78" rx="14" ry="8" fill="#e5e7eb"/>
+      <rect x="76" y="70" width="48" height="16" rx="4" fill="#15171d"/>
+      <rect x="82" y="94" width="36" height="11" rx="2" fill="#f3f4f6"/>
+      <ellipse cx="30" cy="60" rx="9" ry="5" fill="#2f3240" stroke="#5b6475" stroke-width="2"/>
+      <ellipse cx="170" cy="60" rx="9" ry="5" fill="#2f3240" stroke="#5b6475" stroke-width="2"/>
+      <rect x="28" y="112" width="24" height="18" rx="4" fill="#0e0f13"/>
+      <rect x="148" y="112" width="24" height="18" rx="4" fill="#0e0f13"/>
+    </symbol>
+    <symbol id="auto-atras" viewBox="0 0 200 140">
+      <path d="M18 104 L22 74 C24 64 32 59 44 57 L60 32 C64 26 70 24 78 24 L122 24 C130 24 136 26 140 32 L156 57 C168 59 176 64 178 74 L182 104 C182 110 178 114 172 114 L28 114 C22 114 18 110 18 104 Z" fill="#2f3240" stroke="#5b6475" stroke-width="2.5"/>
+      <path d="M72 36 L128 36 L140 54 L60 54 Z" fill="#15171d"/>
+      <rect x="28" y="70" width="30" height="13" rx="3" fill="#f87171"/>
+      <rect x="142" y="70" width="30" height="13" rx="3" fill="#f87171"/>
+      <rect x="82" y="80" width="36" height="11" rx="2" fill="#f3f4f6"/>
+      <path d="M30 100 H170" stroke="#4b5563" stroke-width="2"/>
+      <rect x="28" y="112" width="24" height="18" rx="4" fill="#0e0f13"/>
+      <rect x="148" y="112" width="24" height="18" rx="4" fill="#0e0f13"/>
+    </symbol>
+  </defs>
+</svg>
+
+<!-- 1 · Portada -->
+<section class="slide">
+  <div class="marca"><i></i>Tallermax</div>
+  <h1 class="titular" style="font-size:124px;margin-top:40px">«Ese <span class="rayon-subrayado">rayón</span> no estaba cuando lo dejé»</h1>
+  <div class="empuje"></div>
+  <svg class="auto-grande" viewBox="0 0 400 160" width="1000">
+    <use href="#auto-lado"/>
+    <path d="M226 92 L236 95 L243 93 L251 97 L259 95 L268 99" stroke="#e5e7eb" stroke-width="2" fill="none" stroke-linecap="round"/>
+    <path d="M230 98 L241 99 L249 101" stroke="#cbd5e1" stroke-width="1.2" fill="none" stroke-linecap="round" opacity=".7"/>
+    <circle cx="247" cy="96" r="25" fill="none" stroke="#f59e0b" stroke-width="3" stroke-dasharray="7 5"/>
+  </svg>
+  <div class="pie"><span class="sigue">Desliza →</span><span>1/6</span></div>
+</section>
+
+<!-- 2 · La discusión -->
+<section class="slide">
+  <p class="paso">¿Te suena?</p>
+  <h2 class="titular md">Lo escuchas una vez al mes.</h2>
+  <div class="burbujas">
+    <p class="burbuja cliente"><small>Cliente</small>Ese rayón no estaba cuando lo dejé.</p>
+    <p class="burbuja taller"><small>Tú</small>Estaba, se lo aseguro.</p>
+    <p class="burbuja cliente"><small>Cliente</small>¿Y cómo lo demuestra?</p>
+    <p class="burbuja taller"><small>Tú</small><span class="puntos">…</span></p>
+  </div>
+  <p class="cuerpo">Sin pruebas, es <b>tu palabra contra la suya</b>.</p>
+  <div class="pie"><span class="sigue">Desliza →</span><span>2/6</span></div>
+</section>
+
+<!-- 3 · Las cuatro caras -->
+<section class="slide">
+  <p class="paso">Paso 1 · Al recibir el auto</p>
+  <h2 class="titular md">Foto a las cuatro caras, desde el teléfono.</h2>
+  <div class="caras">
+    <div class="cara"><svg viewBox="0 0 200 140"><use href="#auto-frente"/></svg><span>Frente</span><i class="ok">✓</i></div>
+    <div class="cara"><svg viewBox="0 0 200 140"><use href="#auto-atras"/></svg><span>Atrás</span><i class="ok">✓</i></div>
+    <div class="cara"><svg viewBox="0 0 400 160"><use href="#auto-lado"/></svg><span>Izquierda</span><i class="ok">✓</i></div>
+    <div class="cara"><svg viewBox="0 0 400 160" style="transform:scaleX(-1)"><use href="#auto-lado"/></svg><span>Derecha</span><i class="ok">✓</i></div>
+  </div>
+  <div class="pie"><span class="sigue">Desliza →</span><span>3/6</span></div>
+</section>
+
+<!-- 4 · Marcar daños -->
+<section class="slide">
+  <p class="paso">Paso 2</p>
+  <h2 class="titular md">Marcas los daños con el dedo, sobre la misma foto.</h2>
+  <div class="pantalla">
+    <svg viewBox="-6 0 416 160" width="100%">
+      <use href="#auto-lado"/>
+      <path d="M226 92 L236 95 L243 93 L251 97 L259 95 L268 99" stroke="#e5e7eb" stroke-width="2" fill="none" stroke-linecap="round"/>
+      <circle cx="247" cy="96" r="22" fill="none" stroke="#f59e0b" stroke-width="3" stroke-dasharray="7 5"/>
+      <text x="247" y="66" text-anchor="middle" font-family="JBM" font-weight="700" font-size="13" fill="#f59e0b">1</text>
+      <path d="M357 112 Q364 107 371 113" stroke="#9ca3af" stroke-width="2" fill="none"/>
+      <circle cx="364" cy="112" r="14" fill="none" stroke="#f59e0b" stroke-width="3" stroke-dasharray="6 4"/>
+      <text x="338" y="100" text-anchor="middle" font-family="JBM" font-weight="700" font-size="13" fill="#f59e0b">2</text>
+      <circle cx="364" cy="112" r="7" fill="#f59e0b" opacity=".35"/>
+      <circle cx="364" cy="112" r="23" fill="none" stroke="#f59e0b" stroke-width="1.5" opacity=".35"/>
+    </svg>
+  </div>
+  <ul class="marcas">
+    <li><b>1</b>Rayón en la puerta trasera</li>
+    <li><b>2</b>Abolladura en el parachoques</li>
+  </ul>
+  <div class="pie"><span class="sigue">Desliza →</span><span>4/6</span></div>
+</section>
+
+<!-- 5 · La constancia -->
+<section class="slide">
+  <p class="paso">Paso 3</p>
+  <h2 class="titular md">La constancia le llega al cliente por correo.</h2>
+  <div class="correo">
+    <p class="de">De: tu taller · 09:42</p>
+    <h3>Constancia de ingreso de su vehículo</h3>
+    <dl>
+      <dt>Patente</dt><dd><span class="patente">KL·TR·42</span></dd>
+      <dt>Ingreso</dt><dd>20 oct 2026 · 09:42</dd>
+      <dt>Kilometraje</dt><dd>84.310 km</dd>
+      <dt>Daños marcados</dt><dd>2</dd>
+    </dl>
+    <div class="miniaturas">
+      <div><svg viewBox="0 0 200 140"><use href="#auto-frente"/></svg></div>
+      <div><svg viewBox="0 0 200 140"><use href="#auto-atras"/>
+        <circle cx="140" cy="100" r="17" fill="none" stroke="#f59e0b" stroke-width="5" stroke-dasharray="8 5"/></svg></div>
+      <div><svg viewBox="0 0 400 160"><use href="#auto-lado"/>
+        <circle cx="247" cy="96" r="30" fill="none" stroke="#f59e0b" stroke-width="8" stroke-dasharray="14 9"/></svg></div>
+      <div><svg viewBox="0 0 400 160" style="transform:scaleX(-1)"><use href="#auto-lado"/></svg></div>
+    </div>
+  </div>
+  <div class="pie"><span class="sigue">Desliza →</span><span>5/6</span></div>
+</section>
+
+<!-- 6 · Cierre -->
+<section class="slide">
+  <div class="marca"><i></i>Tallermax</div>
+  <h2 class="titular" style="margin-top:30px">La próxima vez que reclame, está la foto. <span class="ambar">Con fecha y hora.</span></h2>
+  <p class="cuerpo">Tallermax registra el ingreso, las órdenes y la boleta de cada auto, <b>buscando por patente</b>.</p>
+  <div class="empuje"></div>
+  <p class="llamado">Escríbenos → demo de 10 minutos</p>
+  <p class="web">tallermax.website</p>
+  <div class="pie"><span></span><span>6/6</span></div>
+</section>
+
+</body>
+</html>

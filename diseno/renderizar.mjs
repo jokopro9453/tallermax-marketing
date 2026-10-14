@@ -33,8 +33,11 @@ try {
 
     // Si una tipografía no cargó, Chromium usa otra sin decir nada y la pieza
     // sale con la letra equivocada. Mejor fallar.
-    const faltan = await pagina.evaluate(() =>
-      ['800 100px Archivo', '400 40px Inter', '500 26px JBM'].filter((f) => !document.fonts.check(f)));
+    const faltan = await pagina.evaluate(async () => {
+      const caras = [...document.fonts];
+      await Promise.allSettled(caras.map((f) => f.load()));
+      return caras.filter((f) => f.status !== 'loaded').map((f) => `tipografía ${f.family}`);
+    });
     if (faltan.length || errores.length) {
       throw new Error(`No cargó: ${[...faltan, ...errores].join(', ')}`);
     }

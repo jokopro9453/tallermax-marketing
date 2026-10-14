@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>Logo Tallermax · conceptos</title>
+<style>
+  @font-face { font-family: "Inter"; src: url(../fuentes/Inter.ttf); font-weight: 100 900; }
+  @font-face { font-family: "JBM"; src: url(../fuentes/JetBrainsMono.ttf); font-weight: 100 800; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: #ECEDF1; font-family: "Inter", sans-serif; color: #121318; }
+  .hoja { width: 1800px; padding: 70px; display: grid; gap: 34px; }
+  h1 { font: 800 44px/1 "Inter"; letter-spacing: -.03em; }
+  h1 span { color: #6B7080; font-weight: 500; }
+  .fila { display: grid; grid-template-columns: 220px 1fr 1fr 300px; gap: 24px; align-items: stretch; }
+  .nombre { display: flex; flex-direction: column; justify-content: center; gap: 10px; }
+  .nombre b { font: 800 30px/1.1 "Inter"; letter-spacing: -.02em; }
+  .nombre small { font: 400 20px/1.35 "Inter"; color: #4A4F5C; }
+  .nombre i { font: 700 15px/1 "JBM"; letter-spacing: .12em; color: #4F46E5; font-style: normal; }
+  .caja { border-radius: 22px; display: grid; place-items: center; height: 220px; }
+  .clara { background: #fff; }
+  .oscura { background: #121318; }
+  .caja img { height: 84px; }
+  .chicos { background: #fff; border-radius: 22px; display: flex; align-items: flex-end; justify-content: center; gap: 30px; padding-bottom: 62px; }
+  .chicos img { display: block; }
+  .chicos div { display: flex; flex-direction: column; align-items: center; gap: 10px; font: 500 14px/1 "JBM"; color: #6B7080; }
+  .rec { outline: 4px solid #4F46E5; outline-offset: 10px; border-radius: 26px; }
+</style>
+</head>
+<body>
+<section class="hoja">
+  <h1>Logo Tallermax <span>· tres conceptos, el primero recomendado</span></h1>
+
+  <div class="fila">
+    <div class="nombre"><i>RECOMENDADO</i><b>A · La T en la tuerca</b><small>La inicial y el objeto más reconocible del taller, en una sola forma.</small></div>
+    <div class="caja clara rec"><img src="svg/tallermax-horizontal.svg" alt=""></div>
+    <div class="caja oscura"><img src="svg/tallermax-horizontal-sobre-oscuro.svg" alt=""></div>
+    <div class="chicos">
+      <div><img src="svg/tallermax-icono.svg" width="16" height="16" alt="">16</div>
+      <div><img src="svg/tallermax-icono.svg" width="32" height="32" alt="">32</div>
+      <div><img src="svg/tallermax-icono.svg" width="64" height="64" alt="">64</div>
+    </div>
+  </div>
+
+  <div class="fila">
+    <div class="nombre"><b>B · Tuerca con visto bueno</b><small>«Trabajo terminado». Más ilustrativo; pierde fuerza en tamaños chicos.</small></div>
+    <div class="caja clara"><img src="svg/concepto-b-horizontal.svg" alt=""></div>
+    <div class="caja oscura"><img src="svg/concepto-b-icono-oscuro.svg" alt="" style="height:84px"></div>
+    <div class="chicos">
+      <div><img src="svg/concepto-b-icono.svg" width="16" height="16" alt="">16</div>
+      <div><img src="svg/concepto-b-icono.svg" width="32" height="32" alt="">32</div>
+      <div><img src="svg/concepto-b-icono.svg" width="64" height="64" alt="">64</div>
+    </div>
+  </div>
+
+  <div class="fila">
+    <div class="nombre"><b>C · Monograma «tm»</b><small>Sobrio, de app. No dice «taller»: depende del nombre al lado.</small></div>
+    <div class="caja clara"><img src="svg/concepto-c-horizontal.svg" alt=""></div>
+    <div class="caja oscura"><img src="svg/concepto-c-icono.svg" alt="" style="height:84px"></div>
+    <div class="chicos">
+      <div><img src="svg/concepto-c-icono.svg" width="16" height="16" alt="">16</div>
+      <div><img src="svg/concepto-c-icono.svg" width="32" height="32" alt="">32</div>
+      <div><img src="svg/concepto-c-icono.svg" width="64" height="64" alt="">64</div>
+    </div>
+  </div>
+</section>
+</body>
+</html>

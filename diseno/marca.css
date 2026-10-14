@@ -92,3 +92,6 @@ body { background: #000; }
 
 .empuje { flex: 1; }
 .web { position: absolute; left: 80px; bottom: 64px; font: 500 28px/1 "JBM"; color: var(--suave); }
+
+/* El logo oficial (diseno/logo/svg), en lugar del provisorio de la versión 1. */
+.logo { height: 64px; width: auto; align-self: flex-start; }

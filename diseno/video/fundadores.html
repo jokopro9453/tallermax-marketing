@@ -1,0 +1,274 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>Reel · Talleres fundadores</title>
+<style>
+/* Reel de 1080 × 1920. No usa animaciones CSS: `render(t)` pone cada elemento
+   en su estado del segundo t, y el renderizador fotografía cuadro a cuadro.
+   Zona segura de Reels: nada importante arriba de y=260 ni abajo de y=1500,
+   ni en la franja derecha (botones de la app). */
+@font-face { font-family: "Inter"; src: url(../fuentes/Inter.ttf); font-weight: 100 900; }
+@font-face { font-family: "JBM"; src: url(../fuentes/JetBrainsMono.ttf); font-weight: 100 800; }
+@font-face { font-family: "Archivo"; src: url(../fuentes/Archivo.ttf); font-weight: 100 900; font-stretch: 62% 125%; }
+:root { --indigo: #4F46E5; --amarillo: #FFC53D; --grafito: #121318; --concreto: #ECEDF1; }
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { width: 1080px; height: 1920px; overflow: hidden; background: var(--grafito); font-family: "Inter", sans-serif; font-variation-settings: "opsz" 32; }
+.capa { position: absolute; inset: 0; }
+#fondo-oscuro { background: radial-gradient(900px 900px at 100% 0%, rgba(79,70,229,.45), transparent 65%), var(--grafito); }
+#fondo-claro { background: radial-gradient(900px 800px at 0% 100%, rgba(79,70,229,.16), transparent 70%), var(--concreto); }
+.puntos { background-image: radial-gradient(circle, rgba(255,255,255,.06) 0 2px, transparent 2.5px); background-size: 40px 40px; }
+#fondo-claro.puntos { background-image: radial-gradient(circle, rgba(18,19,24,.08) 0 2px, transparent 2.5px), radial-gradient(900px 800px at 0% 100%, rgba(79,70,229,.16), transparent 70%); background-size: 40px 40px, auto; background-color: var(--concreto); }
+
+#titulo { position: absolute; left: 80px; right: 150px; top: 300px; font: 800 78px/1.06 "Inter"; letter-spacing: -.04em; color: #F4F4F6; text-wrap: balance; }
+#titulo.oscuro-txt { color: #121318; }
+#titulo em { font-style: normal; color: var(--amarillo); }
+#titulo.oscuro-txt em { color: var(--indigo); }
+#titulo .cursor { display: inline-block; width: 6px; height: .9em; background: currentColor; margin-left: 6px; vertical-align: -0.08em; }
+
+/* Teléfono con mensajes */
+#tel { position: absolute; left: 190px; top: 640px; width: 700px; height: 980px; border-radius: 70px; border: 4px solid #2E303B;
+  background: #17181F; box-shadow: 0 60px 120px -40px rgba(0,0,0,.8); padding: 90px 40px 40px; overflow: hidden; }
+#tel .barra { display: flex; justify-content: space-between; font: 600 26px/1 "Inter"; color: #9CA3AF; margin-bottom: 30px; }
+#tel .muesca { position: absolute; top: 26px; left: 50%; width: 180px; height: 34px; margin-left: -90px; background: #0B0C10; border-radius: 20px; }
+.msj { background: #23252F; border: 2px solid #2E303B; border-radius: 26px; padding: 22px 26px; margin-bottom: 20px; }
+.msj.urg { border-color: rgba(255,197,61,.6); background: rgba(255,197,61,.07); }
+.msj small { display: block; font: 600 20px/1 "Inter"; color: #8B90A0; margin-bottom: 10px; }
+.msj p { font: 500 32px/1.25 "Inter"; color: #F4F4F6; }
+#globo { position: absolute; left: 820px; top: 600px; width: 96px; height: 96px; border-radius: 50%; background: var(--amarillo); color: var(--grafito);
+  font: 800 48px/96px "Inter"; text-align: center; box-shadow: 0 0 0 14px rgba(255,197,61,.18); }
+
+/* Marca */
+#marca { position: absolute; left: 0; right: 0; top: 760px; display: flex; flex-direction: column; align-items: center; gap: 40px; }
+#marca svg { width: 260px; height: 260px; }
+#marca .nombre { font: 900 130px/1 "Inter"; letter-spacing: -.05em; color: #fff; }
+#marca .lema { font: 600 30px/1 "JBM"; letter-spacing: .14em; text-transform: uppercase; color: var(--amarillo); }
+
+/* App: teléfono claro con la interfaz oscura de Tallermax */
+#app { position: absolute; left: 170px; top: 620px; width: 740px; height: 1040px; border-radius: 74px; border: 14px solid #121318; background: #1A1C23;
+  box-shadow: 0 70px 120px -40px rgba(18,19,24,.55); overflow: hidden; padding: 70px 40px 40px; }
+#app .top { font: 700 30px/1 "Inter"; color: #fff; margin-bottom: 34px; display: flex; justify-content: space-between; }
+#app .top span { color: #9CA3AF; font-weight: 500; }
+.pantalla { position: absolute; left: 40px; right: 40px; top: 140px; }
+.campo { background: #15171D; border: 2px solid #374151; border-radius: 22px; padding: 26px 28px; font: 700 46px/1 "JBM"; letter-spacing: .12em; color: #fff; min-height: 104px; }
+.campo.foco { border-color: var(--indigo); box-shadow: 0 0 0 6px rgba(79,70,229,.25); }
+.etq { font: 700 26px/1 "Inter"; color: #fff; margin-bottom: 20px; }
+.btn { margin-top: 20px; background: var(--indigo); color: #fff; border-radius: 22px; padding: 30px; text-align: center; font: 700 32px/1 "Inter"; position: relative; overflow: hidden; }
+.btn.claro { background: #F3F4F6; color: #111318; }
+.ficha { margin-top: 30px; background: #242630; border: 2px solid #374151; border-radius: 24px; padding: 26px 28px; }
+.ficha header { display: flex; align-items: center; gap: 20px; margin-bottom: 14px; }
+.patente { font: 700 26px/1 "JBM"; letter-spacing: .08em; background: #F3F4F6; color: #111318; border-radius: 8px; padding: 9px 12px; }
+.ficha b { font: 700 32px/1.1 "Inter"; color: #fff; display: block; }
+.ficha .sub { font: 400 24px/1.3 "Inter"; color: #9CA3AF; }
+.fila { display: flex; align-items: center; gap: 16px; padding: 18px 0; border-top: 2px solid #343744; font: 500 26px/1.2 "Inter"; color: #E5E7EB; }
+.fila .f { font: 600 21px/1 "JBM"; color: #9CA3AF; width: 120px; }
+.fila .d { margin-left: auto; font-weight: 700; font-variant-numeric: tabular-nums; }
+.chip { font: 700 18px/1 "JBM"; border-radius: 7px; padding: 7px 9px; }
+.chip.mo { background: rgba(79,70,229,.3); color: #C7C4FF; }
+.chip.rep { background: rgba(255,197,61,.18); color: #FFC53D; }
+.tot { display: flex; justify-content: space-between; font: 400 28px/1 "Inter"; color: #9CA3AF; padding: 12px 0; font-variant-numeric: tabular-nums; }
+.tot b { color: #F3F4F6; font-weight: 600; }
+.tot.grande { border-top: 2px solid #343744; margin-top: 10px; padding-top: 22px; font: 800 40px/1 "Inter"; color: #F3F4F6; }
+.tot.grande b { color: var(--amarillo); font-weight: 800; }
+#toque { position: absolute; width: 120px; height: 120px; border-radius: 50%; background: rgba(255,255,255,.35); pointer-events: none; }
+#aviso { position: absolute; left: 50%; top: 520px; transform: translateX(-50%); background: #121318; color: #fff; padding: 22px 34px; border-radius: 999px;
+  font: 600 30px/1 "Inter"; display: flex; gap: 14px; align-items: center; white-space: nowrap; }
+#aviso i { width: 34px; height: 34px; border-radius: 50%; background: #22C55E; display: inline-block; position: relative; }
+#aviso i::after { content: ""; position: absolute; left: 12px; top: 7px; width: 8px; height: 15px; border-right: 4px solid #fff; border-bottom: 4px solid #fff; transform: rotate(40deg); }
+
+/* Cierre */
+#cierre { position: absolute; left: 0; right: 0; top: 640px; display: flex; flex-direction: column; align-items: center; }
+#cierre .conv { font: 700 30px/1 "JBM"; letter-spacing: .3em; color: var(--amarillo); margin-bottom: 30px; }
+#cierre .grande { font: 900 156px/.95 "Archivo"; font-stretch: 70%; letter-spacing: -.01em; text-align: center; }
+#cierre .t1 { color: #fff; }
+#cierre .t2 { color: var(--amarillo); }
+#cta { position: absolute; left: 0; right: 0; top: 1150px; display: flex; flex-direction: column; align-items: center; gap: 26px; }
+#cta .boton { background: var(--amarillo); color: var(--grafito); border-radius: 28px; padding: 34px 56px; font: 900 62px/1 "Inter"; letter-spacing: -.03em; }
+#cta .boton em { font-style: normal; background: var(--grafito); color: var(--amarillo); border-radius: 14px; padding: 4px 18px; margin: 0 6px; }
+#cta .bajo { font: 500 36px/1.2 "Inter"; color: #C9CCD6; }
+#cta .cuenta { font: 600 32px/1 "JBM"; color: #8B90A0; margin-top: 10px; }
+</style>
+</head>
+<body>
+<div id="fondo-oscuro" class="capa puntos"></div>
+<div id="fondo-claro" class="capa puntos"></div>
+
+<div id="tel"><div class="muesca"></div>
+  <div class="barra"><span>Mensajes</span><span>hoy</span></div>
+  <div id="mensajes"></div>
+</div>
+<div id="globo">0</div>
+
+<div id="marca">
+  <svg viewBox="0 0 64 64"><path d="M32 6.5 L54.08 19.25 L54.08 44.75 L32 57.5 L9.92 44.75 L9.92 19.25 Z" fill="#4F46E5" stroke="#4F46E5" stroke-width="7" stroke-linejoin="round"/>
+    <path d="M21.1 20 H42.9 Q44.5 20 44.5 21.6 V25.4 Q44.5 27 42.9 27 H35.5 V43.9 Q35.5 45.5 33.9 45.5 H30.1 Q28.5 45.5 28.5 43.9 V27 H21.1 Q19.5 27 19.5 25.4 V21.6 Q19.5 20 21.1 20 Z" fill="#fff"/></svg>
+  <div class="nombre">tallermax</div>
+  <div class="lema">Software para talleres mecánicos</div>
+</div>
+
+<div id="app">
+  <div class="top">Taller de Ejemplo <span>09:42</span></div>
+  <div class="pantalla" id="p-busca">
+    <div class="etq">Buscar vehículo por patente</div>
+    <div class="campo foco" id="campo"></div>
+    <div class="btn" id="btn-buscar">Buscar este auto</div>
+    <div class="ficha" id="ficha">
+      <header><span class="patente">KL·TR·42</span><div><b>Toyota Hilux 2019</b><span class="sub">Juan Pérez · 4 visitas</span></div></header>
+      <div class="fila h"><span class="f">12-08-26</span>Aceite y filtro<span class="d">$48.900</span></div>
+      <div class="fila h"><span class="f">03-04-26</span>Pastillas de freno<span class="d">$64.000</span></div>
+      <div class="fila h"><span class="f">18-11-25</span>Alineación y balanceo<span class="d">$25.000</span></div>
+    </div>
+  </div>
+  <div class="pantalla" id="p-cobro">
+    <div class="etq">Orden · KL·TR·42</div>
+    <div class="fila c"><span class="chip mo">MO</span>Pastillas delanteras<span class="d">$35.000</span></div>
+    <div class="fila c"><span class="chip mo">MO</span>Alineación y balanceo<span class="d">$25.000</span></div>
+    <div class="fila c"><span class="chip rep">REP</span>Pastillas de freno<span class="d">$28.990</span></div>
+    <div class="fila c"><span class="chip rep">REP</span>Aceite 10W-40 · 4 L<span class="d">$31.960</span></div>
+    <div style="margin-top:18px">
+      <div class="tot">Neto <b id="neto">$120.950</b></div>
+      <div class="tot">IVA 19 % <b id="iva">$22.981</b></div>
+      <div class="tot grande">Total a pagar <b id="total">$0</b></div>
+    </div>
+    <div class="btn claro" id="btn-pdf">Comprobante PDF</div>
+  </div>
+  <div id="toque"></div>
+</div>
+<div id="aviso"><i></i>Comprobante listo con tu logo</div>
+
+<div id="cierre">
+  <div class="conv">CONVOCATORIA</div>
+  <div class="grande t1">TALLERES</div>
+  <div class="grande t2">FUNDADORES</div>
+</div>
+<div id="cta">
+  <div class="boton">Comenta <em>DEMO</em></div>
+  <div class="bajo">y te la enviamos por mensaje</div>
+  <div class="cuenta">@tallermax.cl</div>
+</div>
+
+<div id="titulo"></div>
+
+<script>
+const DURACION = 25.5;
+const $ = (id) => document.getElementById(id);
+const clamp = (x, a = 0, b = 1) => Math.min(b, Math.max(a, x));
+const prog = (t, a, b) => clamp((t - a) / (b - a));
+const sale = (x) => 1 - Math.pow(1 - x, 3);                      // ease-out
+const rebote = (x) => { const c = 1.7; return 1 + (c + 1) * Math.pow(x - 1, 3) + c * Math.pow(x - 1, 2); };
+const ver = (el, o, extra = '') => { el.style.opacity = o; el.style.transform = extra; el.style.visibility = o <= 0.001 ? 'hidden' : 'visible'; };
+const pesos = (n) => '$' + Math.round(n).toLocaleString('es-CL');
+
+// Títulos: [inicio, fin, segmentos]. Un segmento entre [ ] va resaltado.
+const TITULOS = [
+  [0.3, 2.6, '¿Cuántos autos entregas [hoy?]'],
+  [2.6, 4.9, '¿Cuánto [cobraste] esta semana?'],
+  [4.9, 7.1, '¿Qué le hiciste a la Hilux [la otra vez?]'],
+  [7.1, 9.9, 'Si la respuesta está en un [cuaderno] o en el [WhatsApp]…'],
+  [10.0, 12.9, 'Para eso hicimos [Tallermax].'],
+  [13.1, 15.9, 'Escribes la [patente]…', 'claro'],
+  [15.9, 19.5, '…y el cobro sale [con IVA y en PDF.]', 'claro'],
+  [19.8, DURACION + 1, 'Estamos eligiendo [pocos talleres.]'],
+];
+const VEL = 26; // caracteres por segundo
+
+function titulo(t) {
+  const el = $('titulo');
+  const actual = TITULOS.find(([a, b]) => t >= a && t < b);
+  if (!actual) { el.style.opacity = 0; return; }
+  const [a, b, txt, modo] = actual;
+  el.className = modo === 'claro' ? 'oscuro-txt' : '';
+  const n = Math.floor((t - a) * VEL);
+  let html = '', vistos = 0, dentro = false;
+  for (const ch of txt) {
+    if (ch === '[') { dentro = true; html += '<em>'; continue; }
+    if (ch === ']') { dentro = false; html += '</em>'; continue; }
+    if (vistos >= n) break;
+    html += ch; vistos++;
+  }
+  if (dentro) html += '</em>';
+  const escribiendo = vistos < txt.replace(/[\[\]]/g, '').length;
+  if (escribiendo || Math.floor(t * 2) % 2 === 0) html += '<span class="cursor"></span>';
+  el.innerHTML = html;
+  el.style.opacity = 1 - prog(t, b - 0.25, b);
+}
+
+const MENSAJES = [
+  [0.8, 'Cliente · Toyota Hilux', '¿Ya está listo mi auto?', false],
+  [2.0, 'Cliente · Toyota Yaris', '¿Cuánto me sale al final?', true],
+  [3.3, 'Cliente · Chevrolet Sail', 'Ese rayón no estaba cuando lo dejé', true],
+  [4.6, 'Cliente · Nissan Frontier', '¿Me manda el presupuesto?', true],
+  [5.9, 'Cliente · Toyota Hilux', 'Paso a buscarlo a las 6', false],
+];
+$('mensajes').innerHTML = MENSAJES.map(([, q, m, u]) => `<div class="msj${u ? ' urg' : ''}"><small>${q}</small><p>${m}</p></div>`).join('');
+
+function render(t) {
+  // Fondos
+  const claro = prog(t, 12.8, 13.3) * (1 - prog(t, 19.4, 19.9));
+  $('fondo-claro').style.opacity = claro;
+
+  titulo(t);
+
+  // Escena 1-2: mensajes que se acumulan
+  const tel = $('tel');
+  const telIn = sale(prog(t, 0.2, 0.9));
+  const telOut = prog(t, 9.3, 10.0);
+  const dim = prog(t, 7.2, 7.8);
+  ver(tel, telIn * (1 - telOut) * (1 - 0.7 * dim), `translateY(${(1 - telIn) * 80}px) scale(${1 - 0.04 * dim})`);
+  [...document.querySelectorAll('.msj')].forEach((el, i) => {
+    const p = sale(prog(t, MENSAJES[i][0], MENSAJES[i][0] + 0.35));
+    ver(el, p, `translateY(${(1 - p) * 60}px)`);
+  });
+  const n = MENSAJES.filter(([s]) => t >= s).length;
+  const ultimo = Math.max(0, ...MENSAJES.filter(([s]) => t >= s).map(([s]) => s));
+  const latido = 1 + 0.25 * (1 - prog(t, ultimo, ultimo + 0.3));
+  $('globo').textContent = n;
+  ver($('globo'), n ? (1 - telOut) * (1 - 0.7 * dim) : 0, `scale(${latido})`);
+
+  // Escena 3: la marca
+  const mIn = prog(t, 10.0, 10.7), mOut = prog(t, 12.6, 13.0);
+  ver($('marca'), Math.min(1, mIn * 2) * (1 - mOut), `scale(${0.7 + 0.3 * rebote(mIn)})`);
+  $('marca').querySelector('.lema').style.opacity = prog(t, 11.0, 11.5);
+
+  // Escena 4: la app
+  const aIn = sale(prog(t, 13.0, 13.6)), aOut = prog(t, 19.3, 19.8);
+  ver($('app'), aIn * (1 - aOut), `translateY(${(1 - aIn) * 120}px)`);
+  const pat = 'KLTR42';
+  $('campo').textContent = pat.slice(0, Math.floor(prog(t, 13.6, 14.4) * pat.length));
+  const busca = 1 - prog(t, 15.9, 16.2);
+  ver($('p-busca'), busca);
+  const fIn = sale(prog(t, 14.7, 15.1));
+  ver($('ficha'), fIn, `translateY(${(1 - fIn) * 40}px)`);
+  document.querySelectorAll('.fila.h').forEach((el, i) => { const p = sale(prog(t, 15.0 + i * 0.15, 15.3 + i * 0.15)); ver(el, p, `translateX(${(1 - p) * 40}px)`); });
+  ver($('p-cobro'), prog(t, 16.0, 16.3));
+  document.querySelectorAll('.fila.c').forEach((el, i) => { const p = sale(prog(t, 16.1 + i * 0.12, 16.4 + i * 0.12)); ver(el, p, `translateX(${(1 - p) * 40}px)`); });
+  $('total').textContent = pesos(143931 * sale(prog(t, 16.7, 17.6)));
+
+  // Toques: en «Buscar este auto» y en «Comprobante PDF»
+  const toque = $('toque');
+  const tq1 = prog(t, 14.45, 14.85), tq2 = prog(t, 18.0, 18.4);
+  if (tq1 > 0 && tq1 < 1) { toque.style.left = '310px'; toque.style.top = '330px'; ver(toque, 1 - tq1, `scale(${0.4 + tq1})`); }
+  else if (tq2 > 0 && tq2 < 1) { toque.style.left = '310px'; toque.style.top = '815px'; ver(toque, 1 - tq2, `scale(${0.4 + tq2})`); }
+  else ver(toque, 0);
+  const av = sale(prog(t, 18.4, 18.8)) * (1 - prog(t, 19.2, 19.5));
+  ver($('aviso'), av, `translateX(-50%) translateY(${(1 - av) * 40}px)`);
+
+  // Escena 5: talleres fundadores y llamado
+  const c1 = rebote(prog(t, 20.4, 21.0)), c2 = rebote(prog(t, 20.7, 21.3));
+  ver($('cierre'), prog(t, 20.3, 20.6), '');
+  $('cierre').querySelector('.conv').style.opacity = prog(t, 20.3, 20.7);
+  $('cierre').querySelector('.t1').style.transform = `scale(${0.6 + 0.4 * c1})`;
+  $('cierre').querySelector('.t1').style.opacity = clamp(c1 * 1.5);
+  $('cierre').querySelector('.t2').style.transform = `scale(${0.6 + 0.4 * c2})`;
+  $('cierre').querySelector('.t2').style.opacity = clamp(c2 * 1.5);
+  const cta = sale(prog(t, 21.8, 22.4));
+  const pulso = 1 + 0.035 * Math.sin(Math.max(0, t - 22.4) * 5);
+  ver($('cta'), cta, `translateY(${(1 - cta) * 60}px)`);
+  $('cta').querySelector('.boton').style.transform = `scale(${pulso})`;
+}
+window.render = render;
+window.DURACION = DURACION;
+render(0);
+</script>
+</body>
+</html>

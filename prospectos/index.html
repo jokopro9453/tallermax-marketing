@@ -1,0 +1,343 @@
+<title>Prospectos Tallermax</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400..800&family=JetBrains+Mono:wght@500;700&display=swap">
+<style>
+/* Layout: una columna de fichas de taller, con la meta del día y el embudo arriba; se usa desde el teléfono, en el taller o en la calle. */
+:root {
+  --bg: #ECEDF1; --surface: #FFFFFF; --ink: #121318; --muted: #5A5F6E; --line: #D9DBE3;
+  --accent: #4F46E5; --accent-ink: #FFFFFF; --highlight: #B98300; --highlight-bg: #FFF4D6;
+  --ok: #157F4A; --ok-bg: #E2F4EA; --bad: #B42318; --bad-bg: #FDE7E5; --info: #3B4BB8; --info-bg: #E8EAFC;
+  --wa: #128C4A;
+  --f-body: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --f-mono: "JetBrains Mono", ui-monospace, Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --bg: #121318; --surface: #1C1D25; --ink: #F1F2F5; --muted: #A1A6B4; --line: #2C2F3B;
+  --accent: #8B85FF; --accent-ink: #121318; --highlight: #FFC53D; --highlight-bg: #3A2F12;
+  --ok: #5FD39A; --ok-bg: #12301F; --bad: #FF8A80; --bad-bg: #3A1714; --info: #A9B2FF; --info-bg: #1F2547; --wa: #4ADE80;
+  color-scheme: dark; } }
+:root[data-theme="dark"] {
+  --bg: #121318; --surface: #1C1D25; --ink: #F1F2F5; --muted: #A1A6B4; --line: #2C2F3B;
+  --accent: #8B85FF; --accent-ink: #121318; --highlight: #FFC53D; --highlight-bg: #3A2F12;
+  --ok: #5FD39A; --ok-bg: #12301F; --bad: #FF8A80; --bad-bg: #3A1714; --info: #A9B2FF; --info-bg: #1F2547; --wa: #4ADE80;
+  color-scheme: dark; }
+* { box-sizing: border-box; }
+body { background: var(--bg); color: var(--ink); font: 15px/1.5 var(--f-body); }
+.wrap { max-width: 860px; margin: 0 auto; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); padding-block: 24px 64px; display: grid; gap: 20px; }
+
+header.top { display: grid; gap: 6px; }
+.eyebrow { font: 700 12px/1 var(--f-mono); letter-spacing: .1em; text-transform: uppercase; color: var(--accent); }
+h1 { font: 800 clamp(26px, 5vw, 34px)/1.1 var(--f-body); letter-spacing: -.03em; margin: 0; text-wrap: balance; }
+.lede { margin: 0; color: var(--muted); max-width: 62ch; }
+
+.meta { background: var(--surface); border: 1px solid var(--line); border-radius: 16px; padding: 18px; display: grid; gap: 12px; }
+.meta-cab { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; flex-wrap: wrap; }
+.meta-cab b { font: 800 28px/1 var(--f-body); letter-spacing: -.02em; font-variant-numeric: tabular-nums; }
+.meta-cab span { color: var(--muted); font-size: 14px; }
+.barra { height: 10px; background: var(--bg); border-radius: 999px; overflow: hidden; }
+.barra i { display: block; height: 100%; background: var(--accent); border-radius: 999px; transition: width .3s; }
+@media (prefers-reduced-motion: reduce) { .barra i { transition: none; } }
+
+.embudo { display: flex; flex-wrap: wrap; gap: 8px; }
+.chip-f { font: 600 14px/1 var(--f-body); min-height: 40px; padding: 0 14px; border-radius: 999px; border: 1px solid var(--line); background: var(--surface);
+  color: var(--ink); display: inline-flex; align-items: center; gap: 8px; cursor: pointer; }
+.chip-f .n { font: 500 13px/1 var(--f-mono); color: var(--muted); }
+.chip-f[aria-pressed="true"] { background: var(--ink); color: var(--bg); border-color: var(--ink); }
+.chip-f[aria-pressed="true"] .n { color: var(--bg); opacity: .75; }
+.filtros { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 10px; }
+.filtros input, .filtros select, .campo { font: 15px/1.2 var(--f-body); color: var(--ink); background: var(--surface); border: 1px solid var(--line);
+  border-radius: 12px; min-height: 44px; padding: 0 14px; width: 100%; }
+
+.lista { display: grid; gap: 12px; }
+.ficha { background: var(--surface); border: 1px solid var(--line); border-radius: 16px; padding: 16px; display: grid; gap: 12px; border-left: 5px solid var(--line); }
+.ficha[data-estado="contactado"] { border-left-color: var(--info); }
+.ficha[data-estado="respondio"] { border-left-color: var(--highlight); }
+.ficha[data-estado="demo"], .ficha[data-estado="cliente"] { border-left-color: var(--ok); }
+.ficha[data-estado="descartado"] { opacity: .6; }
+.ficha-cab { display: flex; justify-content: space-between; gap: 10px; align-items: flex-start; }
+.ficha h2 { font: 700 18px/1.25 var(--f-body); margin: 0; letter-spacing: -.01em; }
+.donde { color: var(--muted); font-size: 14px; }
+.comuna { font: 700 11px/1 var(--f-mono); letter-spacing: .08em; text-transform: uppercase; color: var(--accent); white-space: nowrap; padding-top: 4px; }
+.nota { font-size: 14px; color: var(--muted); }
+.tel { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+.tel code { font: 600 15px/1 var(--f-mono); user-select: all; }
+.tel small { color: var(--muted); }
+.acciones { display: flex; gap: 8px; flex-wrap: wrap; }
+.btn { font: 600 14px/1 var(--f-body); min-height: 42px; padding: 0 14px; border-radius: 10px; border: 1px solid var(--line); background: var(--surface);
+  color: var(--ink); display: inline-flex; align-items: center; justify-content: center; gap: 6px; text-decoration: none; cursor: pointer; }
+.btn.wa { background: var(--wa); border-color: var(--wa); color: #fff; }
+.btn.ig { background: linear-gradient(135deg, #F58529, #DD2A7B 50%, #8134AF); border: 0; color: #fff; }
+.btn.ig.buscar { background: var(--surface); border: 1px dashed #DD2A7B; color: var(--ink); }
+.ig-campo { min-height: 40px; font-size: 14px; }
+.btn.primario { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
+.estados { display: flex; flex-wrap: wrap; gap: 6px; }
+.est { font: 600 13px/1 var(--f-body); min-height: 40px; padding: 0 12px; border-radius: 999px; border: 1px solid var(--line); background: transparent; color: var(--muted); cursor: pointer; }
+.est[aria-pressed="true"] { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
+textarea { font: 14px/1.45 var(--f-body); color: var(--ink); background: var(--bg); border: 1px solid var(--line); border-radius: 10px; padding: 10px 12px; width: 100%; min-height: 64px; resize: vertical; }
+.fuente { font: 500 12px/1.3 var(--f-mono); color: var(--muted); overflow-wrap: anywhere; }
+.btn:focus-visible, .est:focus-visible, .chip-f:focus-visible, textarea:focus-visible, input:focus-visible, select:focus-visible, summary:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+
+details.caja { background: var(--surface); border: 1px solid var(--line); border-radius: 16px; }
+details.caja summary { cursor: pointer; padding: 16px; font-weight: 700; min-height: 44px; }
+.caja-in { padding: 0 16px 16px; display: grid; gap: 12px; }
+.plantilla { background: var(--bg); border-radius: 12px; padding: 14px; white-space: pre-wrap; font-size: 14px; }
+.form-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+@media (max-width: 560px) { .form-grid { grid-template-columns: minmax(0, 1fr); } }
+label.l { display: grid; gap: 4px; font-size: 13px; color: var(--muted); }
+
+.vacio { background: var(--surface); border: 1px dashed var(--line); border-radius: 16px; padding: 28px 18px; display: grid; gap: 6px; }
+.vacio h2 { margin: 0; font-size: 18px; }
+.vacio p { margin: 0; color: var(--muted); }
+.toast { position: fixed; left: 50%; bottom: calc(18px + env(safe-area-inset-bottom, 0px)); transform: translateX(-50%); background: var(--ink); color: var(--bg);
+  padding: 12px 18px; border-radius: 10px; font-weight: 600; font-size: 14px; max-width: calc(100% - 32px); }
+</style>
+
+<div class="wrap">
+  <header class="top">
+    <span class="eyebrow">Tallermax · Región de Valparaíso</span>
+    <h1>Talleres por contactar</h1>
+    <p class="lede">Escríbeles por WhatsApp, visítalos o síguelos en Instagram, y marca cómo va cada uno. Los datos salen de directorios públicos: confirma el número antes de llamar.</p>
+  </header>
+
+  <section class="meta" aria-label="Meta de hoy">
+    <div class="meta-cab"><b id="meta-num">0 de 15</b><span id="meta-txt">talleres contactados hoy</span></div>
+    <div class="barra"><i id="meta-barra" style="width:0%"></i></div>
+  </section>
+
+  <div class="embudo" role="group" aria-label="Filtrar por estado" id="embudo"></div>
+  <div class="filtros">
+    <input id="buscar" type="search" placeholder="Buscar por nombre, calle o nota" aria-label="Buscar">
+    <select id="comuna" aria-label="Comuna"><option value="">Todas las comunas</option></select>
+  </div>
+
+  <main class="lista" id="lista">
+    <div class="vacio"><h2>Cargando talleres…</h2><p>Si tarda, revisa que tengas la sesión de claude.ai iniciada.</p></div>
+  </main>
+
+  <details class="caja" id="caja-plantillas">
+    <summary>Mensajes listos para copiar</summary>
+    <div class="caja-in">
+      <label class="l" for="tu-nombre">Tu nombre (va en los mensajes)
+        <input class="campo" id="tu-nombre" placeholder="Ej.: Joaquín"></label>
+      <div><b>Primer WhatsApp</b></div>
+      <div class="plantilla" id="pl-wa"></div>
+      <button class="btn" type="button" data-copiar="pl-wa">Copiar mensaje</button>
+      <div><b>Si lo visitas en persona</b></div>
+      <div class="plantilla" id="pl-visita">1. Preséntate y pregunta por el dueño o encargado.
+2. Pregunta cómo lleva hoy las órdenes y los cobros (cuaderno, Excel, WhatsApp).
+3. Muéstrale en tu teléfono: buscar una patente, una orden y el comprobante con IVA.
+4. Cuéntale que están eligiendo pocos talleres fundadores en la zona.
+5. Deja agendada la demo o el día para volver. Anótalo aquí en «Notas».</div>
+    </div>
+  </details>
+
+  <details class="caja" id="caja-nuevo">
+    <summary>Agregar un taller</summary>
+    <form class="caja-in" id="form-nuevo">
+      <div class="form-grid">
+        <label class="l" for="n-nombre">Nombre<input class="campo" id="n-nombre" required></label>
+        <label class="l" for="n-comuna">Comuna<input class="campo" id="n-comuna" required placeholder="Quilpué"></label>
+        <label class="l" for="n-dir">Dirección<input class="campo" id="n-dir"></label>
+        <label class="l" for="n-tel">Teléfono<input class="campo" id="n-tel" inputmode="tel" placeholder="+56 9 1234 5678"></label>
+        <label class="l" for="n-ig">Instagram<input class="campo" id="n-ig" placeholder="@usuario"></label>
+        <label class="l" for="n-nota">Nota<input class="campo" id="n-nota" placeholder="Especialidad, cómo lo conociste…"></label>
+      </div>
+      <button class="btn primario" type="submit">Agregar a la lista</button>
+    </form>
+  </details>
+</div>
+<div class="toast" id="toast" role="status" hidden></div>
+
+<script>
+(() => {
+  const ZONA = "America/Santiago";
+  const META = 15;
+  const ESTADOS = [
+    ["pendiente", "Por contactar"], ["contactado", "Contactado"], ["respondio", "Respondió"],
+    ["demo", "Demo"], ["cliente", "Cliente"], ["descartado", "Descartado"],
+  ];
+  const NOMBRE_ESTADO = Object.fromEntries(ESTADOS);
+  const $ = (s) => document.querySelector(s);
+  const h = (tag, attrs = {}, ...hijos) => {
+    const el = document.createElement(tag);
+    for (const [k, v] of Object.entries(attrs)) {
+      if (v == null || v === false) continue;
+      if (k.startsWith("on")) el.addEventListener(k.slice(2), v);
+      else if (k === "class") el.className = v;
+      else el.setAttribute(k, v === true ? "" : v);
+    }
+    for (const c of hijos.flat()) if (c != null && c !== false) el.append(c.nodeType ? c : String(c));
+    return el;
+  };
+  const guardado = (k, d) => { try { return localStorage.getItem(k) ?? d; } catch { return d; } };
+  const guardar = (k, v) => { try { localStorage.setItem(k, v); } catch {} };
+
+  let db = null, talleres = [], filtro = guardado("p-filtro", "pendiente"), comuna = guardado("p-comuna", ""), texto = "";
+  let puedeEscribir = true;
+  const notasBorrador = new Map();
+
+  const hoyChile = () => new Intl.DateTimeFormat("en-CA", { timeZone: ZONA, year: "numeric", month: "2-digit", day: "2-digit" }).format(new Date());
+  const toast = (m) => { const t = $("#toast"); t.textContent = m; t.hidden = false; clearTimeout(toast.t); toast.t = setTimeout(() => (t.hidden = true), 2600); };
+  const esMovil = (tel) => /^569\d{8}$/.test(tel || "");
+  const legible = (tel) => !tel ? "" : esMovil(tel) ? `+56 9 ${tel.slice(3, 7)} ${tel.slice(7)}` : `+56 ${tel.slice(2, 4)} ${tel.slice(4, 7)} ${tel.slice(7)}`;
+  const soloDigitos = (s) => { let d = (s || "").replace(/\D/g, ""); if (d.length === 9) d = "56" + d; if (d.length === 8) d = "569" + d; return d; };
+
+  const tuNombre = () => ($("#tu-nombre").value || "").trim();
+  const mensajeWA = (t) =>
+    `Hola, ¿hablo con ${t?.nombre || "el taller"}? ` +
+    `Soy ${tuNombre() || "[tu nombre]"}, de Quilpué. Estamos armando Tallermax, un sistema para ordenar el taller: ` +
+    `órdenes por patente, fotos del auto al recibirlo y cobro con IVA en PDF.\n\n` +
+    `Estamos eligiendo pocos talleres de la zona para empezar como talleres fundadores. ` +
+    `¿Le puedo mostrar en 10 minutos cómo funciona, por videollamada o pasando por su taller?`;
+  const pintarPlantilla = () => { $("#pl-wa").textContent = mensajeWA(null); };
+  $("#tu-nombre").value = guardado("p-nombre", "");
+  $("#tu-nombre").addEventListener("input", () => { guardar("p-nombre", $("#tu-nombre").value); pintarPlantilla(); pintar(); });
+  pintarPlantilla();
+  document.querySelectorAll("[data-copiar]").forEach((b) => b.addEventListener("click", async () => {
+    const el = document.getElementById(b.dataset.copiar);
+    try { await navigator.clipboard.writeText(el.textContent); toast("Copiado"); }
+    catch { const r = document.createRange(); r.selectNodeContents(el); const s = getSelection(); s.removeAllRanges(); s.addRange(r); toast("Selecciónalo y cópialo"); }
+  }));
+
+  async function escribir(t, cambios, ok) {
+    if (!db) return;
+    try { await db.collection("talleres").doc(t.id).update({ ...cambios, actualizadoEn: new Date().toISOString() }); if (ok) toast(ok); }
+    catch (e) {
+      if (e && e.code === "invalid_argument") { puedeEscribir = false; pintar(); toast("No tienes permiso para cambiar la lista."); }
+      else toast("No se guardó. Revisa la conexión e inténtalo de nuevo.");
+    }
+  }
+
+  function pintarCabecera() {
+    const hoy = hoyChile();
+    const n = talleres.filter((t) => (t.contactadoEn || "").startsWith(hoy)).length;
+    $("#meta-num").textContent = `${n} de ${META}`;
+    $("#meta-txt").textContent = n >= META ? "¡Meta de hoy cumplida!" : "talleres contactados hoy";
+    $("#meta-barra").style.width = `${Math.min(100, (n / META) * 100)}%`;
+
+    const cuenta = (k) => talleres.filter((t) => (t.estado || "pendiente") === k).length;
+    $("#embudo").replaceChildren(
+      ...[["todos", "Todos", talleres.length], ...ESTADOS.map(([k, n]) => [k, n, cuenta(k)])].map(([k, n, c]) =>
+        h("button", { class: "chip-f", type: "button", "aria-pressed": String(filtro === k),
+          onclick: () => { filtro = k; guardar("p-filtro", k); pintar(); } }, n, h("span", { class: "n" }, c))));
+
+    const comunas = [...new Set(talleres.map((t) => t.comuna).filter(Boolean))].sort();
+    const sel = $("#comuna");
+    const actual = sel.value || comuna;
+    sel.replaceChildren(h("option", { value: "" }, "Todas las comunas"),
+      ...comunas.map((c) => h("option", { value: c }, `${c} (${talleres.filter((t) => t.comuna === c).length})`)));
+    sel.value = comunas.includes(actual) ? actual : "";
+  }
+
+  function ficha(t) {
+    const estado = t.estado || "pendiente";
+    const enlaces = [];
+    if (esMovil(t.telefono)) enlaces.push(h("a", { class: "btn wa", href: `https://wa.me/${t.telefono}?text=${encodeURIComponent(mensajeWA(t))}`, target: "_blank", rel: "noopener" }, "WhatsApp"));
+    const q = encodeURIComponent(`${t.nombre} ${t.direccion || ""} ${t.comuna || ""}`.trim());
+    enlaces.push(h("a", { class: "btn", href: `https://www.google.com/maps/search/?api=1&query=${q}`, target: "_blank", rel: "noopener" }, "Mapa"));
+    // Instagram siempre: directo al perfil si sabemos la cuenta; si no, una búsqueda
+    // limitada a instagram.com, que casi siempre lo trae primero.
+    const ig = (t.instagram || "").replace(/^@/, "");
+    enlaces.unshift(ig
+      ? h("a", { class: "btn ig", href: `https://www.instagram.com/${ig}/`, target: "_blank", rel: "noopener" }, `Instagram @${ig}`)
+      : h("a", { class: "btn ig buscar", href: `https://www.google.com/search?q=${encodeURIComponent(`site:instagram.com "${t.nombre}" ${t.comuna || ""}`)}`, target: "_blank", rel: "noopener" }, "Instagram (buscar)"));
+    if (t.facebook) enlaces.push(h("a", { class: "btn", href: t.facebook, target: "_blank", rel: "noopener" }, "Facebook"));
+    if (t.web) enlaces.push(h("a", { class: "btn", href: t.web, target: "_blank", rel: "noopener" }, "Sitio web"));
+
+    const notas = h("textarea", { id: `notas-${t.id}`, placeholder: "Notas: con quién hablaste, qué dijo, cuándo volver…", "aria-label": `Notas de ${t.nombre}` });
+    notas.value = notasBorrador.get(t.id) ?? (t.notas || "");
+    notas.disabled = !puedeEscribir;
+    notas.addEventListener("input", () => notasBorrador.set(t.id, notas.value));
+    notas.addEventListener("blur", async () => {
+      if ((t.notas || "") === notas.value) return;
+      await escribir(t, { notas: notas.value }, "Nota guardada");
+      notasBorrador.delete(t.id);
+    });
+
+    // Cuando se encuentra su cuenta, se pega aquí y el botón pasa a ir directo.
+    const campoIg = ig || !puedeEscribir ? null : h("input", { class: "campo ig-campo", id: `ig-${t.id}`, placeholder: "¿Encontraste su Instagram? Pega su @ aquí",
+      "aria-label": `Instagram de ${t.nombre}`, onchange: async (e) => {
+        const v = e.target.value.trim().replace(/^https?:\/\/(www\.)?instagram\.com\//, "").replace(/[/?].*$/, "").replace(/^@/, "");
+        if (v) await escribir(t, { instagram: v }, `Instagram de ${t.nombre} guardado`);
+      } });
+
+    return h("article", { class: "ficha", "data-estado": estado },
+      h("div", { class: "ficha-cab" },
+        h("div", {}, h("h2", {}, t.nombre), h("div", { class: "donde" }, t.direccion || "Sin dirección publicada")),
+        h("span", { class: "comuna" }, t.comuna || "")),
+      t.nota ? h("div", { class: "nota" }, t.nota) : null,
+      t.telefono ? h("div", { class: "tel" }, h("code", {}, legible(t.telefono)),
+        h("small", {}, esMovil(t.telefono) ? "celular" : "teléfono fijo: llama en vez de escribir"),
+        t.telefonoNota ? h("small", {}, `· ${t.telefonoNota}`) : null)
+        : h("div", { class: "tel" }, h("small", {}, "Sin teléfono publicado: búscalo en el mapa o visítalo.")),
+      h("div", { class: "acciones" }, enlaces),
+      campoIg,
+      h("div", { class: "estados", role: "group", "aria-label": `Estado de ${t.nombre}` },
+        ESTADOS.map(([k, n]) => h("button", { class: "est", type: "button", "aria-pressed": String(estado === k), disabled: !puedeEscribir,
+          onclick: () => {
+            if (estado === k) return;
+            const cambios = { estado: k };
+            if (k !== "pendiente" && !t.contactadoEn) cambios.contactadoEn = new Date().toISOString().slice(0, 10) === hoyChile() ? new Date().toISOString() : `${hoyChile()}T12:00:00`;
+            escribir(t, cambios, `${t.nombre}: ${n.toLowerCase()}`);
+          } }, n))),
+      notas,
+      t.fuente ? h("div", { class: "fuente" }, `Fuente: ${t.fuente}`) : null);
+  }
+
+  function pintar() {
+    if (!db) return;
+    pintarCabecera();
+    const q = texto.toLowerCase();
+    const sel = $("#comuna").value;
+    const orden = Object.fromEntries(ESTADOS.map(([k], i) => [k, i]));
+    const visibles = talleres
+      .filter((t) => filtro === "todos" || (t.estado || "pendiente") === filtro)
+      .filter((t) => !sel || t.comuna === sel)
+      .filter((t) => !q || [t.nombre, t.direccion, t.nota, t.notas, t.comuna].join(" ").toLowerCase().includes(q))
+      .sort((a, b) => (orden[a.estado || "pendiente"] - orden[b.estado || "pendiente"]) || (a.comuna || "").localeCompare(b.comuna || "") || a.nombre.localeCompare(b.nombre));
+    const lista = $("#lista");
+    if (!talleres.length) {
+      lista.replaceChildren(h("div", { class: "vacio" }, h("h2", {}, "Todavía no hay talleres"), h("p", {}, "Agrega el primero con «Agregar un taller», más abajo.")));
+      return;
+    }
+    if (!visibles.length) {
+      lista.replaceChildren(h("div", { class: "vacio" }, h("h2", {}, "Nada con este filtro"), h("p", {}, filtro === "pendiente" ? "Contactaste a todos los de esta vista. Prueba con otra comuna." : "Prueba con «Todos».")));
+      return;
+    }
+    lista.replaceChildren(...visibles.map(ficha));
+  }
+
+  $("#buscar").addEventListener("input", (e) => { texto = e.target.value; pintar(); });
+  $("#comuna").addEventListener("change", (e) => { comuna = e.target.value; guardar("p-comuna", comuna); pintar(); });
+
+  $("#form-nuevo").addEventListener("submit", async (e) => {
+    e.preventDefault();
+    if (!db) return;
+    const nombre = $("#n-nombre").value.trim(), com = $("#n-comuna").value.trim();
+    if (!nombre || !com) return;
+    const id = `${com}-${nombre}`.toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "").replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "").slice(0, 80);
+    try {
+      await db.collection("talleres").doc(id).set({
+        nombre, comuna: com, direccion: $("#n-dir").value.trim(), telefono: soloDigitos($("#n-tel").value),
+        instagram: $("#n-ig").value.trim().replace(/^@/, ""), nota: $("#n-nota").value.trim(),
+        fuente: "Agregado a mano", estado: "pendiente", actualizadoEn: new Date().toISOString(),
+      });
+      e.target.reset(); toast(`${nombre} agregado`);
+    } catch { toast("No se pudo agregar. Revisa la conexión."); }
+  });
+
+  (async () => {
+    if (!window.claude?.use) { $("#lista").replaceChildren(h("div", { class: "vacio" }, h("h2", {}, "No se pudo abrir la lista"), h("p", {}, "Ábrela desde claude.ai con tu sesión iniciada."))); return; }
+    db = await window.claude.use("db");
+    if (!db) { $("#lista").replaceChildren(h("div", { class: "vacio" }, h("h2", {}, "No se pudo abrir la lista"), h("p", {}, "Ábrela desde claude.ai con tu sesión iniciada."))); return; }
+    const user = await window.claude.use("user");
+    if (user && (await user.can("data.write")) === false) puedeEscribir = false;
+    db.collection("talleres").onSnapshot((snap) => {
+      talleres = snap.docs.filter((d) => d.exists).map((d) => ({ id: d.id, ...d.data() }));
+      pintar();
+    }, () => $("#lista").replaceChildren(h("div", { class: "vacio" }, h("h2", {}, "Se cortó la conexión"), h("p", {}, "Recarga la página."))));
+  })();
+})();
+</script>

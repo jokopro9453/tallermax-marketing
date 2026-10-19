@@ -272,7 +272,11 @@ textarea { font: 15px/1.5 var(--f-body); color: var(--ink); background: var(--bg
       h("span", { class: "num" }, reel ? "Reel · guion" : `Imagen ${n + 1}`),
       h("span", { class: "txt" }, reel ? (p.gancho || p.titulo || "") : (textos[n] || p.titulo || "")),
       h("span", { class: "pend" }, reel ? "Video pendiente · 1080×1920" : "Imagen pendiente · 1080×1350 JPEG"));
-    if (imgs[i]) {
+    if (imgs[i] && /\.mp4$/i.test(imgs[i])) {
+      // Un reel: el video mismo, para revisar que el texto alcance a leerse.
+      caja.append(h("video", { src: imgs[i], controls: true, muted: true, playsinline: true, loop: true, preload: "metadata",
+        "aria-label": `Reel ${p.titulo || ""}`, style: "width:100%;height:100%;object-fit:cover;display:block;background:#000" }));
+    } else if (imgs[i]) {
       const img = h("img", { src: imgs[i], alt: textos[i] || `Imagen ${i + 1} de ${p.titulo || "la pieza"}` });
       img.addEventListener("error", () => img.replaceWith(ph(i)));
       caja.append(img);
@@ -307,8 +311,9 @@ textarea { font: 15px/1.5 var(--f-body); color: var(--ink); background: var(--bg
       [`${tags}/${LIMITE_HASHTAGS} hashtags`, tags > LIMITE_HASHTAGS],
     ];
     if (p.tipo !== "reel") fila.push([`${imgs} imagen${imgs === 1 ? "" : "es"}`, imgs === 0 || imgs > LIMITE_IMAGENES]);
-    const malos = (p.imagenes || []).filter(x => !/\.jpe?g$/i.test(x));
-    if (malos.length) fila.push([`${malos.length} no son JPEG`, true]);
+    if (p.tipo === "reel") fila.push([(p.imagenes || []).length === 1 ? "1 video" : "falta el video", (p.imagenes || []).length !== 1]);
+    const malos = (p.imagenes || []).filter(x => !(p.tipo === "reel" ? /\.mp4$/i : /\.jpe?g$/i).test(x));
+    if (malos.length) fila.push([`${malos.length} con formato equivocado (${p.tipo === "reel" ? "debe ser MP4" : "debe ser JPEG"})`, true]);
     return h("div", { class: "chequeos" }, fila.map(([t, mal]) => h("span", { class: mal ? "mal" : "" }, t)));
   }
 

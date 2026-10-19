@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>Tu nuevo sistema de gestión, hoy</title>
+<link rel="stylesheet" href="marca.css">
+<style>
+  .lista-gana { margin-top: 70px; display: flex; flex-direction: column; gap: 44px; }
+  .gana { display: flex; align-items: flex-start; gap: 28px; }
+  .gana i { width: 70px; height: 70px; border-radius: 50%; background: var(--resalte); flex: none; position: relative; margin-top: 2px; }
+  .gana i::after { content: ""; position: absolute; left: 25px; top: 13px; width: 15px; height: 30px; border-right: 7px solid #fff; border-bottom: 7px solid #fff; transform: rotate(40deg); }
+  .oscuro .gana i::after { border-color: #121318; }
+  .gana b { display: block; font: 800 56px/1.1 "Inter"; letter-spacing: -.03em; }
+  .gana span { font: 400 34px/1.35 "Inter"; color: var(--suave); }
+  .correo { background: #fff; color: #121318; border-radius: 34px; padding: 44px 46px; display: flex; flex-direction: column; gap: 22px; box-shadow: 0 50px 90px -30px rgba(18,19,24,.45); }
+  .correo .de { font: 600 24px/1 "JBM"; color: #6B7080; }
+  .correo h3 { font: 800 48px/1.08 "Inter"; letter-spacing: -.03em; }
+  .correo dl { display: grid; grid-template-columns: auto 1fr; gap: 12px 30px; font: 400 32px/1.2 "Inter"; }
+  .correo dt { color: #6B7080; } .correo dd { font-weight: 700; }
+  .correo .patente { font-size: 26px; padding: 6px 12px; border: 3px solid #121318; }
+  .minis { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+  .minis div { background: #242630; border-radius: 14px; aspect-ratio: 1; display: grid; place-items: center; padding: 10px; }
+  .noti { display: flex; align-items: center; gap: 24px; background: #fff; color: #121318; border-radius: 30px; padding: 30px 34px; margin-top: 70px; box-shadow: 0 30px 60px -24px rgba(0,0,0,.45); }
+  .noti i { width: 76px; height: 76px; border-radius: 20px; background: var(--indigo); flex: none; position: relative; }
+  .noti i::after { content: ""; position: absolute; inset: 20px 16px; border: 5px solid #fff; border-radius: 6px; }
+  .noti b { display: block; font: 800 34px/1.2 "Inter"; } .noti span { font: 500 32px/1.25 "Inter"; color: #4A4F5C; }
+  .respuesta { margin-top: 56px; background: rgba(255,197,61,.12); border: 3px solid rgba(255,197,61,.45); border-radius: 30px; padding: 40px 44px;
+    font: 600 50px/1.25 "Inter"; letter-spacing: -.02em; color: #F4F4F6; }
+  .respuesta b { color: var(--amarillo); }
+  .siete { font: 900 520px/.74 "Inter"; letter-spacing: -.08em; color: var(--amarillo); margin: 40px 0 0 -16px; }
+  .tu-logo { width: 110px; height: 110px; border-radius: 24px; border: 4px dashed #6B7080; display: grid; place-items: center; font: 700 22px/1.1 "JBM"; color: #9CA3AF; text-align: center; flex: none; }
+  .listo { margin-top: 56px; padding: 36px 40px; display: flex; flex-direction: column; gap: 6px; }
+  .listo header { display: flex; align-items: center; gap: 26px; padding-bottom: 18px; }
+  .listo .r { font-size: 34px; padding: 26px 0; }
+  .listo .r .check { margin-left: auto; }
+</style>
+</head>
+<body class="xl">
+
+<section class="slide indigo">
+  <img class="logo" src="logo/svg/tallermax-horizontal-blanco.svg" alt="tallermax">
+  <div class="etiqueta">Sin esperas</div>
+  <h1 class="titular">Tu nuevo sistema de gestión, <em>hoy.</em></h1>
+  <div class="pildoras" style="margin-top:auto;margin-bottom:150px">
+    <span class="pildora">Sin instalar nada</span><span class="pildora">Con tu logo</span><span class="pildora">7 días gratis</span>
+  </div>
+  <div class="desliza">Desliza →</div>
+</section>
+
+<section class="slide oscuro">
+  <div class="etiqueta" style="margin-top:0">Paso 1</div>
+  <h2 class="titular sm">Nos escribes <em>por WhatsApp.</em></h2>
+  <div class="burbujas">
+    <p class="burbuja tu"><small>Tú</small>Hola, quiero probar Tallermax en mi taller.</p>
+    <p class="burbuja ellos" style="background:#2A2C36;color:#fff"><small>Tallermax</small>¡Listo! ¿Cómo se llama tu taller? Mándanos tu logo.</p>
+  </div>
+</section>
+
+<section class="slide oscuro">
+  <div class="etiqueta" style="margin-top:0">Paso 2</div>
+  <h2 class="titular sm">Te dejamos tu taller <em>listo, con tu logo.</em></h2>
+  <div class="ui listo">
+    <header><span class="tu-logo">TU<br>LOGO</span><div><div class="cab">Tu taller</div><div class="sub">Listo para usar</div></div></header>
+    <div class="r">Tu logo en el comprobante<i class="check on"></i></div>
+    <div class="r">Datos de ejemplo para practicar<i class="check on"></i></div>
+    <div class="r">Entras desde el teléfono<i class="check on"></i></div>
+  </div>
+</section>
+
+<section class="slide claro">
+  <div class="etiqueta" style="margin-top:0">Paso 3</div>
+  <h2 class="titular">Lo usas <em>ese mismo día.</em></h2>
+  <p class="bajada">Recibes autos, haces órdenes y cobras con IVA. Sin capacitaciones largas.</p>
+</section>
+<section class="slide indigo">
+  <img class="logo" src="logo/svg/tallermax-horizontal-blanco.svg" alt="tallermax">
+  <h2 class="titular" style="margin-top:110px">7 días gratis. <em>Si no te sirve, no pagas.</em></h2>
+  <p class="bajada">Escríbenos y hoy mismo tienes tu taller funcionando en Tallermax.</p>
+  <div class="pie-cierre"><div class="llamado">Pruébalo gratis 7 días →</div><div class="web" style="position:static">tallermax.website</div></div>
+</section>
+</body>
+</html>

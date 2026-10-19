@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Publica en Instagram una pieza aprobada de la cola.
+"""Publica en Instagram una pieza aprobada de la cola: carrusel, foto o reel.
 
     python3 scripts/publicar.py <pieza.json> [--simular] [--ahora AAAA-MM-DDTHH:MM]
 
@@ -41,6 +41,9 @@ from zoneinfo import ZoneInfo
 
 API = "https://graph.instagram.com/v25.0"
 CRUDO = "https://raw.githubusercontent.com/jokopro9453/tallermax-marketing/main/"
+# Los videos van por jsDelivr: GitHub los entrega como application/octet-stream y
+# Instagram pide video/mp4. jsDelivr sirve el mismo archivo del repo con el tipo bueno.
+CDN = "https://cdn.jsdelivr.net/gh/jokopro9453/tallermax-marketing@main/"
 ZONA = ZoneInfo("America/Santiago")
 LIMITE_TEXTO = 2200
 LIMITE_HASHTAGS = 30
@@ -106,13 +109,15 @@ def validar(p: dict, ahora: str) -> list[str]:
     if p.get("huellaAprobada") != huella(p):
         raise Rechazo("La pieza cambió después de aprobarse (la huella no coincide). Hay que volver a aprobarla.")
     tipo = p.get("tipo")
-    if tipo not in ("carrusel", "foto"):
-        raise Rechazo(f"El publicador todavía no sabe publicar «{tipo}».")
+    if tipo not in ("carrusel", "foto", "reel"):
+        raise Rechazo(f"El publicador no sabe publicar «{tipo}».")
     imagenes, shas = p.get("imagenes") or [], p.get("imagenesSha") or []
     if len(imagenes) != len(shas):
         raise Rechazo("`imagenes` e `imagenesSha` no tienen el mismo largo.")
     if tipo == "foto" and len(imagenes) != 1:
         raise Rechazo("Una foto lleva exactamente una imagen.")
+    if tipo == "reel" and (len(imagenes) != 1 or not imagenes[0].lower().endswith(".mp4")):
+        raise Rechazo("Un reel lleva exactamente un video .mp4 en `imagenes`.")
     if tipo == "carrusel" and not 2 <= len(imagenes) <= LIMITE_IMAGENES:
         raise Rechazo(f"Un carrusel lleva entre 2 y {LIMITE_IMAGENES} imágenes; esta tiene {len(imagenes)}.")
     texto = p.get("texto") or ""
@@ -127,15 +132,18 @@ def verificar_imagenes(imagenes: list[str], shas: list[str]) -> list[str]:
     """Baja cada imagen de GitHub y comprueba que sea el JPEG que se aprobó."""
     urls = []
     for ruta, sha in zip(imagenes, shas):
-        if not re.fullmatch(r"piezas/[\w.-]+/[\w.-]+\.jpe?g", ruta, re.IGNORECASE):
+        if not re.fullmatch(r"piezas/[\w.-]+/[\w.-]+\.(jpe?g|mp4)", ruta, re.IGNORECASE):
             raise Rechazo(f"Ruta de imagen no permitida: {ruta!r}")
-        url = CRUDO + ruta
+        es_video = ruta.lower().endswith(".mp4")
+        url = (CDN if es_video else CRUDO) + ruta
         try:
             with urllib.request.urlopen(url, timeout=60) as r:
                 datos = r.read()
         except urllib.error.URLError as e:
             raise Rechazo(f"No se pudo bajar {ruta}: {e}", True) from None
-        if datos[:3] != b"\xff\xd8\xff":
+        if es_video and datos[4:8] != b"ftyp":
+            raise Rechazo(f"{ruta} no es un MP4.")
+        if not es_video and datos[:3] != b"\xff\xd8\xff":
             raise Rechazo(f"{ruta} no es un JPEG.")
         real = hashlib.sha256(datos).hexdigest()
         if real != sha:
@@ -145,14 +153,15 @@ def verificar_imagenes(imagenes: list[str], shas: list[str]) -> list[str]:
     return urls
 
 
-def esperar_contenedor(cid: str) -> None:
-    for _ in range(30):
+def esperar_contenedor(cid: str, intentos: int = 30, pausa: float = 3) -> None:
+    """Espera a que Instagram procese el contenedor. Un video tarda bastante más."""
+    for _ in range(intentos):
         estado = pedir("GET", f"{API}/{cid}?fields=status_code").get("status_code")
         if estado == "FINISHED":
             return
         if estado in ("ERROR", "EXPIRED"):
             raise Rechazo(f"Instagram no pudo procesar el contenedor {cid} ({estado}).", True)
-        time.sleep(3)
+        time.sleep(pausa)
     raise Rechazo(f"El contenedor {cid} no terminó de procesarse a tiempo.", True)
 
 
@@ -176,7 +185,13 @@ def publicar(p: dict, simular: bool, ahora: str) -> dict:
         return {"ok": True, "simulado": True, "cuenta": yo.get("username"), "imagenes": len(urls)}
 
     texto = p.get("texto") or ""
-    if p["tipo"] == "foto":
+    if p["tipo"] == "reel":
+        contenedor = pedir("POST", f"{API}/{ig}/media", {
+            "media_type": "REELS", "video_url": urls[0], "caption": texto, "share_to_feed": "true",
+            "thumb_offset": str(int(p.get("portadaMs") or 0)),
+        })["id"]
+        esperar_contenedor(contenedor, intentos=40, pausa=8)
+    elif p["tipo"] == "foto":
         contenedor = pedir("POST", f"{API}/{ig}/media", {"image_url": urls[0], "caption": texto})["id"]
     else:
         hijos = [pedir("POST", f"{API}/{ig}/media", {"image_url": u, "is_carousel_item": "true"})["id"] for u in urls]

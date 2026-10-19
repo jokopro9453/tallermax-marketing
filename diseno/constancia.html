@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>La constancia que le llega a tu cliente</title>
+<link rel="stylesheet" href="marca.css">
+<style>
+  .lista-gana { margin-top: 70px; display: flex; flex-direction: column; gap: 44px; }
+  .gana { display: flex; align-items: flex-start; gap: 28px; }
+  .gana i { width: 70px; height: 70px; border-radius: 50%; background: var(--resalte); flex: none; position: relative; margin-top: 2px; }
+  .gana i::after { content: ""; position: absolute; left: 25px; top: 13px; width: 15px; height: 30px; border-right: 7px solid #fff; border-bottom: 7px solid #fff; transform: rotate(40deg); }
+  .oscuro .gana i::after { border-color: #121318; }
+  .gana b { display: block; font: 800 56px/1.1 "Inter"; letter-spacing: -.03em; }
+  .gana span { font: 400 34px/1.35 "Inter"; color: var(--suave); }
+  .correo { background: #fff; color: #121318; border-radius: 34px; padding: 44px 46px; display: flex; flex-direction: column; gap: 22px; box-shadow: 0 50px 90px -30px rgba(18,19,24,.45); }
+  .correo .de { font: 600 24px/1 "JBM"; color: #6B7080; }
+  .correo h3 { font: 800 48px/1.08 "Inter"; letter-spacing: -.03em; }
+  .correo dl { display: grid; grid-template-columns: auto 1fr; gap: 12px 30px; font: 400 32px/1.2 "Inter"; }
+  .correo dt { color: #6B7080; } .correo dd { font-weight: 700; }
+  .correo .patente { font-size: 26px; padding: 6px 12px; border: 3px solid #121318; }
+  .minis { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+  .minis div { background: #242630; border-radius: 14px; aspect-ratio: 1; display: grid; place-items: center; padding: 10px; }
+  .noti { display: flex; align-items: center; gap: 24px; background: #fff; color: #121318; border-radius: 30px; padding: 30px 34px; margin-top: 70px; box-shadow: 0 30px 60px -24px rgba(0,0,0,.45); }
+  .noti i { width: 76px; height: 76px; border-radius: 20px; background: var(--indigo); flex: none; position: relative; }
+  .noti i::after { content: ""; position: absolute; inset: 20px 16px; border: 5px solid #fff; border-radius: 6px; }
+  .noti b { display: block; font: 800 34px/1.2 "Inter"; } .noti span { font: 500 32px/1.25 "Inter"; color: #4A4F5C; }
+  .respuesta { margin-top: 56px; background: rgba(255,197,61,.12); border: 3px solid rgba(255,197,61,.45); border-radius: 30px; padding: 40px 44px;
+    font: 600 50px/1.25 "Inter"; letter-spacing: -.02em; color: #F4F4F6; }
+  .respuesta b { color: var(--amarillo); }
+  .siete { font: 900 520px/.74 "Inter"; letter-spacing: -.08em; color: var(--amarillo); margin: 40px 0 0 -16px; }
+  .tu-logo { width: 110px; height: 110px; border-radius: 24px; border: 4px dashed #6B7080; display: grid; place-items: center; font: 700 22px/1.1 "JBM"; color: #9CA3AF; text-align: center; flex: none; }
+  .listo { margin-top: 56px; padding: 36px 40px; display: flex; flex-direction: column; gap: 6px; }
+  .listo header { display: flex; align-items: center; gap: 26px; padding-bottom: 18px; }
+  .listo .r { font-size: 34px; padding: 26px 0; }
+  .listo .r .check { margin-left: auto; }
+</style>
+</head>
+<body class="xl">
+
+<section class="slide claro">
+  <img class="logo" src="logo/svg/tallermax-horizontal.svg" alt="tallermax">
+  <div class="etiqueta">Lo que nos diferencia</div>
+  <h1 class="titular sm">Tu cliente se va con <em>la evidencia en su correo.</em></h1>
+  <div class="correo" style="margin-top:56px">
+    <div class="de">De: tu taller · 09:42</div>
+    <h3>Constancia de ingreso de su vehículo</h3>
+    <dl><dt>Patente</dt><dd><span class="patente">KL·TR·42</span></dd><dt>Daños</dt><dd>2, con foto</dd></dl>
+    <div class="minis">
+      <div><svg viewBox="0 0 200 140" width="100%"><use href="video/autos.svg#auto-frente"/></svg></div>
+      <div><svg viewBox="0 0 200 140" width="100%"><use href="video/autos.svg#auto-atras"/></svg></div>
+      <div><svg viewBox="0 0 400 160" width="100%"><use href="video/autos.svg#auto-lado"/></svg></div>
+      <div><svg viewBox="0 0 400 160" width="100%" style="transform:scaleX(-1)"><use href="video/autos.svg#auto-lado"/></svg></div>
+    </div>
+  </div>
+  <div class="desliza">Desliza →</div>
+</section>
+
+<section class="slide claro">
+  <div class="etiqueta" style="margin-top:0">Qué lleva</div>
+  <h2 class="titular sm">Todo lo que <em>importa al recibir.</em></h2>
+  <div class="lista-gana">
+    <div class="gana"><i></i><div><b>Fotos de las 4 caras</b><span>Tomadas desde el teléfono, al recibir.</span></div></div>
+    <div class="gana"><i></i><div><b>Los daños marcados</b><span>Con el dedo, sobre la misma foto.</span></div></div>
+    <div class="gana"><i></i><div><b>Patente, km, fecha y hora</b><span>Para que nadie discuta cuándo entró ni cómo.</span></div></div>
+  </div>
+</section>
+
+<section class="slide oscuro">
+  <div class="etiqueta" style="margin-top:0">Por qué importa</div>
+  <h2 class="titular">Discusiones que <em>no ocurren.</em></h2>
+  <p class="bajada">Si alguien dice que el rayón no estaba, ya tiene en su correo la foto que dice lo contrario.</p>
+</section>
+
+<section class="slide oscuro">
+  <div class="etiqueta" style="margin-top:0">Y al entregar</div>
+  <h2 class="titular sm">Le avisamos que <em>su auto quedó entregado.</em></h2>
+  <div class="noti"><i></i><div><b>Tu taller</b><span>Su vehículo quedó entregado</span></div></div>
+</section>
+<section class="slide indigo">
+  <img class="logo" src="logo/svg/tallermax-horizontal-blanco.svg" alt="tallermax">
+  <h2 class="titular" style="margin-top:110px">Tu taller, <em>con evidencia.</em></h2>
+  <p class="bajada">Pruébalo gratis 7 días y recibe tu próximo auto con fotos.</p>
+  <div class="pie-cierre"><div class="llamado">Pruébalo gratis 7 días →</div><div class="web" style="position:static">tallermax.website</div></div>
+</section>
+</body>
+</html>

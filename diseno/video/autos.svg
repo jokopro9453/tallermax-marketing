@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg">
+<defs>
+    <symbol id="auto-lado" viewBox="0 0 400 160">
+      <path d="M14 112 C14 96 20 86 38 82 L104 72 C118 56 140 40 160 36 C180 32 250 32 270 36 C290 40 312 58 330 72 L368 80 C382 83 388 92 388 104 L388 112 C388 118 384 122 378 122 L346 122 A34 34 0 0 0 278 122 L130 122 A34 34 0 0 0 62 122 L22 122 C17 122 14 118 14 112 Z" fill="#3A3D4B" stroke="#5b6475" stroke-width="2.5"/>
+      <path d="M118 72 C130 58 146 46 162 43 L206 41 L206 72 Z" fill="#15171d"/>
+      <path d="M214 41 L266 42 C282 45 298 57 312 72 L214 72 Z" fill="#15171d"/>
+      <path d="M210 76 V118 M122 76 V118" stroke="#4b5563" stroke-width="2" fill="none"/>
+      <ellipse cx="25" cy="93" rx="9" ry="5" fill="#e5e7eb"/>
+      <rect x="379" y="86" width="9" height="11" rx="2" fill="#f87171"/>
+      <circle cx="96" cy="122" r="28" fill="#0e0f13" stroke="#4b5563" stroke-width="3"/>
+      <circle cx="312" cy="122" r="28" fill="#0e0f13" stroke="#4b5563" stroke-width="3"/>
+    </symbol>
+    <symbol id="auto-frente" viewBox="0 0 200 140">
+      <path d="M18 104 L22 74 C24 64 32 59 44 57 L60 32 C64 26 70 24 78 24 L122 24 C130 24 136 26 140 32 L156 57 C168 59 176 64 178 74 L182 104 C182 110 178 114 172 114 L28 114 C22 114 18 110 18 104 Z" fill="#3A3D4B" stroke="#5b6475" stroke-width="2.5"/>
+      <path d="M68 36 L132 36 L146 56 L54 56 Z" fill="#15171d"/>
+      <ellipse cx="44" cy="78" rx="14" ry="8" fill="#e5e7eb"/><ellipse cx="156" cy="78" rx="14" ry="8" fill="#e5e7eb"/>
+      <rect x="82" y="94" width="36" height="11" rx="2" fill="#f3f4f6"/>
+    </symbol>
+    <symbol id="auto-atras" viewBox="0 0 200 140">
+      <path d="M18 104 L22 74 C24 64 32 59 44 57 L60 32 C64 26 70 24 78 24 L122 24 C130 24 136 26 140 32 L156 57 C168 59 176 64 178 74 L182 104 C182 110 178 114 172 114 L28 114 C22 114 18 110 18 104 Z" fill="#3A3D4B" stroke="#5b6475" stroke-width="2.5"/>
+      <path d="M72 36 L128 36 L140 54 L60 54 Z" fill="#15171d"/>
+      <rect x="28" y="70" width="30" height="13" rx="3" fill="#f87171"/><rect x="142" y="70" width="30" height="13" rx="3" fill="#f87171"/>
+      <rect x="82" y="80" width="36" height="11" rx="2" fill="#f3f4f6"/>
+    </symbol>
+  </defs>
+</svg>

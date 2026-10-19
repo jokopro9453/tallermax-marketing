@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>Reel · Ingreso con fotos</title>
+<link rel="stylesheet" href="reel.css">
+<style>
+  .auto { position: relative; width: 920px; }
+  .auto svg { width: 920px; height: 368px; display: block; }
+  .marca { position: absolute; border: 6px dashed var(--amarillo); border-radius: 50%; }
+  .marca b { position: absolute; top: -64px; left: 50%; transform: translateX(-50%); font: 800 40px/1 "JBM"; color: var(--amarillo); }
+  .pantalla { background: #2A2C36; border-radius: 34px; padding: 40px 0 30px; }
+</style>
+</head>
+<body>
+
+<section class="esc oscuro centro" data-dur="3.4">
+  <div class="ceja" data-in="0.1">¿Te ha pasado?</div>
+  <h1 class="tt xl" data-in="0.25">«Ese rayón <em>no estaba.»</em></h1>
+</section>
+
+<section class="esc oscuro centro" data-dur="3.4">
+  <h2 class="tt" data-in="0.15">Y es tu palabra <em>contra la suya.</em></h2>
+  <p class="sub" data-in="0.8">Sin pruebas, pierdes la discusión… o al cliente.</p>
+</section>
+
+<section class="esc claro" data-dur="4.2">
+  <div class="ceja" data-in="0.1">Con Tallermax</div>
+  <h2 class="tt md" data-in="0.2">Al recibirlo, <em>foto a las 4 caras.</em></h2>
+  <div class="fotos">
+    <div class="foto" data-in="0.8" data-anim="escala"><svg viewBox="0 0 200 140" width="80%"><use href="autos.svg#auto-frente"/></svg><small>FRENTE</small><i class="ok"></i></div>
+    <div class="foto" data-in="1.2" data-anim="escala"><svg viewBox="0 0 200 140" width="80%"><use href="autos.svg#auto-atras"/></svg><small>ATRÁS</small><i class="ok"></i></div>
+    <div class="foto" data-in="1.6" data-anim="escala"><svg viewBox="0 0 400 160" width="100%"><use href="autos.svg#auto-lado"/></svg><small>IZQUIERDA</small><i class="ok"></i></div>
+    <div class="foto" data-in="2.0" data-anim="escala"><svg viewBox="0 0 400 160" width="100%" style="transform:scaleX(-1)"><use href="autos.svg#auto-lado"/></svg><small>DERECHA</small><i class="ok"></i></div>
+  </div>
+</section>
+
+<section class="esc claro" data-dur="4.0">
+  <h2 class="tt md" data-in="0.15">Marcas los daños <em>con el dedo.</em></h2>
+  <div class="pantalla ui" data-in="0.4">
+    <div class="auto">
+      <svg viewBox="0 0 400 160"><use href="autos.svg#auto-lado"/>
+        <path d="M226 92 L236 95 L243 93 L251 97 L259 95 L268 99" stroke="#e5e7eb" stroke-width="2" fill="none" stroke-linecap="round"/></svg>
+      <div class="marca" style="left:513px;top:166px;width:110px;height:110px" data-in="1.1" data-anim="escala"><b>1</b></div>
+      <div class="marca" style="left:800px;top:222px;width:72px;height:72px" data-in="1.7" data-anim="escala"><b>2</b></div>
+    </div>
+  </div>
+</section>
+
+<section class="esc oscuro" data-dur="4.6">
+  <h2 class="tt md" data-in="0.15">Y la evidencia le llega <em>a su correo.</em></h2>
+  <div class="correo" data-in="0.7">
+    <div class="de">De: tu taller · 09:42</div>
+    <h3>Constancia de ingreso de su vehículo</h3>
+    <dl><dt>Patente</dt><dd><span class="patente">KL·TR·42</span></dd><dt>Ingreso</dt><dd>hoy · 09:42</dd><dt>Daños</dt><dd>2, con foto</dd></dl>
+    <div class="minis">
+      <div><svg viewBox="0 0 200 140" width="100%"><use href="autos.svg#auto-frente"/></svg></div>
+      <div><svg viewBox="0 0 200 140" width="100%"><use href="autos.svg#auto-atras"/></svg></div>
+      <div><svg viewBox="0 0 400 160" width="100%"><use href="autos.svg#auto-lado"/></svg></div>
+      <div><svg viewBox="0 0 400 160" width="100%" style="transform:scaleX(-1)"><use href="autos.svg#auto-lado"/></svg></div>
+    </div>
+  </div>
+</section>
+
+<section class="esc indigo centro" data-dur="3.4">
+  <h2 class="tt xl" data-in="0.15">Antes de que <em>se vaya.</em></h2>
+  <p class="sub" data-in="0.8">Con fecha, hora y fotos. Nada que discutir.</p>
+</section>
+
+<section class="esc oscuro centro" data-dur="4.8">
+  <div class="logo-g" data-in="0.1" data-anim="escala"><svg viewBox="0 0 64 64"><path d="M32 6.5 L54.08 19.25 L54.08 44.75 L32 57.5 L9.92 44.75 L9.92 19.25 Z" fill="#4F46E5" stroke="#4F46E5" stroke-width="7" stroke-linejoin="round"/><path d="M21.1 20 H42.9 Q44.5 20 44.5 21.6 V25.4 Q44.5 27 42.9 27 H35.5 V43.9 Q35.5 45.5 33.9 45.5 H30.1 Q28.5 45.5 28.5 43.9 V27 H21.1 Q19.5 27 19.5 25.4 V21.6 Q19.5 20 21.1 20 Z" fill="#fff"/></svg><span>tallermax</span></div>
+  <h2 class="tt md" data-in="0.4">Tu nuevo sistema de gestión, <em>hoy.</em></h2>
+  <div data-in="0.9" style="align-self:flex-start"><div class="boton" data-pulso>Pruébalo gratis 7 días</div></div>
+  <p class="chico" data-in="1.2">Escríbenos · link en la bio · @tallermax.cl</p>
+</section>
+
+<script src="reel.js"></script>
+</body>
+</html>

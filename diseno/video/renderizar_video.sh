@@ -25,6 +25,7 @@ compose() { (cd "$TALLERMAX" && docker_ compose "$@"); }
 compose exec -T backend sh -c 'rm -rf /tmp/dvid && mkdir -p /tmp/dvid' < /dev/null
 compose cp "$DISENO/video" backend:/tmp/dvid/video >/dev/null
 compose cp "$DISENO/fuentes" backend:/tmp/dvid/fuentes >/dev/null
+compose cp "$DISENO/capturas" backend:/tmp/dvid/capturas >/dev/null
 compose exec -T backend sh -c '
   ln -sfn /app/node_modules /tmp/dvid/video/node_modules
   node /tmp/dvid/video/renderizar_video.mjs "/tmp/dvid/video/$0.html" /tmp/dvid/cuadros "$@"

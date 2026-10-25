@@ -33,6 +33,9 @@
   .listo header { display: flex; align-items: center; gap: 26px; padding-bottom: 18px; }
   .listo .r { font-size: 34px; padding: 26px 0; }
   .listo .r .check { margin-left: auto; }
+  .precio { margin-top: 64px; display: flex; flex-direction: column; gap: 18px; }
+  .precio b { font: 900 210px/.86 "Inter"; letter-spacing: -.06em; color: var(--amarillo); font-variant-numeric: tabular-nums; }
+  .precio span { font: 600 46px/1 "Inter"; color: var(--suave); }
 </style>
 </head>
 <body class="xl">
@@ -66,7 +69,20 @@
   <div class="etiqueta" style="margin-top:0">Pregunta</div>
   <h2 class="titular sm">¿Qué pasa <em>al día 8?</em></h2>
   <div class="respuesta"><b>Tú decides.</b> Si te sirve, sigues con tu plan. Si no, no pagas nada.</div>
+  <div class="desliza">Desliza →</div>
 </section>
+
+<section class="slide oscuro">
+  <div class="etiqueta" style="margin-top:0">Pregunta</div>
+  <h2 class="titular sm">¿Y cuánto <em>cuesta?</em></h2>
+  <div class="precio"><b>$30.000</b><span>al mes + IVA</span></div>
+  <div class="lista-gana">
+    <div class="gana"><i></i><div><b>Usuarios ilimitados</b><span>Todo tu equipo entra, sin pagar por persona.</span></div></div>
+    <div class="gana"><i></i><div><b>Precio de fundador</b><span>Para los primeros 5 talleres. Se mantiene mientras sigas con nosotros.</span></div></div>
+    <div class="gana"><i></i><div><b>Tus datos son tuyos</b><span>Los descargas en Excel cuando quieras.</span></div></div>
+  </div>
+</section>
+
 <section class="slide indigo">
   <img class="logo" src="logo/svg/tallermax-horizontal-blanco.svg" alt="tallermax">
   <h2 class="titular" style="margin-top:110px">Tu nuevo sistema de gestión, <em>hoy.</em></h2>

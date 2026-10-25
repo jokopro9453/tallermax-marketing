@@ -42,6 +42,13 @@ Las pone la API de Instagram, no nosotros:
   primera, así que todas van del mismo tamaño.
 * **Tienen que estar en una URL pública**: Instagram las descarga desde ahí.
 
+Y una nuestra, desde el 25 de octubre: **quien ve la pieza por primera vez
+sabe qué es Tallermax antes de ver una función.** La portada de cada carrusel
+lleva la firma (`.firma` en `diseno/marca.css`: logo + «Sistema de gestión para
+talleres mecánicos»). Los reels la llevan arriba en todas las escenas menos la
+última (la pone `diseno/video/reel.js`). Y las dos primeras líneas del texto,
+las que se ven sin tocar «más», dicen qué es Tallermax.
+
 ## Lo que NO va en este repositorio
 
 El token de Instagram. Vive como variable de entorno `IG_TOKEN` en el entorno

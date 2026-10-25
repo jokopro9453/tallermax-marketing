@@ -6,11 +6,23 @@
 //   data-contar="143931"         cuenta en pesos hasta ese número
 //   data-escribir="KLTR42"       se escribe a data-vel letras por segundo
 //
+// La FIRMA (logo + «Sistema para talleres mecánicos») se pone sola arriba y se
+// ve desde el primer cuadro: quien ve tres segundos tiene que saber quién habla.
+// Se apaga en la última escena, que ya trae el logo grande. Para un reel sin
+// firma: <body data-sin-firma>.
+//
 // Expone window.render(t) y window.DURACION para renderizar_video.mjs.
 (() => {
   const FUNDIDO = 0.35;
   const clamp = (x, a = 0, b = 1) => Math.min(b, Math.max(a, x));
   const sale = (x) => 1 - Math.pow(1 - x, 3);
+  let firma = null;
+  if (!document.body.hasAttribute('data-sin-firma')) {
+    firma = document.createElement('div');
+    firma.className = 'firma';
+    firma.innerHTML = '<svg viewBox="0 0 64 64"><path d="M32 6.5 L54.08 19.25 L54.08 44.75 L32 57.5 L9.92 44.75 L9.92 19.25 Z" fill="#4F46E5" stroke="#4F46E5" stroke-width="7" stroke-linejoin="round"/><path d="M21.1 20 H42.9 Q44.5 20 44.5 21.6 V25.4 Q44.5 27 42.9 27 H35.5 V43.9 Q35.5 45.5 33.9 45.5 H30.1 Q28.5 45.5 28.5 43.9 V27 H21.1 Q19.5 27 19.5 25.4 V21.6 Q19.5 20 21.1 20 Z" fill="#fff"/></svg><b>tallermax</b><span>Sistema para talleres mecánicos</span>';
+    document.body.appendChild(firma);
+  }
   const escenas = [...document.querySelectorAll('.esc')];
   let t0 = 0;
   for (const e of escenas) { e._inicio = t0; e._dur = Number(e.dataset.dur); t0 += e._dur; }
@@ -23,6 +35,7 @@
       const entra = i === 0 ? 1 : clamp(local / FUNDIDO);
       const salir = i === escenas.length - 1 ? 0 : clamp((local - (e._dur - FUNDIDO)) / FUNDIDO);
       const vis = local >= -0.001 && local <= e._dur + 0.001 ? entra * (1 - salir) : 0;
+      if (firma && i === escenas.length - 1) firma.style.opacity = 1 - (local >= 0 ? clamp(local / FUNDIDO) : 0);
       e.style.opacity = vis;
       e.style.visibility = vis > 0.001 ? 'visible' : 'hidden';
       if (vis <= 0.001) return;

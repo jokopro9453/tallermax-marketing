@@ -1,7 +1,8 @@
 /* Reels de Tallermax: 1080 × 1920, escenas a pantalla completa.
    Regla de lectura: cada escena dura 3 a 4,5 s y su frase cabe en una mirada
    (≤ 10 palabras). Zona segura de Reels: el texto vive entre y=280 y y=1480,
-   lejos de la franja derecha donde Instagram pone sus botones. */
+   lejos de la franja derecha donde Instagram pone sus botones. Arriba de todo
+   va la firma (la pone reel.js), así que las escenas empiezan en y=420. */
 @font-face { font-family: "Inter"; src: url(../fuentes/Inter.ttf); font-weight: 100 900; }
 @font-face { font-family: "JBM"; src: url(../fuentes/JetBrainsMono.ttf); font-weight: 100 800; }
 @font-face { font-family: "Archivo"; src: url(../fuentes/Archivo.ttf); font-weight: 100 900; font-stretch: 62% 125%; }
@@ -9,7 +10,15 @@
 * { box-sizing: border-box; margin: 0; padding: 0; }
 body { width: 1080px; height: 1920px; overflow: hidden; background: var(--grafito); font-family: "Inter", sans-serif; font-variation-settings: "opsz" 32; }
 
-.esc { position: absolute; inset: 0; padding: 300px 90px 440px 80px; display: flex; flex-direction: column; gap: 40px; }
+.esc { position: absolute; inset: 0; padding: 420px 90px 440px 80px; display: flex; flex-direction: column; gap: 40px; }
+[data-sin-firma] .esc { padding-top: 300px; }
+
+/* Firma: quién habla y qué es, desde el primer cuadro y en todas las escenas. */
+.firma { position: absolute; z-index: 5; top: 290px; left: 80px; display: flex; align-items: center; gap: 16px;
+  background: rgba(18,19,24,.86); border: 2px solid rgba(255,255,255,.14); border-radius: 999px; padding: 12px 30px 12px 14px; color: #fff; }
+.firma svg { width: 64px; height: 64px; flex: none; }
+.firma b { font: 900 47px/1 "Inter"; letter-spacing: -.05em; }
+.firma span { font: 600 31px/1 "Inter"; color: #C9CCD6; margin-left: 4px; padding-left: 18px; border-left: 2px solid rgba(255,255,255,.22); }
 .esc::before { content: ""; position: absolute; inset: 0; z-index: -1; background-size: 40px 40px; }
 .oscuro { background: radial-gradient(900px 900px at 100% 0%, rgba(79,70,229,.45), transparent 65%), var(--grafito); color: #F4F4F6; --resalte: var(--amarillo); }
 .oscuro::before { background-image: radial-gradient(circle, rgba(255,255,255,.06) 0 2px, transparent 2.5px); }

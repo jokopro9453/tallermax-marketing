@@ -96,6 +96,14 @@ body { background: #000; }
 /* El logo oficial (diseno/logo/svg), en lugar del provisorio de la versión 1. */
 .logo { height: 64px; width: auto; align-self: flex-start; }
 
+/* Firma de la portada: el logo y qué es Tallermax, para quien nunca lo ha visto.
+   Va en la PRIMERA lámina de cada carrusel, en lugar del logo solo. */
+.firma { display: flex; align-items: center; gap: 24px; align-self: flex-start; }
+.firma .logo { align-self: center; }
+.firma span { font: 600 25px/1.2 "Inter"; color: var(--suave); padding-left: 24px; border-left: 2px solid var(--puntos); }
+.claro .firma span { border-left-color: rgba(18,19,24,.18); }
+.indigo .firma span, .oscuro .firma span { border-left-color: rgba(255,255,255,.25); }
+
 /* ---------- Componentes de las piezas (lote del 20 oct en adelante) ---------- */
 
 .desliza { position: absolute; right: 80px; bottom: 64px; font: 600 26px/1 "JBM"; letter-spacing: .04em; color: var(--suave); }

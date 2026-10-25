@@ -52,10 +52,17 @@ Usuarios del sistema → Agregar*:
 * *Asignar activos → Cuentas publicitarias →* la cuenta de Tallermax, con
   **«Administrar campañas»** y nada más. Sin «Administrar cuenta
   publicitaria»: así el token no puede tocar pagos ni el límite de gasto.
-* *Asignar activos → Apps →* la app.
+* *Asignar activos → Apps →* la app, marcando **«Desarrollar app»** (o *Control
+  total*, si es lo único que ofrece). Este paso va **antes** de generar el
+  token: sin un rol en la app, el token se queda en «No hay permisos
+  disponibles. Asigna un rol de app al usuario del sistema» (25 oct). Ese rol
+  es sobre la app, no sobre la cuenta publicitaria, que sigue sólo con
+  «Administrar campañas».
 * *Generar token:* la app, caducidad **Nunca**, permisos **`ads_management`** y
-  **`ads_read`**. Meta lo muestra **una sola vez**: copiarlo directo al paso 5,
-  sin pegarlo en ningún chat.
+  **`ads_read`**. Si con el rol puesto siguen sin aparecer, a la app le falta el
+  caso de uso: developers.facebook.com → la app → *Casos de uso → Agregar* →
+  «Crear y administrar anuncios con la API de marketing». Meta muestra el token
+  **una sola vez**: copiarlo directo al paso 5, sin pegarlo en ningún chat.
 
 **5. Un entorno aparte en la nube.** En claude.ai → Code → entornos, crear
 `tallermax-anuncios` (separado del de Instagram, para que el publicador no

@@ -1,0 +1,16 @@
+{
+  "nombre": "Talleres fundadores · oct-nov 2026",
+  "prefijo": "TMX",
+  "moneda": "CLP",
+  "tope": 35000,
+  "inicio": "2026-10-27",
+  "fin": "2026-11-13",
+  "accion_conversacion": "onsite_conversion.messaging_conversation_started_7d",
+  "reglas": {
+    "gasto_minimo_para_juzgar": 4000,
+    "dias_minimos": 3,
+    "multiplo_costo": 2.0,
+    "conversaciones_minimas_ganador": 2,
+    "gasto_sin_resultado_campana": 8000
+  }
+}

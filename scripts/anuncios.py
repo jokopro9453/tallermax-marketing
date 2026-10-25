@@ -1,8 +1,13 @@
 #!/usr/bin/env python3
 """Piloto de la campaña de Meta de Tallermax: lee los resultados y pausa lo que no rinde.
 
-    python3 scripts/anuncios.py revisar --cuenta act_<id> [--aplicar] [--hoy AAAA-MM-DD] [--falso escenario.json]
-    python3 scripts/anuncios.py activar <id_anuncio> --cuenta act_<id> [--hoy ...] [--falso ...]
+    python3 scripts/anuncios.py cuentas [--falso escenario.json]
+    python3 scripts/anuncios.py revisar [--cuenta act_<id>] [--aplicar] [--hoy AAAA-MM-DD] [--falso escenario.json]
+    python3 scripts/anuncios.py activar <id_anuncio> [--cuenta act_<id>] [--hoy ...] [--falso ...]
+
+`cuentas` dice qué cuentas publicitarias ve el token y con qué permisos: es lo
+primero que se corre con un token nuevo. Sin --cuenta, revisar y activar usan
+la `cuenta` de anuncios/campana.json.
 
 Lo que PUEDE hacer, y nada más:
   * leer la cuenta publicitaria, sus campañas, sus anuncios y sus resultados;
@@ -60,6 +65,8 @@ CAMPOS_CAMPANA = "id,name,status,effective_status,objective,daily_budget,lifetim
 CAMPOS_ANUNCIO = "id,name,status,effective_status,created_time,adset_id"
 CAMPOS_RESULTADO = "ad_id,ad_name,spend,impressions,reach,clicks,actions"
 ESTADOS_CON_PROBLEMA = {"DISAPPROVED", "WITH_ISSUES"}
+# Lo que el token necesita. public_profile lo concede Meta siempre.
+PERMISOS_ESPERADOS = {"ads_management", "ads_read", "public_profile"}
 
 
 class Fallo(Exception):
@@ -84,6 +91,9 @@ class ApiReal:
                 err = json.loads(e.read()).get("error", {})
             except (ValueError, AttributeError):
                 err = {}
+            if not err and e.code == 403:
+                raise Fallo("La red de la nube bloqueó graph.facebook.com (403 sin respuesta de Meta). Hay que "
+                            "permitir ese dominio en el acceso a la red del entorno.") from None
             if err.get("code") == 190:
                 raise Fallo("Meta rechazó el token: falta, venció o fue revocado. Hay que generar uno nuevo "
                             "para el usuario del sistema y reemplazar el network secret del entorno.") from None
@@ -220,6 +230,39 @@ def leer(api, cuenta: str, config: dict) -> dict:
     }
 
 
+def cuentas(api) -> dict:
+    """Las cuentas publicitarias que ve el token y sus permisos. Sólo lee."""
+    filas = todos(api, "me/adaccounts", {
+        "fields": "name,currency,account_status,amount_spent,spend_cap", "limit": 100})
+    alertas: list[str] = []
+    try:
+        concedidos = sorted(p["permission"] for p in todos(api, "me/permissions", {})
+                            if p.get("status") == "granted")
+    except Fallo as e:
+        concedidos = None
+        alertas.append(f"No se pudieron leer los permisos del token: {e}")
+    if concedidos is not None:
+        faltan = sorted({"ads_management", "ads_read"} - set(concedidos))
+        sobran = sorted(set(concedidos) - PERMISOS_ESPERADOS)
+        if faltan:
+            alertas.append(f"Al token le faltan permisos: {', '.join(faltan)}.")
+        if sobran:
+            alertas.append(f"El token tiene permisos de más: {', '.join(sobran)}. Conviene generarlo de nuevo "
+                           "marcando sólo ads_management y ads_read.")
+    if not filas:
+        alertas.append("El token no ve ninguna cuenta publicitaria: falta asignársela al usuario del sistema "
+                       "(Asignar activos → Cuentas publicitarias).")
+    lista = []
+    for c in filas:
+        factor = FACTOR.get(c.get("currency"), 1)
+        lista.append({"id": c.get("id"), "nombre": c.get("name"), "moneda": c.get("currency"),
+                      "estado": c.get("account_status"),
+                      "gastado_historico": numero(c.get("amount_spent")) / factor,
+                      "limite_de_gasto": numero(c.get("spend_cap")) / factor or None})
+    return {"ok": bool(filas) and not any(a.startswith("Al token le faltan") for a in alertas),
+            "modo": "cuentas", "cuentas": lista, "permisos": concedidos, "alertas": alertas}
+
+
 # ── Decisiones ───────────────────────────────────────────────────────────────
 
 
@@ -333,9 +376,9 @@ def activar(api, cuenta: str, config: dict, hoy: date, id_anuncio: str) -> dict:
 
 def main() -> int:
     p = argparse.ArgumentParser(description=__doc__.split("\n")[0])
-    p.add_argument("orden", choices=["revisar", "activar"])
+    p.add_argument("orden", choices=["cuentas", "revisar", "activar"])
     p.add_argument("id_anuncio", nargs="?")
-    p.add_argument("--cuenta", required=True, help="act_<número> de la cuenta publicitaria")
+    p.add_argument("--cuenta", help="act_<número> de la cuenta publicitaria (por omisión, la de campana.json)")
     p.add_argument("--aplicar", action="store_true", help="pausar de verdad (sin esto sólo informa)")
     p.add_argument("--hoy", help="AAAA-MM-DD, para pruebas")
     p.add_argument("--falso", help="escenario JSON en vez de Meta, para pruebas")
@@ -344,13 +387,18 @@ def main() -> int:
     config = json.loads(CONFIG.read_text(encoding="utf-8"))
     hoy = date.fromisoformat(args.hoy) if args.hoy else datetime.now(ZONA).date()
     api = ApiFalsa(args.falso) if args.falso else ApiReal()
+    cuenta = args.cuenta or config.get("cuenta")
     try:
-        if args.orden == "activar":
+        if args.orden == "cuentas":
+            salida = cuentas(api)
+        elif not cuenta:
+            raise Fallo("Falta la cuenta: --cuenta act_<id>, o `cuenta` en anuncios/campana.json.")
+        elif args.orden == "activar":
             if not args.id_anuncio or not args.id_anuncio.isdigit():
                 raise Fallo("activar necesita el id numérico del anuncio.")
-            salida = activar(api, args.cuenta, config, hoy, args.id_anuncio)
+            salida = activar(api, cuenta, config, hoy, args.id_anuncio)
         else:
-            salida = revisar(api, args.cuenta, config, hoy, args.aplicar)
+            salida = revisar(api, cuenta, config, hoy, args.aplicar)
     except Fallo as e:
         salida = {"ok": False, "error": str(e)}
     if isinstance(api, ApiFalsa):

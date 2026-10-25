@@ -7,10 +7,11 @@ con **`TMX`**. Las reglas y los números están en `campana.json`, y el script l
 explica arriba del todo.
 
 ```bash
+python3 scripts/anuncios.py cuentas                              # qué cuentas y permisos ve el token
 python3 scripts/anuncios.py revisar --cuenta act_<id>            # sólo informa
 python3 scripts/anuncios.py revisar --cuenta act_<id> --aplicar  # informa y pausa
 python3 scripts/anuncios.py activar <id_anuncio> --cuenta act_<id>
-python3 scripts/probar_anuncios.py                               # 22 pruebas, sin tocar Meta
+python3 scripts/probar_anuncios.py                               # 25 pruebas, sin tocar Meta
 ```
 
 ## Tres seguros, de afuera hacia adentro

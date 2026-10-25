@@ -201,6 +201,34 @@ def activar_pasada_la_fecha_se_niega():
     assert not s["ok"] and s["_posts"] == [], s
 
 
+def escenario_cuentas(cuentas: list[dict], permisos: list[str]) -> dict:
+    return {"get": {"me/adaccounts": {"data": cuentas},
+                    "me/permissions": {"data": [{"permission": p, "status": "granted"} for p in permisos]}}}
+
+
+@caso
+def cuentas_lista_las_que_ve():
+    s = correr(escenario_cuentas([{"id": CUENTA, "name": "Tallermax", "currency": "CLP", "account_status": 1,
+                                   "amount_spent": "12000", "spend_cap": "35000"}],
+                                 ["ads_management", "ads_read", "public_profile"]), "cuentas")
+    assert s["ok"] and s["cuentas"][0]["id"] == CUENTA and s["cuentas"][0]["limite_de_gasto"] == 35000, s
+    assert s["alertas"] == [] and s["_posts"] == [], s
+
+
+@caso
+def cuentas_avisa_permisos_de_mas_y_de_menos():
+    s = correr(escenario_cuentas([{"id": CUENTA, "currency": "CLP"}], ["ads_read", "business_management"]), "cuentas")
+    assert not s["ok"], s
+    assert any("faltan" in a and "ads_management" in a for a in s["alertas"]), s
+    assert any("de más" in a and "business_management" in a for a in s["alertas"]), s
+
+
+@caso
+def cuentas_sin_ninguna_falla():
+    s = correr(escenario_cuentas([], ["ads_management", "ads_read"]), "cuentas")
+    assert not s["ok"] and any("ninguna cuenta" in a for a in s["alertas"]), s
+
+
 if __name__ == "__main__":
     fallas = 0
     for fn in CASOS:

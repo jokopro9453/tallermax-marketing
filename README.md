@@ -24,9 +24,10 @@ piezas/
   2026-10-20-1315-el-rayon-que-ya-estaba/
     01.jpg 02.jpg …   en orden; la primera es la portada. El texto, la fecha
                       y el estado están en la cola, no aquí
-investigacion/        en qué se basan los horarios y los anuncios
-scripts/              publicar.py (pendiente)
-vista-previa/         la página de aprobación (pendiente)
+anuncios/             el piloto de la campaña de Meta: reglas, tope y cómo se configura
+investigacion/        horarios, anuncios, la competencia y por qué elegir Tallermax
+scripts/              publicar.py (Instagram) · anuncios.py (campaña de Meta) y sus pruebas
+vista-previa/         la página de aprobación
 ```
 
 ## Reglas de las imágenes

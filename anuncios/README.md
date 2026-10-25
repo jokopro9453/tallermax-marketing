@@ -35,15 +35,16 @@ sistema sólo existen dentro de un portafolio comercial (business.facebook.com).
 * *Configuración → Cuentas → Cuentas publicitarias → Agregar → Agregar una
   cuenta publicitaria* → el número de la cuenta con la que ya se pagaron
   anuncios. Si era personal, pasa a ser del portafolio, y eso no se deshace.
-* *Configuración → Cuentas → Apps → Agregar → Conectar un identificador de app*
-  → el identificador de la app del token de Instagram (developers.facebook.com
-  → *Mis apps*).
-
-**3. La API de marketing en la app.** developers.facebook.com → la app →
-*Casos de uso → Agregar casos de uso* → **«Crear y administrar anuncios con la
-API de marketing»**. Si la app no deja sumarlo junto al de Instagram, se crea
-una segunda app de tipo *Negocio* sólo con ese caso de uso, y se conecta al
-portafolio igual que la primera.
+**3. Una app nueva, sólo para anuncios, creada DENTRO del portafolio.** No se
+reclama la app de Instagram: *Agregar → Conectar un identificador de app* falla
+con «Se produjo un problema técnico inesperado» (25 oct). Crearla aparte también
+separa los permisos: la app de Instagram publica y ésta sólo maneja anuncios.
+* developers.facebook.com → *Mis apps → Crear app*.
+* Nombre «Tallermax Anuncios» y el correo de contacto.
+* Caso de uso: **«Crear y administrar anuncios con la API de marketing»** (si
+  no aparece, *Otro → Negocio*, y después se agrega ese caso de uso).
+* Cuando pregunte por el **portafolio comercial**, elegir **Tallermax**. Así
+  la app ya queda dentro y aparece sola en *Configuración → Cuentas → Apps*.
 
 **4. Usuario del sistema.** En business.facebook.com/settings → *Usuarios →
 Usuarios del sistema → Agregar*:

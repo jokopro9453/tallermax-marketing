@@ -30,6 +30,7 @@ import hashlib
 import json
 import os
 import re
+import subprocess
 import sys
 import time
 import urllib.error
@@ -40,10 +41,17 @@ from pathlib import Path
 from zoneinfo import ZoneInfo
 
 API = "https://graph.instagram.com/v25.0"
-CRUDO = "https://raw.githubusercontent.com/jokopro9453/tallermax-marketing/main/"
-# Los videos van por jsDelivr: GitHub los entrega como application/octet-stream y
-# Instagram pide video/mp4. jsDelivr sirve el mismo archivo del repo con el tipo bueno.
-CDN = "https://cdn.jsdelivr.net/gh/jokopro9453/tallermax-marketing@main/"
+REPO = "jokopro9453/tallermax-marketing"
+RAIZ = Path(__file__).resolve().parent.parent
+# Todo se descarga y se verifica desde raw.githubusercontent.com, que es lo que la
+# red del entorno en la nube deja pasar (cdn.jsdelivr.net da 403 desde ahí).
+# A Instagram, en cambio, los videos se le entregan por jsDelivr: GitHub los sirve
+# como application/octet-stream e Instagram pide video/mp4.
+# Las dos direcciones van FIJADAS al commit, no a `main`: así lo que se verifica y
+# lo que baja Instagram es el mismo objeto de git, y jsDelivr no puede entregar
+# una versión vieja de caché (a una rama la guarda hasta 12 horas).
+CRUDO = "https://raw.githubusercontent.com/{repo}/{commit}/"
+CDN = "https://cdn.jsdelivr.net/gh/{repo}@{commit}/"
 ZONA = ZoneInfo("America/Santiago")
 LIMITE_TEXTO = 2200
 LIMITE_HASHTAGS = 30
@@ -128,14 +136,27 @@ def validar(p: dict, ahora: str) -> list[str]:
     return imagenes
 
 
+def commit_actual() -> str:
+    """El commit del clon (en la nube, el último de main). Si no hay git, `main`."""
+    try:
+        r = subprocess.run(["git", "rev-parse", "HEAD"], cwd=RAIZ, capture_output=True, text=True, check=True, timeout=10)
+        commit = r.stdout.strip()
+        return commit if re.fullmatch(r"[0-9a-f]{40}", commit) else "main"
+    except (OSError, subprocess.SubprocessError):
+        return "main"
+
+
 def verificar_imagenes(imagenes: list[str], shas: list[str]) -> list[str]:
-    """Baja cada imagen de GitHub y comprueba que sea el JPEG que se aprobó."""
+    """Baja cada archivo de GitHub, comprueba que sea el que se aprobó y devuelve
+    la dirección que se le da a Instagram."""
+    commit = commit_actual()
+    crudo, cdn = CRUDO.format(repo=REPO, commit=commit), CDN.format(repo=REPO, commit=commit)
     urls = []
     for ruta, sha in zip(imagenes, shas):
         if not re.fullmatch(r"piezas/[\w.-]+/[\w.-]+\.(jpe?g|mp4)", ruta, re.IGNORECASE):
             raise Rechazo(f"Ruta de imagen no permitida: {ruta!r}")
         es_video = ruta.lower().endswith(".mp4")
-        url = (CDN if es_video else CRUDO) + ruta
+        url = crudo + ruta
         try:
             with urllib.request.urlopen(url, timeout=60) as r:
                 datos = r.read()
@@ -149,7 +170,7 @@ def verificar_imagenes(imagenes: list[str], shas: list[str]) -> list[str]:
         if real != sha:
             raise Rechazo(f"{ruta} no es la imagen que se aprobó (SHA-256 distinto). ¿Se regeneró sin "
                           "actualizar imagenesSha, o falta hacer push?")
-        urls.append(url)
+        urls.append(cdn + ruta if es_video else url)
     return urls
 
 

@@ -209,9 +209,18 @@ producto, no de esta campaña.
    (todo incluido, usuarios ilimitados), Appli-Car USD 25 a 32, Bujía $29.990 a
    $36.990 con IVA y MasterCar desde 1,5 UF. **Un precio de fundador por debajo
    de Bujía, congelado mientras sigan siendo clientes**, se defiende solo.
+
+   **Decidido el 25 de octubre:** **$30.000 al mes + IVA, con usuarios
+   ilimitados**, y la boleta del SII como extra opcional de **$20.000 + IVA**.
+   Comparado con Bujía: su plan con usuarios ilimitados más la boleta suma
+   $56.980 con IVA, y el nuestro, $59.500 con IVA. Sin boleta, $35.700 contra
+   $36.990. Quedamos a la par, no más baratos, así que la diferencia la tienen
+   que hacer la puesta en marcha y la cercanía. La boleta todavía no tiene
+   pantallas: no se ofrece con fecha hasta que esté terminada.
 3. **Oferta de taller fundador, concreta:** para los primeros 5, precio de
    fundador para siempre y puesta en marcha en persona. A cambio, permiso para
-   contar su caso (un video corto o una frase con su nombre).
+   contar su caso (un video corto o una frase con su nombre). El guion de
+   WhatsApp con todas las respuestas está en `guiones/whatsapp-ventas.md`.
 4. **Respuestas listas para las objeciones** (ver la tabla de la sección 4):
    SII, «ya uso cuaderno», «mis mecánicos no saben de computadores», «¿y si
    ustedes cierran?». Para la última: los datos se exportan a Excel cuando

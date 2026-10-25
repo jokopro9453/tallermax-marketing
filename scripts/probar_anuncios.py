@@ -13,6 +13,7 @@ import tempfile
 from pathlib import Path
 
 SCRIPT = Path(__file__).resolve().parent / "anuncios.py"
+TOPE = json.loads((SCRIPT.parent.parent / "anuncios" / "campana.json").read_text(encoding="utf-8"))["tope"]
 CUENTA = "act_111"
 
 
@@ -29,7 +30,7 @@ def escenario(campanas: list[dict], moneda: str = "CLP", limite: str = "35000") 
         get[f"{CUENTA}/campaigns"]["data"].append({
             "id": c["id"], "name": c.get("nombre", "TMX · Talleres fundadores"), "status": c.get("estado", "ACTIVE"),
             "effective_status": c.get("estado", "ACTIVE"), "objective": "OUTCOME_ENGAGEMENT",
-            "lifetime_budget": c.get("total", "35000"), "daily_budget": c.get("diario"),
+            "lifetime_budget": c.get("total", str(TOPE)), "daily_budget": c.get("diario"),
             "start_time": "2026-10-27T00:00:00-0300", "stop_time": "2026-11-13T23:59:00-0300"})
         get[f"{c['id']}/adsets"] = {"data": [{"id": c["id"] + "9", "name": "Gran Valparaíso"}]}
         get[f"{c['id']}/ads"] = {"data": [a for a, _ in c["anuncios"]]}
@@ -133,7 +134,7 @@ def presupuesto_sobre_el_tope_pausa_campana():
 
 @caso
 def gasto_en_el_tope_pausa_todo():
-    s = correr(escenario([{"id": "1", "anuncios": [anuncio("10", 20000, 6), anuncio("11", 15000, 2)]}]), "revisar", "--hoy", "2026-11-10")
+    s = correr(escenario([{"id": "1", "anuncios": [anuncio("10", TOPE - 9400, 6), anuncio("11", 9400, 2)]}]), "revisar", "--hoy", "2026-11-10")
     assert [a["tipo"] for a in s["acciones"]] == ["pausar_campana"], s
 
 

@@ -16,9 +16,12 @@ python3 scripts/probar_anuncios.py                               # 25 pruebas, s
 
 ## Tres seguros, de afuera hacia adentro
 
-1. **Límite de gasto de la cuenta, en $35.000.** Lo aplica Meta, y el token de
-   Claude no puede cambiarlo porque no tiene permiso sobre los pagos.
-2. **Presupuesto TOTAL de la campaña, en $35.000**, con fecha de término. Un
+1. **Límite de gasto de la cuenta, en $35.000 con IVA.** Lo aplica Meta, y el
+   token de Claude no puede cambiarlo porque no tiene permiso sobre los pagos.
+2. **Presupuesto TOTAL de la campaña, en $29.400**, con fecha de término. Meta
+   cobra encima un 19% de IVA que el presupuesto no incluye: $29.400 de
+   anuncios son los mismos $35.000 del límite. (El 25 oct la API mostró el
+   límite como 31.091 con 1.680 ya gastados: quedan 29.411 para anuncios.) Un
    presupuesto total no se pasa nunca. Si alguien lo cambia a diario o lo sube
    sobre el tope, el script pausa la campaña.
 3. **El script sólo pausa solo.** Activar un anuncio lo hace sólo si se le pide
@@ -64,6 +67,10 @@ Usuarios del sistema → Agregar*:
   caso de uso: developers.facebook.com → la app → *Casos de uso → Agregar* →
   «Crear y administrar anuncios con la API de marketing». Meta muestra el token
   **una sola vez**: copiarlo directo al paso 5, sin pegarlo en ningún chat.
+* Si `anuncios.py cuentas` avisa «permisos de más» (le pasó al primero, el 25
+  oct: traía los de Instagram y WhatsApp), se arregla en el usuario del
+  sistema: *Revocar tokens*, generar uno nuevo marcando sólo los dos, y
+  reemplazar el valor del network secret.
 
 **5. Un entorno aparte en la nube.** En claude.ai → Code → entornos, crear
 `tallermax-anuncios` (separado del de Instagram, para que el publicador no
@@ -84,9 +91,9 @@ Con eso Claude crea la rutina diaria y hace una primera pasada **sin
 |---|---|
 | Nombre | **`TMX · Talleres fundadores`**. El prefijo `TMX` es obligatorio: es lo que el piloto reconoce. |
 | Objetivo | **Interacción** → dónde: **Apps de mensajes → WhatsApp** → meta: maximizar conversaciones |
-| Presupuesto | **Presupuesto de campaña Advantage+, TOTAL, $35.000** (no diario) |
-| Fechas | **lun 27 oct 00:00 → jue 13 nov 23:59** |
+| Presupuesto | **Presupuesto de campaña Advantage+, TOTAL, $29.400** (no diario). Con el IVA son $35.000; si se pone $35.000, el script lo toma como sobre el tope y pausa la campaña. |
+| Fechas | **mar 27 oct 00:00 → vie 13 nov 23:59**. Crearla el **lunes 26** para que Meta alcance a revisar los anuncios (puede tardar hasta un día). |
 | Horario | Programar anuncios: lun–vie **12:30–14:30** y **19:30–22:30**, sáb **10:00–13:00** |
 | Un conjunto | Quilpué, Villa Alemana, Viña del Mar y Valparaíso (+15 km). 28 a 60 años. Sin intereses: el anuncio filtra solo. Ubicaciones Advantage+. |
-| Anuncios | **Usar publicación existente**: reel «Ingreso con fotos», carrusel «Tu sistema hoy» y reel «Evidencia por correo», ya publicados con la firma de marca. Si un reel todavía no sale, se sube el video de `piezas/<id>/reel.mp4` con el mismo texto. **Un solo destino: WhatsApp** (si se marca más de uno, sale el error #2446493). |
+| Anuncios | **Usar publicación existente**: reels «Ingreso con fotos», «Evidencia por correo» y «Tu sistema hoy», ya publicados con la firma de marca. «Tu sistema hoy» sale recién el 28: hasta entonces, o si otro reel todavía no sale, se sube el video de `piezas/<id>/reel.mp4` con el mismo texto. **Un solo destino: WhatsApp** (si se marca más de uno, sale el error #2446493). |
 | Mensaje inicial | «Hola, quiero probar Tallermax 7 días gratis» |

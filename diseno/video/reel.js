@@ -11,7 +11,8 @@
 // Se apaga en la última escena, que ya trae el logo grande. Para un reel sin
 // firma: <body data-sin-firma>.
 //
-// Expone window.render(t) y window.DURACION para renderizar_video.mjs.
+// Expone window.render(t), window.DURACION y window.ESCENAS (inicio y duración
+// de cada escena, en segundos) para renderizar_video.mjs.
 (() => {
   const FUNDIDO = 0.35;
   const clamp = (x, a = 0, b = 1) => Math.min(b, Math.max(a, x));
@@ -24,8 +25,11 @@
     document.body.appendChild(firma);
   }
   const escenas = [...document.querySelectorAll('.esc')];
+  // Con voz en off, renderizar_video.mjs pone en window.DURACIONES_VOZ lo que
+  // necesita cada frase grabada: la escena dura eso si es más que su data-dur.
+  const voz = window.DURACIONES_VOZ || [];
   let t0 = 0;
-  for (const e of escenas) { e._inicio = t0; e._dur = Number(e.dataset.dur); t0 += e._dur; }
+  escenas.forEach((e, i) => { e._inicio = t0; e._dur = Math.max(Number(e.dataset.dur), voz[i] || 0); t0 += e._dur; });
   const DURACION = t0;
   const pesos = (n) => '$' + Math.round(n).toLocaleString('es-CL');
 
@@ -60,5 +64,6 @@
   }
   window.render = render;
   window.DURACION = DURACION;
+  window.ESCENAS = escenas.map((e) => ({ inicio: e._inicio, dur: e._dur }));
   render(0);
 })();

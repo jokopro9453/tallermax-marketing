@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>Reel · El rayón de $80.000</title>
+<link rel="stylesheet" href="reel.css">
+<style>
+  .auto { position: relative; width: 920px; }
+  .auto svg { width: 920px; height: 368px; display: block; }
+  .marca { position: absolute; border: 6px dashed var(--amarillo); border-radius: 50%; }
+  .marca b { position: absolute; top: -64px; left: 50%; transform: translateX(-50%); font: 800 40px/1 "JBM"; color: var(--amarillo); }
+  .pantalla { background: #2A2C36; border-radius: 34px; padding: 40px 0 30px; }
+
+  .monto { font: 900 230px/.9 "Inter"; letter-spacing: -.06em; color: var(--amarillo); font-variant-numeric: tabular-nums; }
+  .cuenta { padding: 30px 44px; }
+  .cuenta .tot { padding: 26px 0; }
+</style>
+</head>
+<body>
+
+<section class="esc oscuro centro" data-dur="3.6">
+  <div class="ceja" data-in="0.1">Haz la cuenta</div>
+  <div class="monto" data-in="0.2" data-contar="80000" data-desde="0.3">$0</div>
+  <h1 class="tt md" data-in="0.9">Repintar una puerta <em>que tú no rayaste.</em></h1>
+</section>
+
+<section class="esc oscuro centro" data-dur="3.6">
+  <h2 class="tt" data-in="0.15">Sin una foto, <em>lo pagas tú.</em></h2>
+  <p class="sub" data-in="0.8">…o pierdes al cliente y todo lo que te iba a traer.</p>
+</section>
+
+<section class="esc claro" data-dur="4.2">
+    <h2 class="tt md" data-in="0.2">Con Tallermax: <em>foto a las 4 caras</em> al recibirlo.</h2>
+  <div class="fotos">
+    <div class="foto" data-in="0.8" data-anim="escala"><svg viewBox="0 0 200 140" width="80%"><use href="autos.svg#auto-frente"/></svg><small>FRENTE</small><i class="ok"></i></div>
+    <div class="foto" data-in="1.2" data-anim="escala"><svg viewBox="0 0 200 140" width="80%"><use href="autos.svg#auto-atras"/></svg><small>ATRÁS</small><i class="ok"></i></div>
+    <div class="foto" data-in="1.6" data-anim="escala"><svg viewBox="0 0 400 160" width="100%"><use href="autos.svg#auto-lado"/></svg><small>IZQUIERDA</small><i class="ok"></i></div>
+    <div class="foto" data-in="2.0" data-anim="escala"><svg viewBox="0 0 400 160" width="100%" style="transform:scaleX(-1)"><use href="autos.svg#auto-lado"/></svg><small>DERECHA</small><i class="ok"></i></div>
+  </div>
+</section>
+
+<section class="esc oscuro" data-dur="4.6">
+  <h2 class="tt md" data-in="0.15">Y la constancia le llega <em>a su correo.</em></h2>
+  <div class="correo" data-in="0.7">
+    <div class="de">De: tu taller · 09:42</div>
+    <h3>Constancia de ingreso de su vehículo</h3>
+    <dl><dt>Patente</dt><dd><span class="patente">KL·TR·42</span></dd><dt>Ingreso</dt><dd>hoy · 09:42</dd><dt>Daños</dt><dd>2, con foto</dd></dl>
+    <div class="minis">
+      <div><svg viewBox="0 0 200 140" width="100%"><use href="autos.svg#auto-frente"/></svg></div>
+      <div><svg viewBox="0 0 200 140" width="100%"><use href="autos.svg#auto-atras"/></svg></div>
+      <div><svg viewBox="0 0 400 160" width="100%"><use href="autos.svg#auto-lado"/></svg></div>
+      <div><svg viewBox="0 0 400 160" width="100%" style="transform:scaleX(-1)"><use href="autos.svg#auto-lado"/></svg></div>
+    </div>
+  </div>
+</section>
+
+<section class="esc indigo centro" data-dur="4.4">
+  <h2 class="tt md" data-in="0.15">Un reclamo evitado paga <em>dos meses.</em></h2>
+  <div class="ui cuenta" data-in="0.6">
+    <div class="tot">Un rayón <b>$80.000</b></div>
+    <div class="tot grande">Tallermax al mes <b>$35.700</b></div>
+  </div>
+  <p class="sub" data-in="1.2">$30.000 + IVA, usuarios ilimitados.</p>
+</section>
+
+<section class="esc oscuro centro" data-dur="4.8">
+  <div class="logo-g" data-in="0.1" data-anim="escala"><svg viewBox="0 0 64 64"><path d="M32 6.5 L54.08 19.25 L54.08 44.75 L32 57.5 L9.92 44.75 L9.92 19.25 Z" fill="#4F46E5" stroke="#4F46E5" stroke-width="7" stroke-linejoin="round"/><path d="M21.1 20 H42.9 Q44.5 20 44.5 21.6 V25.4 Q44.5 27 42.9 27 H35.5 V43.9 Q35.5 45.5 33.9 45.5 H30.1 Q28.5 45.5 28.5 43.9 V27 H21.1 Q19.5 27 19.5 25.4 V21.6 Q19.5 20 21.1 20 Z" fill="#fff"/></svg><span>tallermax</span></div>
+  <h2 class="tt md" data-in="0.4">Tu nuevo sistema de gestión, <em>hoy.</em></h2>
+  <div data-in="0.9" style="align-self:flex-start"><div class="boton" data-pulso>Pruébalo gratis 7 días</div></div>
+  <p class="chico" data-in="1.2">Escríbenos · link en la bio · @tallermax.cl</p>
+</section>
+
+<script src="reel.js"></script>
+</body>
+</html>

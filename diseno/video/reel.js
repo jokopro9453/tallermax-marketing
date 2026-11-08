@@ -31,6 +31,47 @@
   let t0 = 0;
   escenas.forEach((e, i) => { e._inicio = t0; e._dur = Math.max(Number(e.dataset.dur), voz[i] || 0); t0 += e._dur; });
   const DURACION = t0;
+
+  // Subtítulos de la voz en off: window.SUBTITULOS_VOZ trae, por escena, las
+  // palabras de su frase con su tiempo desde que empieza a hablar, y la frase
+  // empieza window.ENTRA_VOZ segundos después que la escena. Se muestran de a
+  // pocas palabras, con la que se está diciendo en amarillo.
+  const entraVoz = window.ENTRA_VOZ || 0;
+  const grupos = [];
+  (window.SUBTITULOS_VOZ || []).forEach((palabras, i) => {
+    if (!escenas[i] || !palabras.length) return;
+    const base = escenas[i]._inicio + entraVoz;
+    let actual = [];
+    palabras.forEach((w, k) => {
+      actual.push({ p: w.p, a: base + w.a, b: base + w.b });
+      const fin = /[.;:?!…»]$/.test(w.p), coma = /,$/.test(w.p) && actual.length >= 2;
+      const corte = fin || coma || actual.length === 4 || k === palabras.length - 1;
+      if (corte) { grupos.push(actual); actual = []; }
+    });
+  });
+  grupos.forEach((g, k) => {
+    g.desde = g[0].a;
+    const sigue = grupos[k + 1];
+    g.hasta = Math.min(g[g.length - 1].b + 0.35, sigue ? sigue[0].a : Infinity);
+  });
+  let subtitulo = null;
+  if (grupos.length) {
+    subtitulo = document.createElement('div');
+    subtitulo.className = 'subtitulo';
+    document.body.appendChild(subtitulo);
+  }
+  function pintarSubtitulo(t) {
+    const g = grupos.find((x) => t >= x.desde && t < x.hasta);
+    subtitulo.style.visibility = g ? 'visible' : 'hidden';
+    if (!g) return;
+    subtitulo.replaceChildren(...g.map((w) => {
+      const s = document.createElement('span');
+      s.textContent = w.p;
+      if (t >= w.a && t < w.b + 0.05) s.className = 'ahora';
+      return s;
+    }));
+  }
+
   const pesos = (n) => '$' + Math.round(n).toLocaleString('es-CL');
 
   function render(t) {
@@ -62,7 +103,8 @@
       });
     });
   }
-  window.render = render;
+  const renderEscenas = render;
+  window.render = subtitulo ? (t) => { renderEscenas(t); pintarSubtitulo(t); } : render;
   window.DURACION = DURACION;
   window.ESCENAS = escenas.map((e) => ({ inicio: e._inicio, dur: e._dur }));
   render(0);

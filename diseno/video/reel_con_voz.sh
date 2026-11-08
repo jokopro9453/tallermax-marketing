@@ -11,6 +11,12 @@
 # empieza su escena y la escena se alarga si la frase no cabe en su data-dur.
 # Al final todo se lleva a -16 LUFS, el volumen al que Instagram no le baja.
 #
+# Lleva subtítulos palabra por palabra: subtitulos.py transcribe cada frase con
+# faster-whisper (la primera vez instala un entorno de Python y baja el modelo,
+# unos 460 MB, desde huggingface.co). Si la carpeta de voz trae guion.json (lo
+# que se pidió decir, una frase por escena), los subtítulos usan su ortografía.
+# Con SIN_SUBTITULOS=1 se arma sin ellos.
+#
 # A diferencia de renderizar_video.sh, éste no usa Docker: corre donde haya
 # node, Chromium y un ffmpeg con libx264 (el contenedor de la nube de Claude los
 # trae). Chromium sale de CHROMIUM_PATH, o de /opt/pw-browsers/chromium.
@@ -59,8 +65,19 @@ done
 sobran=$(find "$voz" -maxdepth 1 -type f -name '[0-9][0-9].*' | sed 's#.*/##; s#\..*##' | awk -v m="$escenas" '$1+0 > m' | sort -u | tr '\n' ' ')
 [ -z "$sobran" ] || { echo "Hay grabaciones para escenas que no existen: $sobran(el reel tiene $escenas)" >&2; exit 1; }
 
+subtitulos=()
+if [ "${SIN_SUBTITULOS:-0}" != 1 ]; then
+  if [ ! -x "$modulos/venv/bin/python" ] || ! "$modulos/venv/bin/python" -c 'import faster_whisper' 2>/dev/null; then
+    python3 -m venv "$modulos/venv"
+    "$modulos/venv/bin/pip" install --quiet faster-whisper==1.1.1 requests
+  fi
+  HF_HOME="$modulos/hf" HF_HUB_DISABLE_XET=1 "$modulos/venv/bin/python" -I "$VIDEO/subtitulos.py" \
+    "$trabajo/voz" "$escenas" "$trabajo/subtitulos.json" $( [ -f "$voz/guion.json" ] && echo "$voz/guion.json" )
+  subtitulos=(--subtitulos "$trabajo/subtitulos.json" --entra "$ENTRA")
+fi
+
 node "$trabajo/video/renderizar_video.mjs" "$trabajo/video/$nombre.html" "$trabajo/cuadros" \
-  --voz "$(IFS=,; echo "${duraciones[*]}")"
+  --voz "$(IFS=,; echo "${duraciones[*]}")" "${subtitulos[@]}"
 
 # Cada frase en su lugar, todas juntas en una pista del largo del video.
 total=$(python3 -c "import json,sys; e=json.load(open(sys.argv[1])); print(e[-1]['inicio']+e[-1]['dur'])" "$trabajo/cuadros/escenas.json")

@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>3 reclamos que se acaban</title>
+<link rel="stylesheet" href="marca.css">
+<style>
+  .reclamo { margin-top: 56px; font: 800 74px/1.08 "Inter"; letter-spacing: -.035em; color: var(--tinta); text-wrap: balance; }
+  .reclamo::before { content: "«"; color: var(--resalte); } .reclamo::after { content: "»"; color: var(--resalte); }
+  .respuesta { margin-top: 56px; background: rgba(255,197,61,.12); border: 3px solid rgba(255,197,61,.45); border-radius: 30px; padding: 40px 44px;
+    font: 600 46px/1.25 "Inter"; letter-spacing: -.02em; color: #F4F4F6; }
+  .respuesta b { color: var(--amarillo); }
+  .num { font: 900 300px/.8 "Inter"; letter-spacing: -.06em; color: var(--amarillo); margin-top: 60px; }
+  .fotos4 { margin-top: 48px; display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+  .fotos4 div { background: #242630; border-radius: 22px; aspect-ratio: 1.45; display: grid; place-items: center; padding: 18px; position: relative; }
+  .fotos4 small { position: absolute; left: 18px; bottom: 14px; font: 700 20px/1 "JBM"; letter-spacing: .1em; color: #9CA3AF; }
+  .fotos4 .marca-d { position: absolute; border: 5px dashed var(--amarillo); border-radius: 50%; }
+  .ficha { margin-top: 56px; padding: 36px 40px; }
+  .ficha .r { font-size: 34px; padding: 26px 0; }
+  .ficha .r:first-child { border-top: 0; }
+</style>
+</head>
+<body class="xl">
+
+<section class="slide oscuro">
+  <div class="firma"><img class="logo" src="logo/svg/tallermax-horizontal-sobre-oscuro.svg" alt="tallermax"><span>Sistema de gestión<br>para talleres mecánicos</span></div>
+  <div class="num">3</div>
+  <h1 class="titular">reclamos que <em>se acaban</em> con Tallermax.</h1>
+  <div class="desliza">Desliza →</div>
+</section>
+
+<section class="slide oscuro">
+  <div class="etiqueta" style="margin-top:0">Reclamo 1</div>
+  <div class="reclamo">Ese rayón no estaba.</div>
+  <div class="fotos4">
+    <div><svg viewBox="0 0 200 140" width="80%"><use href="video/autos.svg#auto-frente"/></svg><small>FRENTE</small></div>
+    <div><svg viewBox="0 0 200 140" width="80%"><use href="video/autos.svg#auto-atras"/></svg><small>ATRÁS</small></div>
+    <div><svg viewBox="0 0 400 160" width="92%"><use href="video/autos.svg#auto-lado"/></svg><small>IZQUIERDA</small>
+      <i class="marca-d" style="left:58%;top:30%;width:70px;height:70px"></i></div>
+    <div><svg viewBox="0 0 400 160" width="92%" style="transform:scaleX(-1)"><use href="video/autos.svg#auto-lado"/></svg><small>DERECHA</small></div>
+  </div>
+  <div class="respuesta">Al recibirlo, <b>foto a las 4 caras</b> y los daños marcados. El cliente se lleva la constancia en su correo.</div>
+</section>
+
+<section class="slide oscuro">
+  <div class="etiqueta" style="margin-top:0">Reclamo 2</div>
+  <div class="reclamo">Lo traje con menos kilómetros.</div>
+  <div class="ficha ui filas">
+    <div class="r"><span class="m">Patente</span><span class="der"><span class="patente">KL·TR·42</span></span></div>
+    <div class="r"><span class="m">Kilometraje</span><span class="der">143.931 km</span></div>
+    <div class="r"><span class="m">Ingreso</span><span class="der">lun 09:42</span></div>
+  </div>
+  <div class="respuesta">El kilometraje queda anotado <b>al recibirlo</b>, con fecha y hora. No hay nada que discutir.</div>
+</section>
+
+<section class="slide oscuro">
+  <div class="etiqueta" style="margin-top:0">Reclamo 3</div>
+  <div class="reclamo">Eso no me lo hicieron la otra vez.</div>
+  <div class="ficha ui filas">
+    <div class="r"><span class="patente">KL·TR·42</span><span class="m" style="margin-left:auto">3 visitas</span></div>
+    <div class="r"><span class="m">12 ago</span><span>Cambio de pastillas</span></div>
+    <div class="r"><span class="m">03 jun</span><span>Mantención 140.000</span></div>
+  </div>
+  <div class="respuesta">Escribes la patente y aparece <b>todo lo que se le hizo</b>, visita por visita.</div>
+  <div class="desliza">Desliza →</div>
+</section>
+
+<section class="slide indigo">
+  <img class="logo" src="logo/svg/tallermax-horizontal-blanco.svg" alt="tallermax">
+  <h2 class="titular" style="margin-top:110px">Menos discusiones. <em>Más clientes que vuelven.</em></h2>
+  <p class="bajada">Pruébalo gratis 7 días, con el logo de tu taller.</p>
+  <div class="pie-cierre"><div class="llamado">Pruébalo gratis 7 días →</div><div class="web" style="position:static">tallermax.website</div></div>
+</section>
+</body>
+</html>

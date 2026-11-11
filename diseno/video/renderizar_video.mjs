@@ -2,18 +2,26 @@
 // DURACION. Corre en el contenedor backend de Tallermax (trae Chromium); lo
 // lanza renderizar_video.sh, que después arma el MP4 con ffmpeg.
 //
-//   node renderizar_video.mjs <archivo.html> <carpeta-salida> [--fps 30] [--tiempos 1.5,6,12]
+//   node renderizar_video.mjs <archivo.html> <carpeta-salida> [--fps 30] [--tiempos 1.5,6,12] [--voz 3.9,4.2,…]
 //
 // Con --tiempos sólo saca esos instantes (para revisar sin generar todo).
+// Con --voz, cada escena dura al menos lo que dice esa lista (lo que ocupa su
+// frase grabada); lo usa reel_con_voz.sh. Deja en escenas.json dónde empieza
+// cada escena, para poner cada frase en su lugar. Con --subtitulos (el JSON de
+// subtitulos.py) y --entra (segundos desde que empieza la escena hasta que se
+// habla), reel.js pone los subtítulos palabra por palabra.
 
 import puppeteer from 'puppeteer-core';
-import { mkdirSync } from 'node:fs';
+import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 
 const args = process.argv.slice(2);
 const [html, salida] = args;
 const opt = (n, d) => (args.includes(n) ? args[args.indexOf(n) + 1] : d);
 const fps = Number(opt('--fps', 30));
 const tiempos = opt('--tiempos', null);
+const voz = opt('--voz', null);
+const subtitulos = opt('--subtitulos', null);
+const entra = Number(opt('--entra', 0));
 mkdirSync(salida, { recursive: true });
 
 const navegador = await puppeteer.launch({
@@ -26,6 +34,11 @@ try {
   const fallos = [];
   p.on('requestfailed', (r) => fallos.push(r.url()));
   p.on('pageerror', (e) => fallos.push(String(e)));
+  if (voz) await p.evaluateOnNewDocument((d) => { window.DURACIONES_VOZ = d; }, voz.split(',').map(Number));
+  if (subtitulos) {
+    await p.evaluateOnNewDocument((s, e) => { window.SUBTITULOS_VOZ = s; window.ENTRA_VOZ = e; },
+      JSON.parse(readFileSync(subtitulos, 'utf8')), entra);
+  }
   await p.goto(`file://${html}`, { waitUntil: 'networkidle0' });
   await p.evaluate(async () => { await Promise.all([...document.fonts].map((f) => f.load())); });
   if (fallos.length) throw new Error(`No cargó: ${fallos.join(', ')}`);
@@ -54,6 +67,7 @@ try {
   if (choques.length) throw new Error(`Se sale de la zona segura:\n  ${choques.join('\n  ')}`);
 
   const duracion = await p.evaluate(() => window.DURACION);
+  writeFileSync(`${salida}/escenas.json`, JSON.stringify(await p.evaluate(() => window.ESCENAS)));
   const lista = tiempos ? tiempos.split(',').map(Number) : Array.from({ length: Math.round(duracion * fps) }, (_, i) => i / fps);
   for (const [i, t] of lista.entries()) {
     await p.evaluate((x) => window.render(x), t);

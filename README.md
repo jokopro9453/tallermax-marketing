@@ -96,3 +96,19 @@ o si un texto invade el pie, en vez de entregar una imagen mal hecha.
 Las tipografías (Archivo, Inter, JetBrains Mono, todas OFL) están en
 `diseno/fuentes/` para que las imágenes salgan iguales en cualquier máquina.
 La paleta es la de la aplicación.
+
+## Reels con voz
+
+Desde el 6 de noviembre los reels nuevos llevan la voz de Joaquín, una
+grabación por escena. `diseno/video/reel_con_voz.sh` limpia cada frase, alarga
+la escena que no le alcance, le pone subtítulos palabra por palabra (faster-whisper,
+`diseno/video/subtitulos.py`) y arma el MP4 sin Docker, así que corre también en
+la nube. Cómo grabar y el guion de cada reel: `guiones/voz-en-off.md`.
+
+## Habilidades de marketing
+
+`.claude/skills/` trae `ad-creative`, `ads` y `copywriting` de
+[coreyhaines31/marketingskills](https://github.com/coreyhaines31/marketingskills)
+(MIT, commit `96798cf`, sin sus evals). Antes de escribir leen
+`.claude/product-marketing.md`: qué es Tallermax, la oferta, el público y lo que
+ya sabemos que funciona. Ese archivo se mantiene al día aquí.

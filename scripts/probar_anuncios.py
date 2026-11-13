@@ -13,13 +13,21 @@ import tempfile
 from pathlib import Path
 
 SCRIPT = Path(__file__).resolve().parent / "anuncios.py"
-TOPE = json.loads((SCRIPT.parent.parent / "anuncios" / "campana.json").read_text(encoding="utf-8"))["tope"]
 CUENTA = "act_111"
+TOPE = 29400
+# Un plan fijo para las pruebas: el de anuncios/campana.json cambia con cada campaña.
+PLAN = {"nombre": "Plan de prueba", "prefijo": "TMX", "moneda": "CLP", "cuenta": CUENTA, "tope": TOPE,
+        "inicio": "2026-10-27", "fin": "2026-11-13",
+        "accion_conversacion": "onsite_conversion.messaging_conversation_started_7d",
+        "reglas": {"gasto_minimo_para_juzgar": 4000, "dias_minimos": 3, "multiplo_costo": 2.0,
+                   "conversaciones_minimas_ganador": 2, "gasto_sin_resultado_campana": 8000,
+                   "impresiones_para_juzgar_toques": 1500, "toques_minimos_pct": 0.5}}
 
 
-def anuncio(id_: str, gasto: int, conv: int, creado: str = "2026-10-27T09:00:00-0300", estado: str = "ACTIVE"):
+def anuncio(id_: str, gasto: int, conv: int, creado: str = "2026-10-27T09:00:00-0300", estado: str = "ACTIVE",
+            vistas: int = 1000, toques: int = 20):
     return ({"id": id_, "name": f"Anuncio {id_}", "status": estado, "effective_status": estado, "created_time": creado},
-            {"ad_id": id_, "spend": str(gasto), "impressions": "1000", "reach": "800", "clicks": "20",
+            {"ad_id": id_, "spend": str(gasto), "impressions": str(vistas), "reach": "800", "clicks": str(toques),
              "actions": [{"action_type": "onsite_conversion.messaging_conversation_started_7d", "value": str(conv)}] if conv else []})
 
 
@@ -31,7 +39,7 @@ def escenario(campanas: list[dict], moneda: str = "CLP", limite: str = "35000") 
             "id": c["id"], "name": c.get("nombre", "TMX · Talleres fundadores"), "status": c.get("estado", "ACTIVE"),
             "effective_status": c.get("estado", "ACTIVE"), "objective": "OUTCOME_ENGAGEMENT",
             "lifetime_budget": c.get("total", str(TOPE)), "daily_budget": c.get("diario"),
-            "start_time": "2026-10-27T00:00:00-0300", "stop_time": "2026-11-13T23:59:00-0300"})
+            "start_time": "2026-10-27T00:00:00-0300", "stop_time": c.get("termino", "2026-11-13T23:59:00-0300")})
         get[f"{c['id']}/adsets"] = {"data": [{"id": c["id"] + "9", "name": "Gran Valparaíso"}]}
         get[f"{c['id']}/ads"] = {"data": [a for a, _ in c["anuncios"]]}
         get[f"{c['id']}/insights"] = {"data": [r for _, r in c["anuncios"]]}
@@ -41,9 +49,12 @@ def escenario(campanas: list[dict], moneda: str = "CLP", limite: str = "35000") 
 def correr(esc: dict, *args: str) -> dict:
     with tempfile.NamedTemporaryFile("w", suffix=".json", delete=False) as f:
         json.dump(esc, f)
-    r = subprocess.run([sys.executable, str(SCRIPT), *args, "--cuenta", CUENTA, "--falso", f.name],
+    with tempfile.NamedTemporaryFile("w", suffix=".json", delete=False) as plan:
+        json.dump(PLAN, plan)
+    r = subprocess.run([sys.executable, str(SCRIPT), *args, "--cuenta", CUENTA, "--falso", f.name, "--config", plan.name],
                        capture_output=True, text=True, check=False)
     Path(f.name).unlink()
+    Path(plan.name).unlink()
     return json.loads(r.stdout)
 
 
@@ -200,6 +211,29 @@ def activar_sobre_el_tope_se_niega():
 def activar_pasada_la_fecha_se_niega():
     s = correr(escenario([{"id": "1", "anuncios": [anuncio("10", 100, 0, estado="PAUSED")]}]), "activar", "10", "--hoy", "2026-11-20")
     assert not s["ok"] and s["_posts"] == [], s
+
+
+@caso
+def campana_de_un_plan_anterior_no_cuenta():
+    esc = escenario([{"id": "1", "anuncios": [anuncio("10", 2000, 1)]},
+                     {"id": "2", "nombre": "TMX · La de antes", "termino": "2026-10-20T23:59:00-0300",
+                      "anuncios": [anuncio("20", 29000, 2)]}])
+    s = correr(esc, "revisar", "--aplicar", "--hoy", "2026-11-01")
+    assert [c["id"] for c in s["campanas"]] == ["1"] and s["gasto"] == 2000 and s["_posts"] == [], s
+
+
+@caso
+def pocos_toques_avisa_sin_pausar():
+    s = correr(escenario([{"id": "1", "anuncios": [anuncio("10", 2500, 0, vistas=2000, toques=6), anuncio("11", 2500, 1, vistas=2000, toques=30)]}]),
+               "revisar", "--aplicar", "--hoy", "2026-10-29")
+    assert pausados(s) == [] and [a for a in s["alertas"] if "Anuncio 10" in a and "0.30 %" in a], s
+    assert not [a for a in s["alertas"] if "Anuncio 11" in a], s
+
+
+@caso
+def pocas_vistas_no_juzga_los_toques():
+    s = correr(escenario([{"id": "1", "anuncios": [anuncio("10", 500, 0, vistas=400, toques=0), anuncio("11", 500, 1)]}]), "revisar", "--hoy", "2026-10-29")
+    assert not [a for a in s["alertas"] if "tocó" in a], s
 
 
 def escenario_cuentas(cuentas: list[dict], permisos: list[str]) -> dict:

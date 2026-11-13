@@ -10,6 +10,12 @@ las fuentes** (casi todas son proveedores que venden algo: sus cifras se citan
 como lo que dicen, no como hechos) y **lo que deducimos** (hipótesis que la
 campaña 2 tiene que confirmar).
 
+> **Decidido el 13 de noviembre:** $70.000 con IVA y partida el lunes 30 de
+> noviembre. La configuración exacta, los textos y la lista de pendientes están
+> en `anuncios/campana-2.md`. De las 2 conversaciones de la campaña 1, una era
+> un revendedor de autos (probó y no le servía) y la otra dejó de contestar:
+> **ninguna fue de un taller mecánico.**
+
 ---
 
 ## 1. Resumen
@@ -370,7 +376,6 @@ Los subtítulos los pone el sistema de reels.
 * El contacto directo trae clientes más baratos que los anuncios.
 
 **Lo que falta**
-* Qué pasó con las 2 conversaciones de la campaña 1.
 * Si el sitio `tallermax.website` tiene el píxel de Meta instalado (no se pudo
   revisar desde la nube). Sin él no se puede volver a mostrarle anuncios a
   quien visitó la página.

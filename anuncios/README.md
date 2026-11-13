@@ -1,5 +1,9 @@
 # Piloto de anuncios de Meta
 
+**Campaña vigente: `campana-2.md`** («TMX · Rayón», 30 nov – 18 dic 2026, $58.800).
+Lo de más abajo es la configuración de la cuenta y la campaña 1, que terminó el
+13 de noviembre.
+
 Claude maneja la campaña con `scripts/anuncios.py`: lee los resultados todos los
 días y **pausa** lo que no rinde. Nunca crea campañas, nunca cambia un
 presupuesto ni el límite de gasto, y sólo mira las campañas cuyo nombre empieza
@@ -11,7 +15,7 @@ python3 scripts/anuncios.py cuentas                              # qué cuentas 
 python3 scripts/anuncios.py revisar --cuenta act_<id>            # sólo informa
 python3 scripts/anuncios.py revisar --cuenta act_<id> --aplicar  # informa y pausa
 python3 scripts/anuncios.py activar <id_anuncio> --cuenta act_<id>
-python3 scripts/probar_anuncios.py                               # 25 pruebas, sin tocar Meta
+python3 scripts/probar_anuncios.py                               # 28 pruebas, sin tocar Meta
 ```
 
 ## Tres seguros, de afuera hacia adentro

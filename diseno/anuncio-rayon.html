@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>Anuncio · El rayón (imagen fija)</title>
+<link rel="stylesheet" href="marca.css">
+<style>
+  /* Imagen fija de la campaña 2. A diferencia de los carruseles, tiene que
+     decirlo todo sola: a quién le habla, el problema, la salida y la oferta. */
+  .para { align-self: flex-start; margin-top: 44px; background: var(--amarillo); color: var(--grafito); border-radius: 14px; padding: 16px 24px;
+    font: 800 34px/1 "Inter"; letter-spacing: .04em; text-transform: uppercase; }
+  .reclamo { margin-top: 34px; font: 850 118px/1.0 "Inter"; letter-spacing: -.045em; color: #F4F4F6; text-wrap: balance; }
+  .reclamo em { font-style: normal; color: var(--amarillo); }
+  .fotos4 { margin-top: 44px; display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
+  .fotos4 div { background: #242630; border-radius: 18px; aspect-ratio: 1.15; display: grid; place-items: center; padding: 14px; position: relative; }
+  .fotos4 small { position: absolute; left: 12px; bottom: 9px; font: 700 15px/1 "JBM"; letter-spacing: .08em; color: #9CA3AF; }
+  .fotos4 .marca-d { position: absolute; border: 5px dashed var(--amarillo); border-radius: 50%; }
+  .salida { margin-top: 36px; font: 600 44px/1.22 "Inter"; letter-spacing: -.02em; color: #F4F4F6; }
+  .salida b { color: var(--amarillo); }
+  .oferta { margin-top: auto; margin-bottom: 70px; display: flex; align-items: center; gap: 30px; }
+  .oferta .llamado { font-size: 40px; padding: 28px 36px; }
+  .oferta span { font: 600 28px/1.25 "Inter"; color: var(--suave); }
+</style>
+</head>
+<body class="xl">
+
+<section class="slide oscuro">
+  <div class="firma"><img class="logo" src="logo/svg/tallermax-horizontal-sobre-oscuro.svg" alt="tallermax"><span>Sistema de gestión<br>para talleres mecánicos</span></div>
+  <div class="para">Para talleres mecánicos</div>
+  <h1 class="reclamo">«Ese rayón <em>no estaba.»</em></h1>
+  <div class="fotos4">
+    <div><svg viewBox="0 0 200 140" width="86%"><use href="video/autos.svg#auto-frente"/></svg><small>FRENTE</small></div>
+    <div><svg viewBox="0 0 200 140" width="86%"><use href="video/autos.svg#auto-atras"/></svg><small>ATRÁS</small></div>
+    <div><svg viewBox="0 0 400 160" width="96%"><use href="video/autos.svg#auto-lado"/></svg><small>IZQ.</small>
+      <i class="marca-d" style="left:56%;top:26%;width:60px;height:60px"></i></div>
+    <div><svg viewBox="0 0 400 160" width="96%" style="transform:scaleX(-1)"><use href="video/autos.svg#auto-lado"/></svg><small>DER.</small></div>
+  </div>
+  <p class="salida">Recibe cada auto con <b>4 fotos desde el celular.</b> Al cliente le llega la constancia a su correo antes de irse.</p>
+  <div class="oferta"><div class="llamado">7 días gratis →</div><span>Te lo dejamos armado hoy,<br>con el logo de tu taller.</span></div>
+</section>
+</body>
+</html>

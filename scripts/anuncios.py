@@ -15,6 +15,8 @@ Lo que PUEDE hacer, y nada más:
     anuncios/campana.json (las demás campañas de la cuenta ni se miran);
   * ACTIVAR un anuncio de esas campañas, sólo con la orden `activar`, y sólo si
     su campaña respeta el tope y todavía no pasa su fecha de término.
+Las campañas con el prefijo que terminaron antes del `inicio` del plan son de
+un plan anterior: no se miran ni cuentan para el tope.
 Nunca crea nada ni cambia un presupuesto, una puja, un público o el límite de
 gasto de la cuenta. Pausar no gasta plata: por eso es lo único que hace solo.
 
@@ -28,6 +30,10 @@ Las reglas (los números están en anuncios/campana.json):
   3. Se pausa si cada conversación le sale más de `multiplo_costo` veces lo que
      al mejor anuncio (que necesita `conversaciones_minimas_ganador` para valer
      como referencia).
+  3b. Si un anuncio ya se mostró `impresiones_para_juzgar_toques` veces y lo
+     toca menos del `toques_minimos_pct` %, se AVISA (no se pausa): no está
+     deteniendo a nadie y conviene reemplazarlo por otro gancho. Se sabe en
+     días, mucho antes de que haya conversaciones que contar.
   4. Las reglas 2 y 3 nunca dejan una campaña sin anuncios activos. Pero si la
      campaña entera gastó `gasto_sin_resultado_campana` sin una conversación, se
      pausa completa: algo está mal armado, casi siempre el WhatsApp de destino.
@@ -55,7 +61,7 @@ from pathlib import Path
 from zoneinfo import ZoneInfo
 
 API = "https://graph.facebook.com/v25.0"
-CONFIG = Path(__file__).resolve().parent.parent / "anuncios" / "campana.json"
+CONFIG = Path(__file__).resolve().parent.parent / "anuncios" / "campana.json"  # --config lo cambia, para pruebas
 ZONA = ZoneInfo("America/Santiago")
 # Meta guarda los presupuestos en la unidad mínima de la moneda. El peso chileno
 # no tiene centavos (factor 1); el dólar sí (factor 100). Una moneda que no esté
@@ -189,6 +195,9 @@ def leer(api, cuenta: str, config: dict) -> dict:
     for c in todos(api, f"{cuenta}/campaigns", {"fields": CAMPOS_CAMPANA, "limit": 100}):
         if not (c.get("name") or "").startswith(config["prefijo"]):
             continue
+        termino = fecha_meta(c.get("stop_time"))
+        if termino and termino < date.fromisoformat(config["inicio"]):
+            continue  # de un plan anterior
         conjuntos = todos(api, f"{c['id']}/adsets", {"fields": "id,name,daily_budget,lifetime_budget", "limit": 100})
         anuncios = todos(api, f"{c['id']}/ads", {"fields": CAMPOS_ANUNCIO, "limit": 100})
         resultados = {r.get("ad_id"): r for r in todos(api, f"{c['id']}/insights", {
@@ -305,6 +314,13 @@ def decidir(estado: dict, config: dict, hoy: date) -> tuple[list[dict], list[str
             if a["estado"] in ESTADOS_CON_PROBLEMA:
                 alertas.append(f"El anuncio «{a['nombre']}» está {a['estado']}: Meta lo rechazó o tiene un problema.")
 
+        ver, minimo = reglas.get("impresiones_para_juzgar_toques"), reglas.get("toques_minimos_pct")
+        for a in activos:
+            if ver and minimo and a["impresiones"] >= ver and 100 * a["clics"] / a["impresiones"] < minimo:
+                alertas.append(f"El anuncio «{a['nombre']}» se mostró {a['impresiones']:,} veces y lo tocó el "
+                               f"{100 * a['clics'] / a['impresiones']:.2f} % (mínimo {minimo:g} %): conviene "
+                               "reemplazarlo por otro gancho.")
+
         maduros = [a for a in activos if a["gasto"] >= reglas["gasto_minimo_para_juzgar"]
                    and a["desde"] and (hoy - date.fromisoformat(a["desde"])).days >= reglas["dias_minimos"]]
         referencias = [a for a in activos if a["conversaciones"] >= reglas["conversaciones_minimas_ganador"]]
@@ -382,9 +398,10 @@ def main() -> int:
     p.add_argument("--aplicar", action="store_true", help="pausar de verdad (sin esto sólo informa)")
     p.add_argument("--hoy", help="AAAA-MM-DD, para pruebas")
     p.add_argument("--falso", help="escenario JSON en vez de Meta, para pruebas")
+    p.add_argument("--config", help="otro campana.json, para pruebas")
     args = p.parse_args()
 
-    config = json.loads(CONFIG.read_text(encoding="utf-8"))
+    config = json.loads(Path(args.config or CONFIG).read_text(encoding="utf-8"))
     hoy = date.fromisoformat(args.hoy) if args.hoy else datetime.now(ZONA).date()
     api = ApiFalsa(args.falso) if args.falso else ApiReal()
     cuenta = args.cuenta or config.get("cuenta")

@@ -38,13 +38,21 @@ Dueños de talleres mecánicos chicos y medianos (1 a 10 personas) de Quilpué,
 Villa Alemana, Viña del Mar y Valparaíso. Hoy anotan en cuaderno, Excel o de
 memoria. Más en Facebook y WhatsApp que en Instagram.
 
-## Lo que sabemos que funciona (campaña de Meta, 1–13 nov 2026)
+## Lo que sabemos (campaña de Meta, 1–13 nov 2026)
 
-* El ángulo que trajo conversaciones: **«Ese rayón no estaba»** → fotos al
-  recibir y constancia al correo. ~$2.700 por conversación.
-* «Evidencia por correo» y «Tu sistema hoy» gastaron más de $4.000 cada uno sin
-  ninguna conversación; el piloto los pausó.
-* Mucha gente toca el botón y no envía el mensaje de WhatsApp.
+Detalle y plan de la siguiente en `investigacion/campana-2-plan.md`.
+
+* $27.481 gastados, 2 conversaciones ($13.740 cada una). Objetivo para la
+  campaña 2: $7.500 o menos por conversación.
+* Las 2 vinieron del ángulo **«Ese rayón no estaba»** → fotos al recibir y
+  constancia al correo. Es la idea central de la campaña 2.
+* Sólo 0,42 % de toques y 3 de cada 100 toques terminaron en conversación: los
+  anuncios (texto animado, sin personas) no detienen a la gente, y el salto a
+  WhatsApp pierde a casi todos.
+* «Evidencia por correo» y «Tu sistema hoy» se pausaron con $4.000–5.000
+  gastados sin conversaciones: es muy poco gasto para saber si eran malos.
+* Lo que sigue: el fundador a la cámara, reels con su voz, una imagen fija, y
+  preguntas listas para tocar en WhatsApp.
 
 ## Voz y reglas
 

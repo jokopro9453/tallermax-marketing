@@ -105,6 +105,17 @@ la escena que no le alcance, le pone subtítulos palabra por palabra (faster-whi
 `diseno/video/subtitulos.py`) y arma el MP4 sin Docker, así que corre también en
 la nube. Cómo grabar y el guion de cada reel: `guiones/voz-en-off.md`.
 
+## Videos grabados (Joaquín a la cámara)
+
+`diseno/video/editar_toma.sh toma.mp4 piezas/<id>/reel.mp4 [--guion …] [--insertos …] [--musica …]`
+edita lo que se graba con el celular: limpia la voz (RNNoise, modelo en
+`diseno/video/rnnoise/`, sin derechos de autor; de-esser, ecualización,
+compresión y -16 LUFS en dos pasadas), corta silencios y las tomas que se
+repiten tras una pausa, recorta a 1080 × 1920, pone la firma, subtítulos
+palabra por palabra, insertos sobre frases dichas, música que se agacha bajo la
+voz y la tarjeta de cierre (`diseno/video/cierre.html`). Guiones y cómo grabar:
+`guiones/reels-noviembre.md`.
+
 ## Habilidades de marketing
 
 `.claude/skills/` trae `ad-creative`, `ads` y `copywriting` de
